@@ -1,0 +1,3759 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vladi Skrivan — Galerie</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #3a3a3a;
+    --white: #fefefc;
+    --accent: #b5924a;
+    --gray: #aaa;
+    --light-gray: #eeebe6;
+    --dark-bg: #2e2e2e;
+    --font-serif: 'Georgia', 'Times New Roman', serif;
+    --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+    --nav-w: 210px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+
+  /* ── SIDE NAV ── */
+  #side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--nav-w);
+    padding: 32px 0 32px 32px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  a.nav-logo-img {
+    display: block;
+    padding: 0 0 24px 0;
+    opacity: 1 !important;
+  }
+  .nav-logo-img-el {
+    width: 100px;
+    height: auto;
+    display: block;
+  }
+  a.nav-mobile-logo { display: none !important; }
+
+  #side-nav a {
+    display: block;
+    padding: 7px 0;
+    font-family: var(--font-serif);
+    font-size: 11px;
+    font-style: normal;
+    text-decoration: none;
+    color: var(--black);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  #side-nav a:hover, #side-nav a.active { opacity: 1; }
+
+  /* ── Nav sub-collections ── */
+  .nav-sub-section {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+  }
+  .nav-sub-section.open { max-height: 300px; }
+  .nav-sub-item {
+    display: block;
+    padding: 4px 0 4px 12px;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    opacity: 0.35;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 0.2s;
+    border-left: 1px solid transparent;
+  }
+  .nav-sub-item:hover { opacity: 0.7; }
+  .nav-sub-item.active { opacity: 1; border-left-color: var(--black); }
+
+  /* ── MAIN CONTENT offset ── */
+  .page-content {
+    padding-top: 0;
+    padding-left: var(--nav-w);
+    min-height: 100vh;
+  }
+
+  @media (max-width: 768px) {
+    .page-content {
+      padding-left: 0;
+      padding-top: 0;
+      position: fixed;
+      top: 46px;
+      left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .page-content > section.active {
+      height: auto !important;
+      min-height: calc(100vh - 46px);
+      overflow: visible !important;
+    }
+    #gallery.active, #tisky.active {
+      height: calc(100vh - 46px) !important;
+      overflow: hidden !important;
+    }
+  }
+
+  /* ── SPA: sekce skryté, jen aktivní viditelná ── */
+  .page-content > section {
+    display: none !important;
+    animation: fadeIn 0.35s ease both;
+  }
+  .page-content > section.active {
+    display: block !important;
+  }
+  #gallery.active { display: grid !important; }
+  #tisky.active { display: block !important; }
+  #about.active { display: block !important; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── GALLERY INTRO ── */
+  .gallery-intro-text {
+    padding: 60px 80px 0;
+    max-width: 820px;
+  }
+  .gallery-section-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--black);
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+  }
+  .gallery-intro-text p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #555;
+  }
+
+  /* ── GALLERY / TISKY VIEWER (Fiorentino style) ── */
+  #gallery {
+    padding: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    position: relative;
+  }
+  #tisky {
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #tisky-tab-tvorba {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+  }
+  #tisky-tab-tvorba .gal-viewer { grid-row: 1; }
+  #tisky-tab-tvorba .gal-infobar { grid-row: 2; }
+  #tisky-tab-kvalita {
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .subtitle-edice {
+    font-size: 1.35em;
+    font-family: var(--font-serif);
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+  .tisky-info-desc {
+    font-size: 11px;
+    line-height: 1.75;
+    color: #777;
+    margin-top: 10px;
+    max-width: 480px;
+    white-space: pre-line;
+  }
+  .tisky-info-meta {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-top: 8px;
+  }
+  .tisky-detail { margin-top: 18px; }
+  .tisky-section-heading {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #999;
+    margin: 16px 0 6px;
+    display: block;
+  }
+  .tisky-section-text {
+    font-size: 11px;
+    line-height: 1.75;
+    color: #777;
+    white-space: pre-line;
+  }
+  .tisky-price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  .tisky-price-table caption {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #999;
+    text-align: left;
+    padding-bottom: 8px;
+  }
+  .tisky-price-table th {
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #bbb;
+    font-weight: 400;
+    padding: 4px 12px 4px 0;
+    border-bottom: 1px solid #e8e4de;
+    text-align: left;
+  }
+  .tisky-price-table td {
+    font-size: 10px;
+    color: #666;
+    padding: 5px 12px 5px 0;
+    border-bottom: 1px solid #f0ede9;
+    vertical-align: top;
+  }
+  .tisky-price-table td:first-child { color: #aaa; font-size: 9px; }
+  .tisky-price-table td:nth-child(2) { color: var(--black); font-weight: 500; white-space: nowrap; }
+  .tisky-intro {
+    padding: 14px 40px;
+    border-bottom: 1px solid var(--light-gray);
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+  .tisky-kvalita-page {
+    padding: 48px 64px;
+  }
+  .tisky-kvalita-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 32px;
+    color: var(--black);
+  }
+  .tisky-quality-btn {
+    margin-left: auto;
+    background: none;
+    border: 1px solid #999;
+    color: #555;
+    font-family: var(--font-serif);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .tisky-quality-btn:hover { background: #f0ede8; border-color: #666; color: #222; }
+  .tisky-quality-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tisky-quality-modal.hidden { display: none; }
+  .tisky-quality-modal-inner {
+    background: var(--white);
+    max-width: 560px;
+    width: 90%;
+    padding: 48px 44px 40px;
+    position: relative;
+  }
+  .tisky-quality-modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none; border: none;
+    font-size: 22px; color: #aaa;
+    cursor: pointer; line-height: 1;
+  }
+  .tisky-quality-modal-close:hover { color: #333; }
+  .tisky-quality-modal-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #333;
+    margin-bottom: 24px;
+  }
+  .tisky-quality-modal-section-title {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #555;
+    margin: 28px 0 14px;
+  }
+  .tisky-quality-modal-section-title:first-of-type { margin-top: 0; }
+  .tisky-quality-modal-text {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 14px;
+  }
+  .tisky-quality-modal-params {
+    margin-top: 24px;
+    border-top: 1px solid var(--light-gray);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tisky-quality {
+    padding: 32px 40px 28px;
+    border-bottom: 1px solid var(--light-gray);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 60px;
+    max-width: 900px;
+  }
+  .tisky-quality-text {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    line-height: 1.8;
+    color: #666;
+    max-width: 680px;
+  }
+  .tisky-quality-params {
+    border-top: 1px solid var(--light-gray);
+    padding-top: 20px;
+  }
+  .tisky-quality-params-title {
+    font-family: var(--font-sans);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .tisky-quality-param {
+    display: flex;
+    gap: 12px;
+    font-size: 10px;
+    color: #555;
+    margin-bottom: 7px;
+    line-height: 1.5;
+  }
+  .tisky-quality-param-label {
+    color: #aaa;
+    min-width: 60px;
+    flex-shrink: 0;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+  .tisky-quality-price {
+    border-top: 1px solid var(--light-gray);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tisky-quality-price-label {
+    font-family: var(--font-sans);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #bbb;
+  }
+  .tisky-quality-price-value {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: #444;
+    letter-spacing: 0.03em;
+  }
+  .tisky-intro-label {
+    font-family: var(--font-serif);
+    font-size: clamp(10px, 1vw, 13px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #444;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .tisky-intro-desc {
+    font-size: 10px;
+    color: #999;
+    line-height: 1.6;
+  }
+  .gal-topbar {
+    display: none;
+  }
+  .gal-viewer {
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    grid-template-rows: 1fr auto;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    grid-row: 2;
+  }
+  .gal-img-wrap {
+    grid-row: 1;
+    grid-column: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 56px;
+    overflow: hidden;
+    gap: 0;
+    position: relative;
+  }
+  .gal-active-img-wrap {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    flex-shrink: 1;
+    min-height: 0;
+    min-width: 0;
+  }
+  .gal-active-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: opacity 0.25s ease;
+  }
+  .gal-artist-name {
+    font-family: var(--font-serif);
+    font-size: clamp(13px, 1.4vw, 18px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .gal-sold-overlay {
+    position: absolute;
+    top: 36px;
+    left: 68px;
+    font-family: var(--font-sans);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c9b99a;
+    border: 1px solid #c9b99a;
+    padding: 3px 10px;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .gal-sold-overlay.hidden { display: none; }
+  .gal-active-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: opacity 0.25s ease;
+  }
+  .gal-thumbstrip {
+    grid-row: 1 / 4;
+    grid-column: 2;
+    overflow-y: auto;
+    border-left: 1px solid var(--light-gray);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--light-gray) transparent;
+  }
+  .gal-thumb {
+    width: 120px;
+    height: 110px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    display: block;
+    flex-shrink: 0;
+  }
+  .gal-thumb.active, .gal-thumb:hover { opacity: 1; }
+  .gal-thumb-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .gal-thumb-sold {
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 7px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(80,70,60,0.68);
+    padding: 2px 0;
+    pointer-events: none;
+  }
+  .gal-sold-badge {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #aaa;
+    border: 1px solid #d0cbc3;
+    padding: 2px 8px;
+    margin-top: 6px;
+    font-family: var(--font-sans);
+  }
+  .gal-infobar {
+    background: var(--white);
+    border-top: 1px solid var(--light-gray);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    padding: 0 32px;
+    height: 56px;
+    flex-shrink: 0;
+    grid-row: 3;
+  }
+  .gal-infobar-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--light-gray);
+    margin: 0 20px;
+    flex-shrink: 0;
+  }
+  .gal-photo-strip-inline, .tisky-photo-strip { display: none !important; }
+  .gal-photo-strip-inline-hidden {
+    grid-row: unset;
+    grid-column: unset;
+    border-top: none;
+    background: none;
+    padding: 0 0 12px 0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .gal-photo-strip-inline:empty { display: none; }
+  .gal-infobar-btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .gal-info-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--black);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  .gal-info-collection {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #999;
+    white-space: nowrap;
+  }
+  .gal-info-technique {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: #777;
+    white-space: nowrap;
+  }
+  .gal-info-size {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: #aaa;
+    white-space: nowrap;
+  }
+  .gal-info-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .gal-inquire-btn {
+    display: inline-block;
+    margin-top: 0;
+    padding: 7px 20px;
+    font-size: 9px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    border: 1px solid var(--black);
+    color: var(--black);
+    background: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: var(--font-sans);
+  }
+  .gal-inquire-btn:hover { background: var(--black); color: var(--white); }
+
+  /* ── VIEW TOGGLE (room / detail) ── */
+  .gal-view-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 12px;
+    align-self: flex-start;
+  }
+  .gal-view-btn {
+    padding: 5px 14px;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--light-gray);
+    background: none;
+    color: #999;
+    cursor: pointer;
+    margin-left: -1px;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+  }
+  .gal-view-btn:first-child { border-radius: 2px 0 0 2px; margin-left: 0; }
+  .gal-view-btn:last-child { border-radius: 0 2px 2px 0; }
+  .gal-view-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+  .gal-view-toggle.hidden { display: none; }
+
+  /* ── FILTER TABS (hidden on desktop, moved to nav) ── */
+  .gal-topbar { display: none; }
+  .gal-edice-label {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: var(--font-serif);
+    color: #888;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+
+  /* ── PRICE INQUIRY MODAL ── */
+  .pi-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(232,228,222,0.94);
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .pi-overlay.open { display: flex; }
+  .pi-box {
+    background: var(--white);
+    border: 1px solid #d6d0c8;
+    display: flex;
+    max-width: 820px;
+    width: calc(100% - 48px);
+    position: relative;
+    overflow: hidden;
+  }
+  .pi-img-panel {
+    flex: 0 0 320px;
+    display: flex;
+    align-items: stretch;
+  }
+  .pi-img-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .pi-form-panel {
+    flex: 1;
+    padding: 48px 44px;
+    min-width: 0;
+  }
+  .pi-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none; border: none;
+    font-size: 20px; color: #aaa;
+    cursor: pointer; line-height: 1;
+  }
+  .pi-close:hover { color: var(--black); }
+  .pi-painting-ref {
+    font-size: 9px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 28px;
+  }
+  .pi-box h3 {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 12px;
+  }
+  .pi-box p {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .pi-field {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 11px;
+    border: 1px solid #d0cbc3;
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-sans);
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .pi-field:focus { border-color: var(--black); }
+  .pi-submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 6px;
+    font-family: var(--font-sans);
+    transition: opacity 0.2s;
+  }
+  .pi-submit:hover { opacity: 0.75; }
+  .pi-success {
+    display: none;
+    background: #eaf3ec;
+    border: 1px solid #b8d9bf;
+    color: #3d7a52;
+    padding: 14px 18px;
+    font-size: 11px;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── ÚVOD ── */
+  #uvod {
+    padding: 80px 80px;
+    text-align: center;
+  }
+  .uvod-inner { max-width: 680px; margin: 0 auto; }
+  .uvod-title {
+    font-family: var(--font-serif);
+    font-size: clamp(21px, 2.8vw, 34px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 28px;
+  }
+  .uvod-text { font-size: 12px; line-height: 1.9; color: #555; }
+  .uvod-hero-img {
+    width: 77%;
+    display: block;
+    margin: 48px auto 0;
+  }
+  .uvod-mobile-triptych { display: none; }
+
+  /* ── Gallery nav arrows ── */
+  .gal-nav-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.85);
+    border: none;
+    width: 36px; height: 52px;
+    font-size: 22px;
+    color: var(--black);
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .gal-img-wrap:hover .gal-nav-arrow { opacity: 0.85; }
+  .gal-nav-arrow:hover { opacity: 1 !important; background: rgba(255,255,255,0.97); }
+  .gal-nav-prev { left: 0; }
+  .gal-nav-next { right: 0; }
+  .gal-img-dots {
+    position: absolute;
+    bottom: 10px; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 5px;
+    pointer-events: none;
+  }
+  .gal-img-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.25);
+    transition: background 0.2s;
+  }
+  .gal-img-dot.active { background: rgba(0,0,0,0.7); }
+
+  /* ── MOBILE GALLERY GRID ── */
+  .mobile-gallery-grid { display: none; }
+  .mgrid-item { background: var(--white); cursor: pointer; overflow: hidden; }
+  .mgrid-item img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #f0ede8; display: block; transition: transform 0.3s; }
+  .mgrid-item-print img { aspect-ratio: 4/3; object-fit: contain; background: #f0ede8; }
+  .mgrid-caption { padding: 8px 10px 12px; }
+  .mgrid-title { display: block; font-family: var(--font-serif); font-size: 12px; color: var(--black); line-height: 1.3; }
+  .mgrid-meta { display: block; font-size: 9px; color: #aaa; margin-top: 3px; letter-spacing: 0.04em; }
+  .mgrid-sold .mgrid-title { opacity: 0.5; }
+  .mgrid-sold-badge { display: inline-block; font-size: 8px; letter-spacing: 0.1em; color: #999; text-transform: uppercase; margin-top: 4px; }
+
+  /* ── GALLERY FILTER TABS ── */
+  .filter-tabs { display: flex; flex-wrap: wrap; }
+  .filter-tab {
+    padding: 6px 18px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--light-gray);
+    margin-left: -1px;
+    color: var(--gray);
+    transition: all 0.2s;
+  }
+  .filter-tab:first-child { margin-left: 0; border-radius: 2px 0 0 2px; }
+  .filter-tab:last-child { border-radius: 0 2px 2px 0; }
+  .filter-tab.active, .filter-tab:hover {
+    background: var(--black); color: var(--white); border-color: var(--black); z-index: 1;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 80px 80px;
+    border-top: 1px solid var(--light-gray);
+  }
+  .about-grid {
+    display: block;
+    margin-bottom: 72px;
+    max-width: 820px;
+  }
+  .about-text h2 {
+    font-family: var(--font-serif);
+    font-size: 28px; font-weight: 400; margin-bottom: 28px; line-height: 1.2;
+  }
+  .about-text p { font-size: 12px; line-height: 1.9; color: #555; margin-bottom: 18px; }
+  .about-video {
+    position: relative; width: 100%; aspect-ratio: 16/9;
+    border-radius: 2px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.12);
+  }
+  .about-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .about-story {
+    border-top: 1px solid var(--light-gray);
+    padding-top: 60px;
+    max-width: 820px;
+  }
+  .about-story-title {
+    font-family: var(--font-serif);
+    font-size: 22px; font-weight: 400;
+    color: var(--black); margin-bottom: 32px;
+  }
+  .about-story p { font-size: 12px; line-height: 1.9; color: #555; margin-bottom: 18px; }
+  .about-story-portrait {
+    float: right;
+    width: 220px;
+    height: 260px;
+    object-fit: cover;
+    object-position: center top;
+    margin: 0 0 24px 40px;
+    border-radius: 2px;
+  }
+
+  /* ── VÝSTAVY ── */
+  #vystavy {
+    padding: 80px 80px;
+    border-top: 1px solid var(--light-gray);
+  }
+  .vystavy-inner { max-width: 720px; }
+  #vystavy .section-title { margin-bottom: 48px; }
+  .vystavy-list { list-style: none; }
+  .vystavy-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 40px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .vystavy-list li:first-child { border-top: 1px solid var(--light-gray); }
+  .vystavy-rok {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    color: var(--gray);
+    min-width: 44px;
+    flex-shrink: 0;
+  }
+  .vystavy-popis {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--black);
+  }
+  .vystavy-popis em { font-style: italic; }
+
+  .vystavy-photos {
+    margin-top: 64px;
+    columns: 3;
+    column-gap: 12px;
+  }
+  .vystavy-photos img {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+    break-inside: avoid;
+    cursor: pointer;
+    transition: opacity 0.25s;
+  }
+  .vystavy-photos img:hover { opacity: 0.85; }
+
+  /* ── KLUB ── */
+  #klub {
+    padding: 80px 80px;
+    border-top: 1px solid var(--light-gray);
+  }
+  .klub-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+  }
+  .klub-left {
+    flex: 1;
+    max-width: 460px;
+  }
+  .klub-left h2 {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  .klub-tagline {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #555;
+    margin-bottom: 36px;
+  }
+  .klub-benefits {
+    list-style: none;
+    margin-bottom: 0;
+  }
+  .klub-benefits li {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #666;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--light-gray);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .klub-benefits li:first-child { border-top: 1px solid var(--light-gray); }
+  .klub-bullet {
+    color: var(--accent);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .klub-right {
+    flex: 1;
+    max-width: 380px;
+  }
+  .klub-form-wrap {
+    border: 1px solid var(--light-gray);
+    padding: 40px 36px;
+  }
+  .klub-form-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .klub-form-sub {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+  .klub-field {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 11px;
+    border: 1px solid #d0cbc3;
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-sans);
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .klub-field:focus { border-color: var(--black); }
+  .klub-submit {
+    width: 100%;
+    padding: 13px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: opacity 0.2s;
+    margin-top: 4px;
+  }
+  .klub-submit:hover { opacity: 0.75; }
+  .klub-success {
+    display: none;
+    background: #eaf3ec;
+    border: 1px solid #b8d9bf;
+    color: #3d7a52;
+    padding: 14px 18px;
+    font-size: 11px;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+  .klub-note {
+    font-size: 9px;
+    color: #bbb;
+    margin-top: 14px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .klub-social {
+    display: flex;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .klub-social-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .klub-social-link:hover { color: var(--black); }
+  .contact-social-standalone {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 32px;
+    padding: 40px 0;
+    border-top: 1px solid #d6d0c8;
+    margin-top: 8px;
+  }
+  .contact-social-standalone a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #666;
+    transition: color 0.2s;
+  }
+  .contact-social-standalone a:hover { color: var(--black); }
+  .contact-social-standalone svg { flex-shrink: 0; }
+  .contact-social-name {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    display: block;
+  }
+  .contact-social-handle {
+    font-size: 9px;
+    color: #aaa;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-top: 2px;
+  }
+  /* small icons inside contact-manager (removed) */
+  .contact-social { display: none; }
+  .contact-social-link { display: none; }
+
+  /* ── ROZHOVOR ── */
+  #rozhovor {
+    padding: 80px 80px;
+  }
+  .rozhovor-inner {
+    max-width: 720px;
+  }
+  .rozhovor-title {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .rozhovor-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 56px;
+    display: block;
+  }
+  .rozhovor-qa {
+    padding: 20px 0;
+  }
+  .rozhovor-q {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .rozhovor-a {
+    font-size: 12px;
+    line-height: 1.85;
+    color: #555;
+  }
+
+  /* ── SECTION TITLE (shared) ── */
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--black);
+    letter-spacing: 0.02em;
+    margin-bottom: 48px;
+  }
+
+  /* ── CONTACT PROCESS ── */
+  .contact-process {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 56px;
+    border-top: 1px solid #d6d0c8;
+  }
+  .contact-step {
+    padding: 32px 40px 32px 0;
+    border-right: 1px solid #d6d0c8;
+    padding-right: 40px;
+  }
+  .contact-step:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
+  .contact-step:nth-child(2) { padding-left: 40px; }
+  .contact-step-num {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--accent);
+    margin-bottom: 14px;
+    line-height: 1;
+  }
+  .contact-step strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 10px;
+  }
+  .contact-step p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #777;
+  }
+  .contact-process-cta {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    margin-bottom: 40px;
+  }
+  .contact-process-cta a {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    border: 1px solid var(--black);
+    padding: 13px 32px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .contact-process-cta a:hover { background: var(--black); color: var(--white); }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--light-gray);
+    color: var(--black);
+    padding: 80px 80px;
+    border-top: 1px solid #d6d0c8;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1000px;
+  }
+  #contact h2 {
+    font-family: var(--font-serif);
+    font-size: 28px; font-weight: 400;
+    margin-bottom: 20px; grid-column: 1 / -1;
+    color: var(--black);
+  }
+  .contact-process-label {
+    grid-column: 1 / -1;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .contact-intro {
+    font-size: 12px; color: #666; line-height: 1.8; margin-bottom: 40px;
+  }
+  .contact-manager {
+    padding-top: 32px;
+    border-top: 1px solid #d6d0c8;
+  }
+  .contact-manager-label {
+    font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #999; margin-bottom: 16px;
+  }
+  .contact-manager-name {
+    font-family: var(--font-serif); font-size: 16px; color: var(--black);
+    margin-bottom: 16px;
+  }
+  .contact-manager a {
+    display: block; font-size: 11px; color: var(--accent);
+    text-decoration: none; margin-bottom: 8px; transition: opacity 0.2s;
+  }
+  .contact-manager a:hover { opacity: 0.7; }
+
+  /* ── FORM ── */
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: #888;
+  }
+  .form-group input,
+  .form-group textarea {
+    background: var(--white); border: 1px solid #cbc5bc; color: var(--black);
+    padding: 12px 16px; font-size: 11px; font-family: var(--font-sans);
+    border-radius: 2px; outline: none; resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: #a09888; }
+  .form-group textarea { min-height: 120px; }
+  .btn-send {
+    align-self: flex-start; padding: 13px 32px;
+    background: var(--accent); color: #fff; border: none;
+    font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; border-radius: 2px; transition: background 0.2s; margin-top: 4px;
+  }
+  .btn-send:hover { background: #9a7b3a; }
+  .form-success {
+    display: none; padding: 16px; background: #eaf3ec;
+    border: 1px solid #b8d9bf; color: #3d7a52;
+    font-size: 10px; border-radius: 2px;
+  }
+
+  /* ── FOOTER ── */
+  footer { display: none; }
+  .nav-copyright {
+    margin-top: auto;
+    padding-top: 16px;
+    font-size: 9px;
+    color: #aaa;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    display: none; background: rgba(245,243,239,0.98);
+  }
+  #lightbox.open { display: flex; }
+  .lb-close {
+    position: absolute; top: 24px; right: 32px;
+    width: 44px; height: 44px; background: none; border: none; cursor: pointer;
+    color: rgba(0,0,0,0.4); font-size: 22px; display: flex;
+    align-items: center; justify-content: center; transition: color 0.2s; z-index: 10;
+  }
+  .lb-close:hover { color: var(--black); }
+  .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: rgba(0,0,0,0.3); font-size: 26px; padding: 20px;
+    transition: color 0.2s; z-index: 10;
+  }
+  .lb-nav:hover { color: var(--black); }
+  .lb-prev { left: 8px; } .lb-next { right: 8px; }
+  .lb-content { display: grid; grid-template-columns: 1fr 360px; width: 100%; height: 100%; }
+  .lb-image-area { display: flex; align-items: center; justify-content: center; padding: 80px 60px 80px 80px; }
+  .lb-image-area img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+  .lb-info { background: var(--light-gray); border-left: 1px solid #d6d0c8; padding: 80px 40px; display: flex; flex-direction: column; overflow-y: auto; }
+  .lb-collection { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .lb-title { font-family: var(--font-serif); font-size: 22px; font-weight: 400; color: var(--black); margin-bottom: 8px; }
+  .lb-year { font-size: 10px; color: #999; margin-bottom: 32px; }
+  .lb-meta { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid #d6d0c8; }
+  .lb-meta-row { display: flex; justify-content: space-between; font-size: 10px; }
+  .lb-meta-label { color: #aaa; text-transform: uppercase; letter-spacing: 0.1em; }
+  .lb-meta-value { color: #555; text-align: right; }
+  .lb-price { font-family: var(--font-serif); font-size: 18px; color: var(--black); margin-bottom: 6px; }
+  .lb-price-eur { font-size: 10px; color: #999; margin-bottom: 24px; }
+  .lb-status { display: inline-block; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; margin-bottom: 32px; width: fit-content; }
+  .lb-status.available { background: #eaf3ec; color: #3d7a52; border: 1px solid #b8d9bf; }
+  .lb-status.sold { background: #f5eaea; color: #a04040; border: 1px solid #dbbaba; }
+  .lb-story { font-size: 10px; line-height: 1.9; color: #888; font-style: italic; white-space: pre-line; }
+  .lb-inquire { margin-top: auto; padding-top: 32px; }
+  .btn-inquire {
+    display: block; text-align: center; padding: 14px 24px; background: var(--accent);
+    color: #fff; text-decoration: none; font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase; border-radius: 2px; transition: background 0.2s;
+  }
+  .btn-inquire:hover { background: #9a7b3a; }
+
+  /* ── LANG SWITCHER ── */
+  #lang-switcher {
+    display: flex;
+    gap: 0;
+    border: 1px solid rgba(0,0,0,0.18);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 8px;
+    align-self: flex-start;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    border-left: 1px solid rgba(0,0,0,0.12);
+    color: #aaa;
+    font-family: var(--font-sans);
+    font-size: 5.5px;
+    letter-spacing: 0.12em;
+    padding: 4px 7px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn:first-child { border-left: none; }
+  .lang-btn:hover { color: var(--black); }
+  .lang-btn.active { background: var(--black); color: #fff; }
+
+  /* ── PROŽITKY ── */
+  .inspirace-inner { padding: 80px 80px; }
+  .inspirace-quote {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: #8faa80;
+    line-height: 1.55;
+    max-width: 560px;
+    margin-bottom: 40px;
+    padding-left: 36px;
+    position: relative;
+    border: none;
+  }
+  .inspirace-quote::before {
+    content: '\201C';
+    position: absolute;
+    left: 0; top: -4px;
+    font-size: 44px;
+    color: #c8d9be;
+    line-height: 1;
+    font-family: var(--font-serif);
+  }
+  .inspirace-intro {
+    font-size: 14px;
+    line-height: 1.85;
+    color: #555;
+    max-width: 720px;
+    margin-bottom: 48px;
+  }
+  .inspirace-title {
+    font-family: var(--font-serif);
+    font-size: 28px; font-weight: 400;
+    color: var(--black); letter-spacing: 0.02em;
+    margin-bottom: 48px;
+  }
+  .inspi-tag {
+    display: inline-block;
+    font-size: 8px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  /* Kartová mřížka */
+  .prozitky-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .prozitky-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    aspect-ratio: 4/3;
+  }
+  .prozitky-card-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .prozitky-card:hover .prozitky-card-img { transform: scale(1.04); }
+  .prozitky-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 32px;
+  }
+  .prozitky-card-tag {
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .prozitky-card-title {
+    font-family: var(--font-serif);
+    font-size: 18px; font-weight: 400; line-height: 1.3;
+    color: #fff; margin-bottom: 8px;
+  }
+  .prozitky-card-lead {
+    font-size: 11px; line-height: 1.6; color: rgba(255,255,255,0.75);
+    font-style: italic;
+  }
+
+  /* Detail článku */
+  .prozitky-article-view { display: none; max-width: 780px; }
+  .prozitky-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-sans); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 48px;
+    padding: 0; transition: color 0.2s;
+  }
+  .prozitky-back:hover { color: var(--black); }
+  .prozitky-article-content { display: none; }
+  .prozitky-article-content.active { display: block; }
+
+  .inspi-article-title {
+    font-family: var(--font-serif);
+    font-size: 21px; font-weight: 400; line-height: 1.3;
+    color: var(--black); margin-bottom: 16px;
+  }
+  .inspi-article-lead {
+    font-size: 13px; line-height: 1.7; color: #666;
+    font-style: italic; margin-bottom: 40px;
+  }
+  .inspi-article-hero {
+    width: 100%; max-height: 480px;
+    object-fit: cover; display: block;
+    margin-bottom: 40px;
+  }
+  .inspi-article-body h4 {
+    font-family: var(--font-serif);
+    font-size: 14px; font-weight: 400;
+    color: var(--black); margin: 32px 0 12px;
+    letter-spacing: 0.01em;
+  }
+  .inspi-article-body p {
+    font-size: 12px; line-height: 1.9; color: #555;
+    margin-bottom: 16px;
+  }
+  .inspi-article-img {
+    width: 100%; display: block;
+    margin: 24px 0; object-fit: cover;
+    max-height: 400px;
+  }
+  .inspi-article-closing {
+    font-style: italic; color: #777 !important;
+    border-left: 3px solid var(--light-gray);
+    padding-left: 20px; margin-top: 32px !important;
+  }
+
+  /* ── RESPONSIVE ── */
+
+  /* Tablet + narrow desktop */
+  @media (max-width: 1024px) {
+    :root { --nav-w: 140px; }
+    #gallery, #tisky { height: auto; min-height: calc(100vh - 52px); }
+    .gal-topbar { padding: 12px 24px; overflow-x: auto; }
+    .filter-tabs { flex-wrap: nowrap; }
+    .filter-tab { white-space: nowrap; }
+    .contact-process { grid-template-columns: 1fr; }
+    .contact-step { border-right: none; border-bottom: 1px solid #d6d0c8; padding: 24px 0; }
+    .contact-step:last-child { border-bottom: none; }
+    .contact-step:nth-child(2), .contact-step:last-child { padding-left: 0; }
+    .klub-inner { gap: 48px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    /* ── Nav: horizontal scrollable bar ── */
+    #lang-switcher { display: none !important; }
+    #side-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      width: 100%;
+      padding: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      overflow-x: auto;
+      z-index: 99;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      height: auto;
+    }
+    #side-nav::-webkit-scrollbar { display: none; }
+    #side-nav::after {
+      content: '';
+      position: fixed;
+      top: 0; right: 0;
+      width: 32px;
+      height: 46px;
+      background: linear-gradient(to left, var(--white) 30%, transparent);
+      pointer-events: none;
+      z-index: 100;
+    }
+    a.nav-logo-img { display: none !important; }
+    a.nav-mobile-logo {
+      display: flex !important;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 14px 0 16px;
+      font-family: var(--font-serif);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--black);
+      border-right: 1px solid var(--light-gray);
+      height: 46px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    #side-nav a {
+      display: inline-block;
+      padding: 13px 14px;
+      font-size: 11px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      opacity: 1;
+    }
+    #side-nav a.active { border-bottom-color: var(--black); opacity: 1; }
+    .nav-copyright { display: none; }
+
+    .page-content {
+      padding-left: 0;
+      padding-top: 46px;
+      min-height: 0;
+    }
+
+    /* Global section padding */
+    #uvod, #about, #vystavy, #inspirace, #klub, #rozhovor, #contact, #libi {
+      padding: 40px 20px;
+    }
+
+    /* ── Gallery ── */
+    #gallery.active {
+      height: auto !important;
+      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column;
+      overflow: visible !important;
+      position: static !important;
+    }
+    #gallery .gal-topbar {
+      padding: 10px 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-shrink: 0;
+    }
+    #gallery .gal-viewer {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+    #gallery .gal-img-wrap {
+      padding: 12px 16px 8px;
+      min-height: 0;
+      flex: none;
+    }
+    #gallery .gal-active-img {
+      flex: none;
+      max-height: 65vw;
+      width: 100%;
+    }
+    #gallery .gal-artist-name { font-size: 9px; letter-spacing: 0.14em; padding: 4px 0 8px; }
+    #gallery .gal-thumbstrip {
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      height: 68px;
+      padding: 6px 12px;
+      border-left: none;
+      border-top: 1px solid var(--light-gray);
+      gap: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    /* Infobar: in-flow on mobile (not absolute) */
+    #gallery .gal-infobar {
+      position: static !important;
+      right: auto; left: auto; bottom: auto;
+      border-top: 1px solid var(--light-gray);
+      background: var(--white);
+      flex-shrink: 0;
+    }
+    #gallery .gal-infobar { height: auto; flex-wrap: wrap; padding: 10px 16px; gap: 6px; }
+    #gallery .gal-infobar-btns { flex-direction: column; gap: 6px; width: 100%; margin-left: 0; }
+    #gallery .gal-inquire-btn { width: 100%; text-align: center; box-sizing: border-box; }
+    #gallery .gal-infobar-sep { display: none; }
+
+    /* ── Tisky ── */
+    #tisky {
+      height: auto;
+      min-height: auto;
+      display: block;
+    }
+    #tisky .gal-viewer {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      height: auto;
+    }
+    #tisky .gal-img-wrap {
+      grid-row: 1; grid-column: 1;
+      padding: 12px 16px 8px;
+      min-height: 0;
+    }
+    #tisky .gal-active-img { max-height: 72vw; width: 100%; flex: none; }
+    #tisky .tisky-photo-strip { grid-row: 2; grid-column: 1; }
+    #tisky .gal-infobar {
+      position: static !important;
+      grid-row: 3; grid-column: 1;
+      flex-direction: column;
+      max-height: none;
+      overflow-y: visible;
+      padding: 16px;
+      gap: 10px;
+      width: 100%;
+    }
+    #tisky .gal-info-left, #tisky .gal-info-right {
+      width: 100%;
+      align-items: flex-start;
+      text-align: left;
+    }
+    #tisky .gal-inquire-btn { width: 100%; text-align: center; box-sizing: border-box; }
+    #tisky .gal-thumbstrip {
+      grid-row: 4; grid-column: 1;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      height: 68px;
+      padding: 6px 12px;
+      border-left: none;
+      border-top: 1px solid var(--light-gray);
+      gap: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    /* Shared */
+    .gal-thumbstrip::-webkit-scrollbar { display: none; }
+    .gal-thumb { width: 56px; height: 52px; flex-shrink: 0; }
+    .gal-info-right { align-items: flex-start; text-align: left; }
+    .gal-info-title { font-size: 20px; }
+    .gal-view-toggle { display: none; }
+    .gal-inquire-btn { width: 100%; text-align: center; box-sizing: border-box; }
+    .filter-tabs { flex-wrap: nowrap; }
+    .filter-tab { white-space: nowrap; font-size: 9px; padding: 5px 12px; }
+    .gal-edice-label { display: none; }
+
+    /* Tisky intro */
+    .tisky-intro { padding: 12px 16px; flex-direction: column; gap: 6px; align-items: flex-start; }
+    .tisky-intro-desc { display: none; }
+
+    /* Subtitle edice */
+    .subtitle-edice { font-size: 1.1em; }
+
+    /* ── About ── */
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-story-portrait { width: 140px; height: 180px; margin: 0 0 16px 16px; }
+    .about-text h2, .about-text p { padding-right: 0; }
+
+    /* ── Výstavy ── */
+    .vystavy-inner { max-width: 100%; }
+    .vystavy-photos { columns: 2; column-gap: 8px; }
+    .vystavy-photos img { margin-bottom: 8px; }
+
+    /* ── Inspirace (Blog) ── */
+    .inspirace-inner { padding: 40px 20px; }
+    .inspirace-quote { font-size: 20px; padding-left: 36px; margin-bottom: 32px; }
+    .inspirace-quote::before { font-size: 52px; }
+    .prozitky-grid { grid-template-columns: 1fr; }
+
+    /* ── Klub ── */
+    .klub-inner { flex-direction: column; gap: 40px; }
+    .klub-left, .klub-right { max-width: 100%; }
+    .klub-form-wrap { padding: 28px 20px; }
+
+    /* ── Rozhovor ── */
+    #rozhovor { padding: 40px 20px; }
+    .rozhovor-inner { max-width: 100%; }
+    .rozhovor-q { font-size: 15px; }
+    .rozhovor-a { font-size: 14px; }
+
+    /* ── Líbí se vám ── */
+    .libi-inner { padding: 40px 20px; }
+    .contact-process { grid-template-columns: 1fr; margin-top: 16px; }
+    .contact-step { border-right: none; border-bottom: 1px solid #d6d0c8; padding: 20px 0; }
+    .contact-step:last-child { border-bottom: none; }
+    .contact-step:nth-child(2), .contact-step:last-child { padding-left: 0; }
+
+    /* ── Contact ── */
+    #contact { padding: 40px 20px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 0; }
+    #contact h2 { margin-bottom: 16px; }
+    .contact-social-standalone { flex-direction: column; gap: 20px; }
+
+    /* ── Lightbox ── */
+    .lb-content { grid-template-columns: 1fr; }
+    .lb-info { padding: 32px 20px; }
+    .lb-image-area { padding: 72px 16px 16px; height: 55vw; }
+
+    /* ── Modals ── */
+    .pi-img-panel { display: none !important; }
+    .pi-form-panel { padding: 32px 20px; }
+    .pi-box { border-radius: 0; }
+    .pi-overlay { align-items: flex-end; }
+    .cm-img-panel { display: none !important; }
+    .cm-form-panel { padding: 32px 20px; }
+
+    /* ── Uvod triptych ── */
+    .uvod-hero-img { display: none !important; }
+    #uvod { padding: 0 !important; }
+    .uvod-mobile-triptych {
+      display: flex;
+      height: 68vw;
+      gap: 1px;
+      background: #ccc;
+    }
+    .uvod-trip-panel {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .uvod-trip-panel img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+    .uvod-trip-panel:active img { transform: scale(1.04); }
+    .uvod-trip-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 18px 8px 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.55));
+      color: #fff;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      font-family: var(--font-sans);
+    }
+
+    /* ── Mobile gallery grid ── */
+    .mobile-gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--light-gray);
+    }
+    #gallery .gal-topbar,
+    #gallery .gal-viewer,
+    #gallery .gal-infobar { display: none !important; }
+    #gallery.active {
+      display: block !important;
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+      position: static !important;
+    }
+    #tisky .tisky-intro,
+    #tisky .tisky-quality-modal,
+    #tisky .gal-viewer { display: none !important; }
+    #tisky.active { display: block !important; }
+
+    /* ── Footer ── */
+    footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+
+    /* ── Cookie bar ── */
+    #cookie-bar { flex-direction: column; align-items: flex-start; padding: 16px 20px; gap: 14px; }
+
+    /* ── Section headings ── */
+    .about-text h2, .klub-left h2, #contact h2, .rozhovor-title,
+    .inspirace-title, .section-title, .libi-title { font-size: 22px; }
+  }
+
+  @media (max-width: 400px) {
+    .vystavy-photos { columns: 1; }
+    .prozitky-card-title { font-size: 15px; }
+    .filter-tab { font-size: 8px; padding: 5px 10px; }
+    #side-nav a { padding: 13px 11px; font-size: 10px; }
+  }
+  /* ── MOBILE HAMBURGER + FULLSCREEN MENU ── */
+  .mob-hamburger { display: none; }
+  @media (max-width: 768px) {
+    .mob-hamburger {
+      display: flex; flex-direction: column; justify-content: center; gap: 5px;
+      margin-left: auto; padding: 0 16px; height: 46px;
+      background: none; border: none; cursor: pointer; flex-shrink: 0;
+    }
+    .mob-hamburger span {
+      display: block; width: 22px; height: 1.5px; background: var(--black);
+    }
+    /* hide all nav links on mobile — only show VS logo + hamburger */
+    #side-nav a[data-section],
+    #side-nav .nav-sub-section,
+    #side-nav .nav-copyright { display: none !important; }
+    #side-nav { justify-content: space-between; }
+  }
+  .mob-menu-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    background: var(--white);
+    display: flex; flex-direction: column;
+    padding: 0 32px 48px;
+    overflow-y: auto;
+  }
+  .mob-menu-hidden { display: none !important; }
+  .mob-menu-close {
+    align-self: flex-end; margin-top: 20px;
+    background: none; border: none; font-size: 22px; color: #555;
+    cursor: pointer; padding: 8px; line-height: 1;
+  }
+  .mob-menu-links {
+    display: flex; flex-direction: column;
+    gap: 0; margin-top: 24px; flex: 1; justify-content: center;
+  }
+  .mob-menu-links a {
+    font-family: var(--font-serif); font-size: 28px; font-weight: 400;
+    color: var(--black); text-decoration: none; padding: 14px 0;
+    border-bottom: 1px solid var(--light-gray); letter-spacing: 0.02em;
+    opacity: 0.9;
+  }
+  .mob-menu-links a:last-child { border-bottom: none; }
+  /* ── MOBILE UNIFIED FEED ── */
+  .mob-unified-feed { display: none; }
+  @media (max-width: 768px) {
+    .mob-unified-feed {
+      display: block; margin-top: 1px;
+    }
+    .mob-feed-item {
+      cursor: pointer; background: var(--white);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .mob-feed-item img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+    }
+    .mob-feed-caption {
+      padding: 14px 16px 18px;
+    }
+    .mob-feed-title {
+      font-family: var(--font-serif); font-size: 17px;
+      color: var(--black); display: block; margin-bottom: 4px;
+    }
+    .mob-feed-meta {
+      font-size: 10px; letter-spacing: 0.07em; color: #999;
+      text-transform: uppercase;
+    }
+    .mob-feed-badge {
+      display: inline-block; font-size: 8px; letter-spacing: 0.1em;
+      color: #b99; text-transform: uppercase; margin-top: 4px;
+    }
+    /* Triptych smaller */
+    .uvod-mobile-triptych { height: 38vw !important; }
+    /* Section label between paintings/prints */
+    .mob-feed-section-label {
+      padding: 14px 16px 10px;
+      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #aaa; background: var(--light-gray);
+    }
+  }
+
+  /* ── MOBILE DETAIL OVERLAY ── */
+  .mobile-detail-hidden { display: none !important; }
+  #mobile-detail {
+    position: fixed; inset: 0; z-index: 10000;
+    background: var(--white);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .mob-detail-close {
+    position: absolute; top: 16px; right: 16px; z-index: 10;
+    width: 40px; height: 40px; border: none; background: rgba(245,243,239,0.9);
+    font-size: 18px; color: #555; cursor: pointer; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mob-detail-img-wrap {
+    flex: 0 0 auto; aspect-ratio: 1/1; width: 100%; background: #f0ede8;
+    position: relative; overflow: hidden;
+  }
+  .mob-carousel {
+    display: flex; height: 100%;
+    transition: transform 0.3s ease;
+    will-change: transform;
+  }
+  .mob-carousel-slide {
+    flex: 0 0 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mob-carousel-slide img { width: 100%; height: 100%; object-fit: contain; }
+  .mob-carousel-dots {
+    position: absolute; bottom: 8px; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 6px; pointer-events: none;
+  }
+  .mob-carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(0,0,0,0.25); transition: background 0.2s;
+  }
+  .mob-carousel-dot.active { background: rgba(0,0,0,0.7); }
+  .mob-carousel-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 36px; height: 36px; border: none; border-radius: 50%;
+    background: rgba(255,255,255,0.85); color: #333;
+    font-size: 22px; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2; padding: 0;
+  }
+  .mob-carousel-prev { left: 10px; }
+  .mob-carousel-next { right: 10px; }
+  .mob-carousel-arrow[hidden] { display: none; }
+  .mob-detail-info {
+    flex: 1; overflow-y: auto; padding: 20px 20px 32px;
+    border-top: 1px solid var(--light-gray);
+  }
+  .mob-detail-collection {
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #999; margin-bottom: 8px;
+  }
+  .mob-detail-title {
+    font-family: var(--font-serif); font-size: 22px; font-weight: 400;
+    color: var(--black); margin-bottom: 16px; line-height: 1.2;
+  }
+  .mob-detail-meta {
+    font-size: 11px; color: #666; line-height: 1.9; margin-bottom: 8px;
+  }
+  .mob-detail-status {
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #b99; margin-bottom: 20px;
+  }
+  .mob-detail-btns {
+    flex-shrink: 0;
+    padding: 14px 20px 20px;
+    border-top: 1px solid var(--light-gray);
+    background: var(--white);
+  }
+  .mob-detail-btn-primary {
+    display: block; width: 100%;
+    padding: 16px; background: var(--black); color: var(--white);
+    border: none; font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; cursor: pointer;
+    -webkit-appearance: none;
+    touch-action: manipulation;
+  }
+  .mob-detail-story {
+    font-size: 14px; line-height: 1.8; color: #555;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--light-gray);
+  }
+  .mob-detail-story:empty { display: none; }
+  .mob-detail-story p { margin-bottom: 1em; }
+  .mob-detail-btn-secondary {
+    padding: 13px; background: none; color: var(--black);
+    border: 1px solid #bbb; font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; cursor: pointer;
+  }
+
+  /* ── COOKIE BAR ── */
+  #cookie-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9999;
+    background: rgba(237,233,226,0.98);
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 18px 40px;
+    backdrop-filter: blur(8px);
+    border-top: 1px solid #d6d0c8;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  #cookie-bar.visible { transform: translateY(0); }
+  .cookie-text { font-size: 10px; line-height: 1.6; letter-spacing: 0.02em; max-width: 680px; color: #555; }
+  .cookie-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .cookie-btn {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 9px 22px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .cookie-accept { background: var(--black); border-color: var(--black); color: var(--white); }
+  .cookie-accept:hover { background: #555; border-color: #555; }
+  .cookie-decline:hover { background: rgba(0,0,0,0.06); color: var(--black); }
+  @media (max-width: 600px) {
+    #cookie-bar { flex-direction: column; align-items: flex-start; padding: 20px 24px; }
+  }
+
+  /* ── TISKY PHOTO STRIP ── */
+  .tisky-photo-strip {
+    grid-row: 2;
+    grid-column: 1;
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #f0ede8;
+    border-top: 1px solid #e0dbd3;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-shrink: 0;
+  }
+  .tisky-photo-strip:empty { display: none; }
+  .tisky-photo-strip img {
+    height: 72px;
+    width: auto;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.2s, outline 0.2s;
+    flex-shrink: 0;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .tisky-photo-strip img:hover { opacity: 0.85; }
+  .tisky-photo-strip img.active { opacity: 1; outline-color: #8a7e6e; }
+
+  /* ── COMMENT BUTTON ── */
+  .gal-comment-btn {
+    border-color: #b0a898;
+    color: #888;
+  }
+  .gal-comment-btn:hover { background: #b0a898; border-color: #b0a898; color: var(--white); }
+
+  /* ── COMMENT MODAL ── */
+  .cm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(232,228,222,0.94);
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .cm-overlay.open { display: flex; }
+  .cm-box {
+    background: var(--white);
+    border: 1px solid #d6d0c8;
+    display: flex;
+    max-width: 820px;
+    width: calc(100% - 48px);
+    position: relative;
+    overflow: hidden;
+  }
+  .cm-img-panel { flex: 0 0 320px; display: flex; align-items: stretch; }
+  .cm-img-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cm-form-panel { flex: 1; padding: 48px 44px; min-width: 0; }
+  .cm-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none;
+    font-size: 20px; color: #aaa; cursor: pointer; line-height: 1;
+  }
+  .cm-close:hover { color: var(--black); }
+  .cm-painting-ref {
+    font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase;
+    color: #999; margin-bottom: 28px;
+  }
+  .cm-box h3 {
+    font-family: var(--font-serif); font-size: 20px; font-weight: 400;
+    color: var(--black); margin-bottom: 12px;
+  }
+  .cm-box p {
+    font-size: 11px; line-height: 1.8; color: #666; margin-bottom: 20px;
+  }
+  .cm-field {
+    width: 100%; padding: 11px 14px; font-size: 11px;
+    border: 1px solid #d0cbc3; background: var(--white);
+    color: var(--black); font-family: var(--font-sans);
+    margin-bottom: 10px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .cm-field:focus { border-color: var(--black); }
+  textarea.cm-field { resize: vertical; min-height: 100px; }
+  .cm-submit {
+    width: 100%; padding: 12px; background: var(--black); color: var(--white);
+    border: none; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    cursor: pointer; margin-top: 6px; font-family: var(--font-sans);
+    transition: opacity 0.2s;
+  }
+  .cm-submit:hover { opacity: 0.75; }
+  .cm-success {
+    display: none; background: #eaf3ec; border: 1px solid #b8d9bf;
+    color: #3d7a52; font-size: 11px; padding: 12px 16px; margin-top: 14px;
+  }
+  @media (max-width: 768px) {
+    .cm-img-panel { display: none !important; }
+    .cm-form-panel { padding: 36px 24px; }
+  }
+
+  /* ── LÍBÍ SE VÁM ── */
+  #libi { overflow-y: auto; }
+  .libi-inner { padding: 80px; max-width: 860px; }
+  .libi-title {
+    font-family: var(--font-serif);
+    font-size: 28px; font-weight: 400;
+    color: var(--black); margin-bottom: 28px; line-height: 1.2;
+  }
+  .libi-lead {
+    font-size: 14px; line-height: 1.9; color: #555; margin-bottom: 56px;
+  }
+  .libi-process-label {
+    font-family: var(--font-serif); font-size: 18px; font-weight: 400;
+    color: var(--black); margin-bottom: 24px;
+  }
+  .libi-process { margin-bottom: 0; }
+  @media (max-width: 768px) {
+    .libi-inner { padding: 40px 20px; }
+  }
+
+  /* ── BODY TEXT +20% ── */
+  body { font-size: 13px; }
+  .uvod-text,
+  .about-text p, .about-story p,
+  .rozhovor-a,
+  .tisky-info-desc, .tisky-section-text, .tisky-intro-desc,
+  .pi-box p,
+  .contact-inner p, .contact-text,
+  .prozitky-card-text,
+  .vystavy-text,
+  .klub-text,
+  .lb-story { font-size: 14px; }
+  .rozhovor-q { font-size: 18px; }
+  .gal-info-technique, .gal-info-size { font-size: 12px; }
+  .tisky-info-meta { font-size: 11px; }
+  .pi-field { font-size: 13px; }
+
+  /* ── MOBILE READABILITY ── */
+  @media (max-width: 768px) {
+    /* O autorce */
+    .about-text h2, .about-text h3 { font-size: 22px; color: #222; }
+    .about-text p, .about-story p { font-size: 15px; line-height: 1.85; color: #333; }
+    #about { padding: 32px 20px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+
+    /* Výstavy */
+    #vystavy { padding: 32px 20px; }
+    .vystavy-rok { font-size: 13px; color: #555; }
+    .vystavy-popis { font-size: 15px; color: #222; line-height: 1.65; }
+    .vystavy-list li { gap: 20px; padding: 16px 0; }
+    .vystavy-photos { columns: 2; }
+
+    /* Blog */
+    .inspirace-inner { padding: 32px 20px; }
+    .inspirace-quote { font-size: 19px; color: #4a7a3a; line-height: 1.5; }
+    .inspirace-intro { font-size: 15px; color: #333; line-height: 1.8; }
+    .inspirace-title { font-size: 22px; margin-bottom: 24px; }
+    .prozitky-grid { grid-template-columns: 1fr; }
+    .prozitky-card-title { font-size: 16px; }
+    .prozitky-card-lead { font-size: 12px; }
+
+    /* Klub */
+    #klub { padding: 32px 20px; }
+    .klub-inner { flex-direction: column; gap: 32px; }
+    .klub-left h2 { font-size: 22px; }
+    .klub-tagline { font-size: 15px; color: #333; line-height: 1.8; }
+    .klub-benefits li { font-size: 14px; color: #444; }
+    .klub-form-wrap { padding: 24px 20px; }
+    .klub-form-wrap h3 { font-size: 18px; }
+
+    /* Rozhovor */
+    #rozhovor { padding: 32px 20px; }
+    .rozhovor-q { font-size: 17px; color: #222; line-height: 1.4; margin-bottom: 12px; }
+    .rozhovor-a { font-size: 15px; color: #444; line-height: 1.85; margin-bottom: 32px; }
+
+    /* Kontakt */
+    #contact { padding: 32px 20px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 32px; }
+    #contact h2 { font-size: 22px; }
+    .contact-intro { font-size: 15px; color: #444; line-height: 1.8; margin-bottom: 28px; }
+    .contact-process { grid-template-columns: 1fr; }
+    .contact-step { border-right: none; border-bottom: 1px solid #d6d0c8; padding: 20px 0; }
+    .contact-step:last-child { padding-left: 0; border-bottom: none; }
+    .contact-step p { font-size: 14px; color: #555; }
+    .form-group label { font-size: 10px; color: #666; }
+    .contact-form input, .contact-form textarea { font-size: 15px; }
+    .contact-manager-name { font-size: 18px; }
+    .contact-manager a { font-size: 14px; }
+
+    /* Sekce nadpisy */
+    .section-title { font-size: 26px; color: #222; margin-bottom: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<!-- SIDE NAV -->
+<nav id="side-nav">
+  <a href="#" class="nav-logo-img" onclick="showSection('uvod'); return false;">
+    <img src="images/logo-skrivan.png" alt="Vladi Skrivan" class="nav-logo-img-el">
+  </a>
+  <a href="#" class="nav-mobile-logo" onclick="showSection('uvod'); return false;">VS</a>
+  <button class="mob-hamburger" id="mob-hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <a href="#" data-section="uvod" data-cs="Úvod" data-en="Introduction" data-it="Introduzione">Úvod</a>
+  <a href="#" data-section="gallery" data-cs="Obrazy" data-en="Paintings" data-it="Dipinti">Obrazy</a>
+  <div id="nav-collections" class="nav-sub-section"></div>
+  <a href="#" data-section="tisky" data-cs="Umělecké tisky" data-en="Prints" data-it="Stampe">Umělecké tisky</a>
+  <div id="nav-tisky-sub" class="nav-sub-section">
+    <button class="nav-sub-item" onclick="showTiskyTab('tvorba')" data-cs="Tvorba" data-en="Works" data-it="Opere">Tvorba</button>
+    <button class="nav-sub-item" onclick="showTiskyTab('kvalita')" data-cs="Kvalita provedení" data-en="Quality" data-it="Qualità">Kvalita provedení</button>
+  </div>
+  <a href="#" data-section="about" data-cs="O umělkyni" data-en="About" data-it="L'Artista">O umělkyni</a>
+  <a href="#" data-section="vystavy" data-cs="Výstavy" data-en="Exhibitions" data-it="Mostre">Výstavy</a>
+  <a href="#" data-section="inspirace" data-cs="Blog Pozdní sběr" data-en="Blog Late Harvest" data-it="Blog Raccolta Tardiva">Blog Pozdní sběr</a>
+  <a href="#" data-section="klub" data-cs="Klub" data-en="Club" data-it="Club">Klub</a>
+  <a href="#" data-section="rozhovor" data-cs="Rozhovor" data-en="Interview" data-it="Intervista">Rozhovor</a>
+  <a href="#" data-section="libi" data-cs="Líbí se vám?" data-en="Like it?" data-it="Vi piace?">Líbí se vám?</a>
+  <a href="#" data-section="contact" data-cs="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
+  <span class="nav-copyright">© 2026 Vladi Skrivan</span>
+  <div id="lang-switcher">
+    <button class="lang-btn" onclick="applyLang('cs')">CS</button>
+    <button class="lang-btn" onclick="applyLang('en')">EN</button>
+    <button class="lang-btn" onclick="applyLang('it')">IT</button>
+  </div>
+</nav>
+
+<!-- MOBILE FULLSCREEN MENU -->
+<div id="mob-menu-overlay" class="mob-menu-overlay mob-menu-hidden">
+  <button class="mob-menu-close" onclick="toggleMobileMenu()">✕</button>
+  <nav class="mob-menu-links">
+    <a href="#uvod" onclick="mobilNavGo('uvod'); return false;">Úvod</a>
+    <a href="#gallery" onclick="mobilNavGo('gallery'); return false;">Obrazy</a>
+    <a href="#tisky" onclick="mobilNavGo('tisky'); return false;">Umělecké tisky</a>
+    <a href="#about" onclick="mobilNavGo('about'); return false;">O umělkyni</a>
+    <a href="#vystavy" onclick="mobilNavGo('vystavy'); return false;">Výstavy</a>
+    <a href="#inspirace" onclick="mobilNavGo('inspirace'); return false;">Blog Pozdní sběr</a>
+    <a href="#klub" onclick="mobilNavGo('klub'); return false;">Klub</a>
+    <a href="#rozhovor" onclick="mobilNavGo('rozhovor'); return false;">Rozhovor</a>
+    <a href="#contact" onclick="mobilNavGo('contact'); return false;">Kontakt</a>
+  </nav>
+</div>
+
+<div class="page-content">
+
+<!-- ÚVOD -->
+<section id="uvod">
+  <img src="images/ENERGY.jpeg" alt="Vladimíra Victoria Skrivan" class="uvod-hero-img" loading="lazy">
+  <div id="mob-unified-feed" class="mob-unified-feed"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-topbar">
+    <span class="gal-edice-label">Kolekce</span>
+    <div class="filter-tabs" id="filter-tabs"></div>
+  </div>
+  <div id="mobile-gallery-grid" class="mobile-gallery-grid"></div>
+  <div class="gal-viewer">
+    <div class="gal-img-wrap">
+      <div class="gal-artist-name">Vladimíra Victoria Skřivan</div>
+      <div class="gal-view-toggle hidden" id="gal-view-toggle">
+        <button class="gal-view-btn active" id="gal-btn-room" onclick="setGalView('room')">Náhled v místnosti</button>
+        <button class="gal-view-btn" id="gal-btn-detail" onclick="setGalView('detail')">Detail díla</button>
+      </div>
+      <button class="gal-nav-arrow gal-nav-prev" id="gal-nav-prev" onclick="galNavPrev()">&#8249;</button>
+      <div class="gal-active-img-wrap">
+        <img id="gal-active-img" src="" alt="" class="gal-active-img">
+      </div>
+      <button class="gal-nav-arrow gal-nav-next" id="gal-nav-next" onclick="galNavNext()">&#8250;</button>
+      <div class="gal-sold-overlay hidden" id="gal-sold-overlay">Prodáno</div>
+      <div class="gal-img-dots" id="gal-img-dots"></div>
+    </div>
+    <div class="gal-thumbstrip" id="gal-thumbstrip"></div>
+  </div>
+  <div class="gal-infobar" id="gal-infobar">
+    <span class="gal-info-title" id="gal-info-title"></span>
+    <div class="gal-infobar-sep"></div>
+    <span class="gal-info-collection" id="gal-info-collection"></span>
+    <div class="gal-infobar-sep"></div>
+    <span class="gal-info-technique" id="gal-info-technique"></span>
+    <div class="gal-infobar-sep"></div>
+    <span class="gal-info-size" id="gal-info-size"></span>
+    <div class="gal-infobar-btns" style="margin-left:auto">
+      <button class="gal-inquire-btn" id="gal-inquire-btn" onclick="openPriceInquiry()">Zajímá mě cena</button>
+      <button class="gal-inquire-btn" id="gal-author-btn" onclick="openGalAuthorModal()" style="display:none">Slová autora</button>
+    </div>
+  </div>
+  <!-- GAL AUTHOR MODAL -->
+  <div class="tisky-quality-modal hidden" id="gal-author-modal" onclick="if(event.target===this)this.classList.add('hidden')">
+    <div class="tisky-quality-modal-inner">
+      <button class="tisky-quality-modal-close" onclick="document.getElementById('gal-author-modal').classList.add('hidden')">×</button>
+      <h3 class="tisky-quality-modal-title" id="gal-author-modal-title"></h3>
+      <div class="tisky-quality-modal-text" id="gal-author-modal-text"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TISKY -->
+<section id="tisky">
+  <!-- TAB: TVORBA -->
+  <div id="tisky-tab-tvorba" class="tisky-tab">
+
+  <!-- QUALITY MODAL (kept for legacy, hidden) -->
+  <div class="tisky-quality-modal hidden" id="tisky-quality-modal" onclick="if(event.target===this)this.classList.add('hidden')">
+    <div class="tisky-quality-modal-inner">
+      <button class="tisky-quality-modal-close" onclick="document.getElementById('tisky-quality-modal').classList.add('hidden')">×</button>
+      <h3 class="tisky-quality-modal-title" data-cs="Kvalita provedení" data-en="Quality of execution" data-it="Qualità di esecuzione">Kvalita provedení</h3>
+
+      <h4 class="tisky-quality-modal-section-title" data-cs="Originál" data-en="Original" data-it="Originale">Originál</h4>
+      <p class="tisky-quality-modal-text" data-cs="Vladimíra Victoria Skřivan vytváří krajinářská díla technikou olejového pastelu na papíře — médiem, které spojuje sytost barvy oleje s jemností a bezprostředností kresby." data-en="Vladimíra Victoria Skřivan creates landscape works using oil pastel on paper — a medium that combines the richness of oil colour with the delicacy and immediacy of drawing." data-it="Vladimíra Victoria Skřivan crea opere paesaggistiche con la tecnica del pastello a olio su carta — un mezzo che unisce la ricchezza del colore ad olio alla delicatezza e all'immediatezza del disegno.">Vladimíra Victoria Skřivan vytváří krajinářská díla technikou olejového pastelu na papíře — médiem, které spojuje sytost barvy oleje s jemností a bezprostředností kresby.</p>
+      <p class="tisky-quality-modal-text" data-cs="Tento originál je paspartován a zarámován, připraven k okamžitému zavěšení." data-en="This original is matted and framed, ready to hang immediately." data-it="Questo originale è passepartoutato e incorniciato, pronto per essere appeso subito.">Tento originál je paspartován a zarámován, připraven k okamžitému zavěšení.</p>
+      <div class="tisky-quality-modal-params">
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Technika" data-en="Technique" data-it="Tecnica">Technika</span><span data-cs="olejový pastel na papíře" data-en="oil pastel on paper" data-it="pastello a olio su carta">olejový pastel na papíře</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Formát" data-en="Format" data-it="Formato">Formát</span><span>A3</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Úprava" data-en="Finish" data-it="Finitura">Úprava</span><span data-cs="paspartováno a zarámováno" data-en="matted and framed" data-it="passepartoutato e incorniciato">paspartováno a zarámováno</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Cena" data-en="Price" data-it="Prezzo">Cena</span><span>15 000 Kč</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Status" data-en="Status" data-it="Stato">Status</span><span data-cs="originál, jediný kus" data-en="original, unique piece" data-it="originale, pezzo unico">originál, jediný kus</span></div>
+      </div>
+
+      <h4 class="tisky-quality-modal-section-title" data-cs="Umělecké tisky" data-en="Fine art prints" data-it="Stampe artistiche">Umělecké tisky</h4>
+      <p class="tisky-quality-modal-text" data-cs="Limitovaná edice vybraných děl Vladimíry Victorie Skřivan, vytištěná na prémiovém papíře Gallery FineArt Smooth 240 g pro maximální věrnost barev a hloubku detailu originálu." data-en="A limited edition of selected works by Vladimíra Victoria Skřivan, printed on premium Gallery FineArt Smooth 240 g paper for maximum colour fidelity and depth of detail." data-it="Un'edizione limitata di opere selezionate di Vladimíra Victoria Skřivan, stampata su carta premium Gallery FineArt Smooth 240 g per la massima fedeltà cromatica e profondità di dettaglio.">Limitovaná edice vybraných děl Vladimíry Victorie Skřivan, vytištěná na prémiovém papíře Gallery FineArt Smooth 240 g pro maximální věrnost barev a hloubku detailu originálu.</p>
+      <p class="tisky-quality-modal-text" data-cs="Tato edice je dostupná exkluzivně pro český trh v limitovaném počtu pouhých 30 kusů z každého motivu — ručně signovaných a číslovaných autorkou. Jde o odlišnou, exkluzivnější nabídku než open edition tisky dostupné mezinárodně přes Saatchi Art, a je určena sběratelům, kteří hledají jedinečný, číslovaný kus s přímou vazbou na autorku." data-en="This edition is available exclusively for the Czech market in a limited run of just 30 copies per motif — hand-signed and numbered by the artist. It is a more exclusive offer than the open edition prints available internationally through Saatchi Art, aimed at collectors seeking a unique, numbered piece with a direct connection to the artist." data-it="Questa edizione è disponibile esclusivamente per il mercato ceco in un'edizione limitata di soli 30 esemplari per motivo — firmati e numerati a mano dall'autrice. È un'offerta più esclusiva rispetto alle stampe open edition disponibili a livello internazionale tramite Saatchi Art, rivolta a collezionisti che cercano un pezzo unico e numerato con un legame diretto con l'artista.">Tato edice je dostupná exkluzivně pro český trh v limitovaném počtu pouhých 30 kusů z každého motivu — ručně signovaných a číslovaných autorkou. Jde o odlišnou, exkluzivnější nabídku než open edition tisky dostupné mezinárodně přes Saatchi Art, a je určena sběratelům, kteří hledají jedinečný, číslovaný kus s přímou vazbou na autorku.</p>
+      <div class="tisky-quality-modal-params">
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Papír" data-en="Paper" data-it="Carta">Papír</span><span>Gallery FineArt Smooth, 240 g</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Formát" data-en="Format" data-it="Formato">Formát</span><span>A3</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Edice" data-en="Edition" data-it="Edizione">Edice</span><span data-cs="limitovaná, 30 kusů, exkluzivně pro ČR" data-en="limited, 30 copies, exclusive for CZ" data-it="limitata, 30 esemplari, esclusiva per CZ">limitovaná, 30 kusů, exkluzivně pro ČR</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Podpis" data-en="Signature" data-it="Firma">Podpis</span><span data-cs="Každý kus ručně signován a číslován autorkou" data-en="Each piece hand-signed and numbered by the artist" data-it="Ogni pezzo firmato e numerato a mano dall'autrice">Každý kus ručně signován a číslován autorkou</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Cena" data-en="Price" data-it="Prezzo">Cena</span><span>1 990 Kč</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-tisky-grid" class="mobile-gallery-grid"></div>
+  <div class="gal-viewer">
+    <div class="gal-img-wrap">
+      <div class="gal-artist-name">Vladimíra Victoria Skřivan</div>
+      <button class="gal-nav-arrow gal-nav-prev" onclick="tiskyNavPrev()">&#8249;</button>
+      <div class="gal-active-img-wrap">
+        <img id="tisky-active-img" src="" alt="" class="gal-active-img">
+      </div>
+      <button class="gal-nav-arrow gal-nav-next" onclick="tiskyNavNext()">&#8250;</button>
+      <div class="gal-img-dots" id="tisky-img-dots"></div>
+    </div>
+    <div class="tisky-photo-strip" id="tisky-photo-strip" style="display:none"></div>
+    <div class="gal-thumbstrip" id="tisky-thumbstrip"></div>
+    <div class="gal-infobar" id="tisky-infobar">
+      <span class="gal-info-title" id="tisky-info-title"></span>
+      <div class="gal-infobar-sep"></div>
+      <span class="gal-info-collection" id="tisky-info-collection"></span>
+      <div class="gal-infobar-sep"></div>
+      <span class="gal-info-technique" id="tisky-info-technique"></span>
+      <div class="gal-infobar-sep"></div>
+      <span class="gal-info-size" id="tisky-info-size"></span>
+      <div class="gal-infobar-btns" style="margin-left:auto">
+        <button class="gal-inquire-btn" onclick="openPriceInquiry('tisky')">Zajímá mě cena</button>
+        <button class="gal-inquire-btn" id="tisky-author-btn" onclick="openTiskyAuthorModal()" style="display:none">Slová autora</button>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /tisky-tab-tvorba -->
+
+  <!-- TAB: KVALITA -->
+  <div id="tisky-tab-kvalita" class="tisky-tab" style="display:none">
+    <div class="tisky-kvalita-page">
+      <h2 class="tisky-kvalita-title">Kvalita provedení</h2>
+      <h4 class="tisky-quality-modal-section-title" data-cs="Originál" data-en="Original" data-it="Originale">Originál</h4>
+      <p class="tisky-quality-modal-text" data-cs="Vladimíra Victoria Skřivan vytváří krajinářská díla technikou olejového pastelu na papíře — médiem, které spojuje sytost barvy oleje s jemností a bezprostředností kresby." data-en="Vladimíra Victoria Skřivan creates landscape works using oil pastel on paper — a medium that combines the richness of oil colour with the delicacy and immediacy of drawing." data-it="Vladimíra Victoria Skřivan crea opere paesaggistiche con la tecnica del pastello a olio su carta — un mezzo che unisce la ricchezza del colore ad olio alla delicatezza e all'immediatezza del disegno.">Vladimíra Victoria Skřivan vytváří krajinářská díla technikou olejového pastelu na papíře — médiem, které spojuje sytost barvy oleje s jemností a bezprostředností kresby.</p>
+      <p class="tisky-quality-modal-text" data-cs="Tento originál je paspartován a zarámován, připraven k okamžitému zavěšení." data-en="This original is matted and framed, ready to hang immediately." data-it="Questo originale è passepartoutato e incorniciato, pronto per essere appeso subito.">Tento originál je paspartován a zarámován, připraven k okamžitému zavěšení.</p>
+      <div class="tisky-quality-modal-params">
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Technika" data-en="Technique" data-it="Tecnica">Technika</span><span data-cs="olejový pastel na papíře" data-en="oil pastel on paper" data-it="pastello a olio su carta">olejový pastel na papíře</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Formát" data-en="Format" data-it="Formato">Formát</span><span>A3</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Úprava" data-en="Finish" data-it="Finitura">Úprava</span><span data-cs="paspartováno a zarámováno" data-en="matted and framed" data-it="passepartoutato e incorniciato">paspartováno a zarámováno</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Cena" data-en="Price" data-it="Prezzo">Cena</span><span>15 000 Kč</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Status" data-en="Status" data-it="Stato">Status</span><span data-cs="originál, jediný kus" data-en="original, unique piece" data-it="originale, pezzo unico">originál, jediný kus</span></div>
+      </div>
+      <h4 class="tisky-quality-modal-section-title" data-cs="Umělecké tisky" data-en="Fine art prints" data-it="Stampe artistiche">Umělecké tisky</h4>
+      <p class="tisky-quality-modal-text" data-cs="Limitovaná edice vybraných děl Vladimíry Victorie Skřivan, vytištěná na prémiovém papíře Gallery FineArt Smooth 240 g pro maximální věrnost barev a hloubku detailu originálu." data-en="A limited edition of selected works by Vladimíra Victoria Skřivan, printed on premium Gallery FineArt Smooth 240 g paper for maximum colour fidelity and depth of detail." data-it="Un'edizione limitata di opere selezionate di Vladimíra Victoria Skřivan, stampata su carta premium Gallery FineArt Smooth 240 g per la massima fedeltà cromatica e profondità di dettaglio.">Limitovaná edice vybraných děl Vladimíry Victorie Skřivan, vytištěná na prémiovém papíře Gallery FineArt Smooth 240 g pro maximální věrnost barev a hloubku detailu originálu.</p>
+      <p class="tisky-quality-modal-text">Tato edice je dostupná exkluzivně pro český trh v limitovaném počtu pouhých 30 kusů z každého motivu — ručně signovaných a číslovaných autorkou.</p>
+      <div class="tisky-quality-modal-params">
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Papír" data-en="Paper" data-it="Carta">Papír</span><span>Gallery FineArt Smooth, 240 g</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Formát" data-en="Format" data-it="Formato">Formát</span><span>A3</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Edice" data-en="Edition" data-it="Edizione">Edice</span><span data-cs="limitovaná, 30 kusů, exkluzivně pro ČR" data-en="limited, 30 copies, exclusive for CZ" data-it="limitata, 30 esemplari, esclusiva per CZ">limitovaná, 30 kusů, exkluzivně pro ČR</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Podpis" data-en="Signature" data-it="Firma">Podpis</span><span data-cs="Každý kus ručně signován a číslován autorkou" data-en="Each piece hand-signed and numbered by the artist" data-it="Ogni pezzo firmato e numerato a mano dall'autrice">Každý kus ručně signován a číslován autorkou</span></div>
+        <div class="tisky-quality-param"><span class="tisky-quality-param-label" data-cs="Cena" data-en="Price" data-it="Prezzo">Cena</span><span>1 990 Kč</span></div>
+      </div>
+    </div>
+  </div><!-- /tisky-tab-kvalita -->
+
+  <!-- AUTHOR MODAL -->
+  <div class="tisky-quality-modal hidden" id="tisky-author-modal" onclick="if(event.target===this)this.classList.add('hidden')">
+    <div class="tisky-quality-modal-inner">
+      <button class="tisky-quality-modal-close" onclick="document.getElementById('tisky-author-modal').classList.add('hidden')">×</button>
+      <h3 class="tisky-quality-modal-title" id="tisky-author-modal-title"></h3>
+      <p class="tisky-quality-modal-text" id="tisky-author-modal-text"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 data-cs="O umělkyni" data-en="About the Artist" data-it="L'Artista">O umělkyni</h2>
+      <p class="about-tagline"><strong>Contemporary Artist | Light, Emotion and the Poetry of Color</strong></p>
+      <p data-cs="Vladimíra Victoria Skřivan je současná umělkyně, jejíž tvorba vychází z fascinace krásou, světlem a emocemi ukrytými v každodenních okamžicích. Silnou inspirací se pro ni stala Itálie – země, kde se barvy, architektura, krajina a životní energie přirozeně propojují v nezapomenutelnou atmosféru." data-en="Vladimíra Victoria Skřivan is a contemporary artist whose work springs from a fascination with beauty, light and the emotions hidden in everyday moments. Italy has become a powerful source of inspiration for her — a country where colours, architecture, landscape and life energy naturally interweave into an unforgettable atmosphere." data-it="Vladimíra Victoria Skřivan è un'artista contemporanea la cui opera nasce dalla fascinazione per la bellezza, la luce e le emozioni nascoste nei momenti quotidiani. L'Italia è diventata per lei una forte fonte d'ispirazione — un paese dove colori, architettura, paesaggio ed energia vitale si intrecciano naturalmente in un'atmosfera indimenticabile.">Vladimíra Victoria Skřivan je současná umělkyně, jejíž tvorba vychází z fascinace krásou, světlem a emocemi ukrytými v každodenních okamžicích. Silnou inspirací se pro ni stala Itálie – země, kde se barvy, architektura, krajina a životní energie přirozeně propojují v nezapomenutelnou atmosféru.</p>
+      <p data-cs="Ve svých obrazech nezachycuje pouze místa a okamžiky, ale především jejich pocit. Pracuje s barvou jako s nositelem emocí a vytváří díla, která mají schopnost proměnit prostor, přinést do něj harmonii a otevřít vlastní příběh každému, kdo se na ně dívá." data-en="In her paintings she captures not just places and moments, but above all their feeling. She works with colour as a carrier of emotion, creating works that have the power to transform a space, bring harmony into it and open a personal story to everyone who looks at them." data-it="Nei suoi dipinti non cattura solo luoghi e momenti, ma soprattutto la loro sensazione. Lavora con il colore come veicolo di emozioni, creando opere capaci di trasformare uno spazio, portarvi armonia e aprire una storia personale a chiunque le guardi.">Ve svých obrazech nezachycuje pouze místa a okamžiky, ale především jejich pocit. Pracuje s barvou jako s nositelem emocí a vytváří díla, která mají schopnost proměnit prostor, přinést do něj harmonii a otevřít vlastní příběh každému, kdo se na ně dívá.</p>
+      <p data-cs="Její umělecký jazyk spojuje současný výraz s hlubokým respektem k nadčasové kráse. V posledních letech se její tvorba výrazně rozvíjí směrem k abstraktní olejomalbě na velkých plátnech, kde nachází svobodu, sílu a prostor pro intenzivnější emocionální sdělení. Monumentální formáty až do dvou metrů umožňují jejímu rukopisu naplno vyniknout a vytvořit výrazný vizuální zážitek." data-en="Her artistic language combines contemporary expression with a deep respect for timeless beauty. In recent years her work has been developing significantly towards abstract oil painting on large canvases, where she finds freedom, power and space for more intense emotional expression. Monumental formats of up to two metres allow her brushwork to shine fully and create a striking visual experience." data-it="Il suo linguaggio artistico unisce l'espressione contemporanea con un profondo rispetto per la bellezza senza tempo. Negli ultimi anni la sua opera si sta sviluppando significativamente verso la pittura a olio astratta su grandi tele, dove trova libertà, forza e spazio per una comunicazione emotiva più intensa. I formati monumentali fino a due metri permettono al suo tratto di emergere pienamente e creare un'esperienza visiva di grande impatto.">Její umělecký jazyk spojuje současný výraz s hlubokým respektem k nadčasové kráse. V posledních letech se její tvorba výrazně rozvíjí směrem k abstraktní olejomalbě na velkých plátnech, kde nachází svobodu, sílu a prostor pro intenzivnější emocionální sdělení. Monumentální formáty až do dvou metrů umožňují jejímu rukopisu naplno vyniknout a vytvořit výrazný vizuální zážitek.</p>
+      <p data-cs="Každé její dílo vzniká jako originální výpověď – spojení vzpomínek, barev, světla a osobního prožitku. Je určeno pro ty, kteří hledají umění s charakterem, autenticitou a schopností stát se trvalou součástí jejich životního prostoru." data-en="Each of her works is created as an original statement — a union of memories, colours, light and personal experience. It is intended for those who seek art with character, authenticity and the capacity to become a permanent part of their living space." data-it="Ogni sua opera nasce come dichiarazione originale — una fusione di ricordi, colori, luce ed esperienza personale. È destinata a chi cerca arte con carattere, autenticità e la capacità di diventare parte permanente del proprio spazio vitale.">Každé její dílo vzniká jako originální výpověď – spojení vzpomínek, barev, světla a osobního prožitku. Je určeno pro ty, kteří hledají umění s charakterem, autenticitou a schopností stát se trvalou součástí jejich životního prostoru.</p>
+      <p data-cs="Vladimíra Victoria Skřivan je oficiálně zastoupena mezinárodní platformou Saatchi Art, prostřednictvím které se její tvorba představuje sběratelům po celém světě. Během prvních šesti měsíců spolupráce získaly její obrazy své nové majitele mezi sběrateli v USA." data-en="Vladimíra Victoria Skřivan is officially represented by the international platform Saatchi Art, through which her work is presented to collectors around the world. During the first six months of this collaboration her paintings found new owners among collectors in the USA." data-it="Vladimíra Victoria Skřivan è ufficialmente rappresentata dalla piattaforma internazionale Saatchi Art, attraverso la quale la sua opera viene presentata a collezionisti di tutto il mondo. Nei primi sei mesi di questa collaborazione i suoi dipinti hanno trovato nuovi proprietari tra i collezionisti negli USA.">Vladimíra Victoria Skřivan je oficiálně zastoupena mezinárodní platformou Saatchi Art, prostřednictvím které se její tvorba představuje sběratelům po celém světě. Během prvních šesti měsíců spolupráce získaly její obrazy své nové majitele mezi sběrateli v USA.</p>
+      <p data-cs="Její tvorba je pozváním k zastavení – k prožitku krásy, energie a emocí, které přesahují samotný obraz a vytvářejí osobní spojení mezi dílem a jeho majitelem." data-en="Her work is an invitation to pause — to experience beauty, energy and emotions that transcend the painting itself and create a personal connection between the work and its owner." data-it="La sua opera è un invito a fermarsi — a vivere bellezza, energia ed emozioni che trascendono il dipinto stesso e creano un legame personale tra l'opera e il suo proprietario.">Její tvorba je pozváním k zastavení – k prožitku krásy, energie a emocí, které přesahují samotný obraz a vytvářejí osobní spojení mezi dílem a jeho majitelem.</p>
+    </div>
+  </div>
+
+  <div class="about-story">
+    <h3 class="about-story-title" data-cs="Můj příběh" data-en="My Story" data-it="La mia storia">Můj příběh</h3>
+    <img src="images/vladi-portret.png" alt="Vladi Skrivan" class="about-story-portrait" loading="lazy">
+    <p data-cs="Jsem umělkyně, cestovatelka a zakladatelka umělecké školy Atelier VS v Pardubicích. Umění je mou vášní, povoláním i způsobem, jak se propojuji se světem kolem sebe." data-en="I am an artist, traveller and founder of the Atelier VS art school in Pardubice. Art is my passion, my vocation and the way I connect with the world around me." data-it="Sono un'artista, viaggiatrice e fondatrice della scuola d'arte Atelier VS a Pardubice. L'arte è la mia passione, la mia vocazione e il modo in cui mi connetto con il mondo.">Jsem umělkyně, cestovatelka a zakladatelka umělecké školy Atelier VS v Pardubicích. Umění je mou vášní, povoláním i způsobem, jak se propojuji se světem kolem sebe.</p>
+    <p data-cs="Mou tvorbu jste mohli vidět na předních uměleckých festivalech v České republice a ve vybraných galeriích. Některé mé obrazy nyní zdobí soukromé sbírky po celé České republice." data-en="My work has been shown at leading art festivals in the Czech Republic and in selected galleries. Some of my paintings now grace private collections throughout the country." data-it="La mia opera è stata esposta nei principali festival d'arte della Repubblica Ceca e in gallerie selezionate. Alcuni miei dipinti ornano oggi collezioni private in tutto il paese.">Mou tvorbu jste mohli vidět na předních uměleckých festivalech v České republice a ve vybraných galeriích. Některé mé obrazy nyní zdobí soukromé sbírky po celé České republice.</p>
+    <p data-cs="Ráda pracuji s širokým spektrem technik – olejem, akrylem, akvarelem i smíšenými médii. Inspirací mi je samotný život – jeho krása, hloubka, proměnlivost i emoce, které přináší. Maluji nejen příběhy světa kolem nás, ale i ty, které vznikají uvnitř nás." data-en="I enjoy working with a wide range of techniques – oil, acrylic, watercolour and mixed media. Life itself is my inspiration – its beauty, depth, changeability and emotions. I paint not only the stories of the world around us, but also those that arise within us." data-it="Lavoro volentieri con un'ampia gamma di tecniche – olio, acrilico, acquerello e tecniche miste. L'ispirazione è la vita stessa – la sua bellezza, profondità, mutevolezza e le emozioni che porta. Dipingo non solo le storie del mondo intorno a noi, ma anche quelle che nascono dentro di noi.">Ráda pracuji s širokým spektrem technik – olejem, akrylem, akvarelem i smíšenými médii. Inspirací mi je samotný život – jeho krása, hloubka, proměnlivost i emoce, které přináší. Maluji nejen příběhy světa kolem nás, ale i ty, které vznikají uvnitř nás.</p>
+    <p data-cs="Má díla jsou silná v tématech, harmonická v barvách a přinášejí pocit rovnováhy. Baví mě experimentovat a neustále objevovat – od přesné a detailní realistické malby až po nespoutanou svobodu abstrakce." data-en="My works are strong in theme, harmonious in colour and bring a sense of balance. I enjoy experimenting and constantly discovering – from precise, detailed realist painting to the unbounded freedom of abstraction." data-it="Le mie opere sono forti nei temi, armoniose nei colori e trasmettono un senso di equilibrio. Mi piace sperimentare e scoprire continuamente – dalla pittura realista precisa e dettagliata alla libertà senza confini dell'astrazione.">Má díla jsou silná v tématech, harmonická v barvách a přinášejí pocit rovnováhy. Baví mě experimentovat a neustále objevovat – od přesné a detailní realistické malby až po nespoutanou svobodu abstrakce.</p>
+    <p data-cs="Miluji cestování, poznávání nových míst a vnímání světa všemi smysly. Každý nový zážitek se stává součástí mé tvorby, otiskuje se do mých obrazů a dává jim příběh, který můžete číst pohledem." data-en="I love travelling, discovering new places and experiencing the world with all my senses. Every new experience becomes part of my work, imprinting itself in my paintings and giving them a story you can read with your eyes." data-it="Amo viaggiare, scoprire nuovi luoghi e percepire il mondo con tutti i sensi. Ogni nuova esperienza diventa parte della mia opera, si imprime nei miei dipinti e dà loro una storia che si può leggere con gli occhi.">Miluji cestování, poznávání nových míst a vnímání světa všemi smysly. Každý nový zážitek se stává součástí mé tvorby, otiskuje se do mých obrazů a dává jim příběh, který můžete číst pohledem.</p>
+    <p data-cs="Narodila jsem se s neomezenou schopností tvořit a inspirovat. Jsem umělcem na plný úvazek – ve svém ateliéru přetvářím své vize v nová díla a zároveň pomáhám ostatním objevovat a rozvíjet jejich talent. Věřím, že umění je nejen prostředkem vyjádření, ale také cestou k vnitřní svobodě." data-en="I was born with an unlimited capacity to create and inspire. I am a full-time artist – in my studio I transform my visions into new works while also helping others discover and develop their talent. I believe that art is not only a means of expression, but also a path to inner freedom." data-it="Sono nata con una capacità illimitata di creare e ispirare. Sono un'artista a tempo pieno – nel mio atelier trasformo le mie visioni in nuove opere e allo stesso tempo aiuto gli altri a scoprire e sviluppare il proprio talento. Credo che l'arte non sia solo un mezzo di espressione, ma anche un percorso verso la libertà interiore.">Narodila jsem se s neomezenou schopností tvořit a inspirovat. Jsem umělcem na plný úvazek – ve svém ateliéru přetvářím své vize v nová díla a zároveň pomáhám ostatním objevovat a rozvíjet jejich talent. Věřím, že umění je nejen prostředkem vyjádření, ale také cestou k vnitřní svobodě.</p>
+    <p data-cs="Těším se, až moje obrazy stanou součástí i vašeho příběhu." data-en="I look forward to my paintings becoming part of your story too." data-it="Non vedo l'ora che i miei dipinti diventino parte anche della vostra storia.">Těším se, až moje obrazy stanou součástí i vašeho příběhu.</p>
+  </div>
+</section>
+
+<!-- VÝSTAVY -->
+<section id="vystavy">
+  <div class="vystavy-inner">
+    <h2 class="section-title" data-cs="Výstavy" data-en="Exhibitions" data-it="Mostre">Výstavy</h2>
+    <ul class="vystavy-list">
+      <li><span class="vystavy-rok">2026</span><span class="vystavy-popis" data-cs="Obraz <em>Energy</em> z nové kolekce Abstract k vidění v prémiové pekárně a kavárně Zrno Zrnko" data-en="Painting <em>Energy</em> from the new Abstract collection on display at premium bakery and café Zrno Zrnko" data-it="Dipinto <em>Energy</em> della nuova collezione Abstract in mostra nella premiata panetteria e caffè Zrno Zrnko">Obraz <em>Energy</em> z nové kolekce Abstract k vidění v prémiové pekárně a kavárně Zrno Zrnko</span></li>
+      <li><span class="vystavy-rok">2025</span><span class="vystavy-popis" data-cs="Samostatná výstava <em>Dotek nekonečna</em>, Galerie Petrof" data-en="Solo exhibition <em>Dotek nekonečna</em>, Galerie Petrof" data-it="Mostra personale <em>Dotek nekonečna</em>, Galleria Petrof">Samostatná výstava <em>Dotek nekonečna</em>, Galerie Petrof</span></li>
+      <li><span class="vystavy-rok">2022</span><span class="vystavy-popis" data-cs="Samostatná výstava <em>Secret of Love</em>, Galerie Petrof" data-en="Solo exhibition <em>Secret of Love</em>, Galerie Petrof" data-it="Mostra personale <em>Secret of Love</em>, Galleria Petrof">Samostatná výstava <em>Secret of Love</em>, Galerie Petrof</span></li>
+      <li><span class="vystavy-rok">2021</span><span class="vystavy-popis" data-cs="Open Art Fest, Praha" data-en="Open Art Fest, Prague" data-it="Open Art Fest, Praga">Open Art Fest, Praha</span></li>
+      <li><span class="vystavy-rok">2019</span><span class="vystavy-popis" data-cs="Skupinová výstava obrazů <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praha" data-en="Group exhibition <em>Sametová revoluce</em>, Divadlo bez zábradlí, Prague" data-it="Mostra collettiva <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praga">Skupinová výstava obrazů <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praha</span></li>
+      <li><span class="vystavy-rok">2019</span><span class="vystavy-popis" data-cs="Open Art Fest, Praha" data-en="Open Art Fest, Prague" data-it="Open Art Fest, Praga">Open Art Fest, Praha</span></li>
+      <li><span class="vystavy-rok">2018</span><span class="vystavy-popis" data-cs="Skupinová výstava obrazů <em>Diversní (Ne)realita</em>, Galerie Zátiší Praha" data-en="Group exhibition <em>Diversní (Ne)realita</em>, Galerie Zátiší, Prague" data-it="Mostra collettiva <em>Diversní (Ne)realita</em>, Galleria Zátiší, Praga">Skupinová výstava obrazů <em>Diversní (Ne)realita</em>, Galerie Zátiší Praha</span></li>
+      <li><span class="vystavy-rok">2018</span><span class="vystavy-popis" data-cs="Open Art Fest, Praha" data-en="Open Art Fest, Prague" data-it="Open Art Fest, Praga">Open Art Fest, Praha</span></li>
+    </ul>
+    <div class="vystavy-photos">
+      <img src="images/vystavy-D92A6478.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6488.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6487.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6486.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6485.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6484.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6483.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6482.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6481.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6480.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6479.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6477.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6476.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6474.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6473.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6472.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6471.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6470.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6469.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6468.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6467.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/vystavy-D92A6466.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_3197.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_3213.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_3537.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_3538.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_5182.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_5205.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+      <img src="images/IMG_5216.jpeg" alt="Výstava Vladi Skrivan" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- PROŽITKY -->
+<section id="inspirace">
+  <div class="inspirace-inner">
+    <div id="inspirace-intro-block">
+    <h2 class="inspirace-title" data-cs="Blog Pozdní sběr" data-en="Blog Late Harvest" data-it="Blog Raccolta Tardiva">Blog Pozdní sběr</h2>
+
+    <blockquote class="inspirace-quote" data-cs="Blog pro ženy, které zrají jako víno – cestují, malují, vychutnávají si život." data-en="A blog for women who mature like wine – they travel, paint and savour life." data-it="Un blog per le donne che maturano come il vino – viaggiano, dipingono e assaporano la vita.">Blog pro ženy, které zrají jako víno – cestují, malují, vychutnávají si život.</blockquote>
+
+    <p class="inspirace-intro lang-cs">Tento blog jsem založila pro všechny ženy, které mají chuť žít naplno – i po padesátce.<br><br>
+Možná už máme dospělé děti, více času pro sebe a konečně prostor dělat to, co nás opravdu těší. Pro mě je to cestování, malování a objevování chutí – na talíři i v životě.<br><br>
+Pozdní sběr není o stárnutí. Je o zralosti, která přináší svobodu, nadhled a radost z malých i velkých dobrodružství. Najdeš tu inspiraci na cesty, obrazy z mých cest, recepty, zážitky i tipy, jak si vychutnat každý den – s lehkostí, barvou a chutí.<br><br>
+Zatoužila jsem vytvořit místo pro ženy, které mají chuť žít naplno i po padesátce. Místo pro nás, které máme konečně víc času na sebe – na cestování, tvoření, ochutnávání a poznávání nových věcí.<br><br>
+Blog Pozdní sběr vznikl z radosti z volnosti. Cestuji ráda, maluji, zaznamenávám své zážitky a dojmy na plátno, a zároveň si vychutnávám chutě i atmosféru nových míst. A právě o to se tu chci s vámi podělit – o radost z objevování, tvoření a života bez zbytečného spěchu.<br><br>
+Pozdní sběr je pro všechny ženy, které se chtějí inspirovat, zpomalit, otevřít se novým zážitkům – a neztratit chuť být samy sebou. Těším se na společnou cestu!</p>
+<p class="inspirace-intro lang-en" style="display:none">I founded this blog for all women who want to live life to the full — even after fifty.<br><br>
+Perhaps our children are grown, we have more time for ourselves and finally the space to do what truly brings us joy. For me that is travelling, painting and discovering new tastes — on the plate and in life.<br><br>
+Late Harvest is not about getting older. It is about the maturity that brings freedom, perspective and joy in small and great adventures alike. Here you will find travel inspiration, paintings from my journeys, recipes, experiences and tips for savouring every day — with lightness, colour and flavour.<br><br>
+I wanted to create a place for women who have the desire to live fully after fifty. A place for us who finally have more time for ourselves — for travelling, creating, tasting and discovering new things.<br><br>
+Late Harvest blog was born out of the joy of freedom. I love to travel, to paint, to record my experiences and impressions on canvas, and at the same time to savour the flavours and atmosphere of new places. And that is exactly what I want to share with you here — the joy of discovery, creation and a life without unnecessary haste.<br><br>
+Late Harvest is for all women who want to be inspired, slow down, open themselves to new experiences — and not lose their desire to be themselves. I look forward to the journey together!</p>
+<p class="inspirace-intro lang-it" style="display:none">Ho fondato questo blog per tutte le donne che hanno voglia di vivere appieno — anche dopo i cinquanta.<br><br>
+Forse i nostri figli sono già grandi, abbiamo più tempo per noi stesse e finalmente lo spazio per fare ciò che ci piace davvero. Per me sono i viaggi, la pittura e la scoperta di nuovi sapori — nel piatto e nella vita.<br><br>
+Vendemmia Tardiva non parla di invecchiare. Parla della maturità che porta libertà, prospettiva e gioia nelle piccole e grandi avventure. Qui troverete ispirazione per i viaggi, dipinti dai miei viaggi, ricette, esperienze e consigli per assaporare ogni giorno — con leggerezza, colore e gusto.<br><br>
+Ho voluto creare un posto per le donne che hanno voglia di vivere pienamente anche dopo i cinquanta. Un posto per noi che finalmente abbiamo più tempo per noi stesse — per viaggiare, creare, assaggiare e scoprire cose nuove.<br><br>
+Il blog Vendemmia Tardiva è nato dalla gioia della libertà. Amo viaggiare, dipingere, registrare le mie esperienze e impressioni sulla tela, e allo stesso tempo assaporare i sapori e l'atmosfera dei nuovi luoghi. Ed è esattamente questo che voglio condividere con voi qui — la gioia della scoperta, della creazione e di una vita senza fretta inutile.<br><br>
+Vendemmia Tardiva è per tutte le donne che vogliono ispirarsi, rallentare, aprirsi a nuove esperienze — e non perdere la voglia di essere sé stesse. Non vedo l'ora di fare questo viaggio insieme!</p>
+    </div>
+
+    <!-- KARTOVÁ MŘÍŽKA -->
+    <div class="prozitky-grid" id="prozitky-grid">
+
+      <div class="prozitky-card" onclick="openArticle(0)">
+        <img src="images/trapani-cover.jpg" alt="Trapani" class="prozitky-card-img" loading="lazy">
+        <div class="prozitky-card-overlay">
+          <div class="prozitky-card-tag">Cestování</div>
+          <h3 class="prozitky-card-title">Trapani na 4 dny – chuť Sicílie pro duši</h3>
+          <p class="prozitky-card-lead">"Občas stačí pár dní, abychom načerpaly novou sílu a znovu ucítily chuť života."</p>
+        </div>
+      </div>
+
+      <div class="prozitky-card" onclick="openArticle(1)">
+        <img src="images/inspi-pozdni-sber.jpg" alt="Pozdní sběr" class="prozitky-card-img" loading="lazy">
+        <div class="prozitky-card-overlay">
+          <div class="prozitky-card-tag">Blog</div>
+          <h3 class="prozitky-card-title">Pozdní sběr – blog o cestování, malování a radosti ze života</h3>
+          <p class="prozitky-card-lead">Blog pro ženy, které zrají jako víno – cestují, malují, vychutnávají si život.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DETAIL ČLÁNKU -->
+    <div class="prozitky-article-view" id="prozitky-article-view">
+      <button class="prozitky-back" onclick="closeArticle()">← Zpět na Blog</button>
+
+      <!-- Článek 0: Trapani -->
+      <div class="prozitky-article-content" id="prozitky-article-0">
+        <span class="inspi-tag">Cestování</span>
+        <h3 class="inspi-article-title">Trapani na 4 dny – chuť Sicílie pro duši</h3>
+        <p class="inspi-article-lead">"Občas stačí pár dní, abychom načerpaly novou sílu, zpomalily dech a znovu ucítily chuť života."</p>
+        <img src="images/trapani-cover.jpg" alt="Trapani" class="inspi-article-hero" loading="lazy">
+        <div class="inspi-article-body">
+          <p>Trapani, staré sicilské město na západním pobřeží, je přesně tím místem. Letecky z Česka je za pár hodin dosažitelné, ale pocit, že jste úplně jinde, přijde hned, jakmile se nadechnete mořského vzduchu.</p>
+          <h4>Centrum</h4>
+          <p>Historické centrum Trapani je jako starý šperk – trochu odřený, ale o to krásnější. Úzké ulice lemují domy s oprýskanými fasádami a barokní kostely, za rohem vás čeká malá kavárna s vůní silného espressa. Je to město stvořené k toulání bez cíle.</p>
+          <img src="images/trapani-centrum.jpg" alt="Centrum Trapani" class="inspi-article-img" loading="lazy">
+          <h4>Přístav</h4>
+          <p>Přístav je živý a plný barev. Lodě, rybáři, volání racků, modrá hladina třpytící se na slunci. Přesně tady jsem vytáhla skicák – a ztratila se na chvíli v barvách a tazích štětce. Malovat v přístavu je jako malovat samotné srdce Sicílie.</p>
+          <img src="images/trapani-pristav.jpg" alt="Přístav Trapani" class="inspi-article-img" loading="lazy">
+          <h4>Městský park</h4>
+          <p>Kousek dál je městský park – Villa Margherita. Když se po poledni rozvoní květiny a vzduch ztěžkne teplem, je ideální čas schovat se ve stínu prastarých stromů a jen tak být. Číst, snít, nebo jen vnímat čas, který tady běží jinak.</p>
+          <h4>Trh</h4>
+          <p>A ráno? To patří trhu. Čerstvé ryby, šťavnaté citrony, sýry vonící sluncem a neodolatelné cannoli. Ochutnávala jsem, vybírala, nechala se strhnout atmosférou. Žádné spěchání, žádné seznamy – jen radost z okamžiku.</p>
+          <img src="images/trapani-trh.jpg" alt="Trh v Trapani" class="inspi-article-img" loading="lazy">
+          <p class="inspi-article-closing">"Trapani za čtyři dny?" Pro mě čtyři dny radosti, barev a tichého znovunalezení sebe sama. Protože někdy stačí málo – moře, skicák, kousek sýra, sklenka vína a chuť žít naplno.</p>
+        </div>
+      </div>
+
+      <!-- Článek 1: Pozdní sběr -->
+      <div class="prozitky-article-content" id="prozitky-article-1">
+        <span class="inspi-tag">Blog</span>
+        <h3 class="inspi-article-title">Pozdní sběr – blog o cestování, malování a radosti ze života</h3>
+        <p class="inspi-article-lead">Blog pro ženy, které zrají jako víno – cestují, malují, vychutnávají si život.</p>
+        <img src="images/inspi-pozdni-sber.jpg" alt="Pozdní sběr" class="inspi-article-hero" loading="lazy">
+        <div class="inspi-article-body">
+          <h4>O mně</h4>
+          <p>Jmenuji se Vladi Skřivan, a tento blog jsem založila pro všechny ženy, které mají chuť žít naplno – i po padesátce.</p>
+          <p>Možná už máme dospělé děti, více času pro sebe a konečně prostor dělat to, co nás opravdu těší. Pro mě je to cestování, malování a objevování chutí – na talíři i v životě.</p>
+          <p>Pozdní sběr není o stárnutí. Je o zralosti, která přináší svobodu, nadhled a radost z malých i velkých dobrodružství. Najdeš tu inspiraci na cesty, obrazy z mých cest, recepty, zážitky i tipy, jak si vychutnat každý den – s lehkostí, barvou a chutí.</p>
+          <h4>Proč jsem založila Pozdní sběr</h4>
+          <p>Zatoužila jsem vytvořit místo pro ženy, které mají chuť žít naplno i po padesátce. Místo pro nás, které máme konečně víc času na sebe – na cestování, tvoření, ochutnávání a poznávání nových věcí.</p>
+          <p>Blog Pozdní sběr vznikl z radosti z volnosti. Cestuji ráda, maluji, zaznamenávám své zážitky a dojmy na plátno, a zároveň si vychutnávám chutě i atmosféru nových míst. A právě o to se tu chci s vámi podělit – o radost z objevování, tvoření a života bez zbytečného spěchu.</p>
+          <p class="inspi-article-closing">Pozdní sběr je pro všechny ženy, které se chtějí inspirovat, zpomalit, otevřít se novým zážitkům – a neztratit chuť být samy sebou. Těším se na společnou cestu!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KLUB -->
+<section id="klub">
+  <div class="klub-inner">
+  <div class="klub-left">
+    <h2 data-cs="Pro přátelé umění Vladi Skrivan" data-en="Friends of Vladi Skrivan Art" data-it="Amici dell'arte di Vladi Skrivan">Pro přátelé umění Vladi Skrivan</h2>
+    <p class="klub-tagline" data-cs="Přidejte se ke komunitě lidí, kteří mají rádi umění, barvy a příběhy za každým dílem." data-en="Join a community of people who love art, colour and the stories behind every work." data-it="Unisciti a una comunità di persone che amano l'arte, i colori e le storie dietro ogni opera.">Přidejte se ke komunitě lidí, kteří mají rádi umění, barvy a příběhy za každým dílem.</p>
+    <ul class="klub-benefits">
+      <li>
+        <span class="klub-bullet">—</span>
+        <span data-cs="Nová díla a jejich příběhy — jako první se dozvíte, co vzniká v ateliéru" data-en="New works and their stories — be the first to learn what is being created in the studio" data-it="Nuove opere e le loro storie — i primi a sapere cosa nasce in atelier">Nová díla a jejich příběhy — jako první se dozvíte, co vzniká v ateliéru</span>
+      </li>
+      <li>
+        <span class="klub-bullet">—</span>
+        <span data-cs="Pozvánky na vernisáže a výstavy" data-en="Invitations to vernissages and exhibitions" data-it="Inviti alle vernissage e alle mostre">Pozvánky na vernisáže a výstavy</span>
+      </li>
+      <li>
+        <span class="klub-bullet">—</span>
+        <span data-cs="Aktuální informace k tvorbě, inspiracím a cestám, které obrazy přinášejí" data-en="Current news about the creative process, inspirations and journeys that the paintings bring" data-it="Notizie aggiornate sul processo creativo, le ispirazioni e i viaggi che i dipinti portano">Aktuální informace k tvorbě, inspiracím a cestám, které obrazy přinášejí</span>
+      </li>
+    </ul>
+  <div class="klub-social">
+    <a href="https://www.facebook.com/vladka.skrivankova" target="_blank" rel="noopener" class="klub-social-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      <span>Facebook</span>
+    </a>
+    <a href="https://www.instagram.com/vladiskrivan/" target="_blank" rel="noopener" class="klub-social-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      <span>Instagram</span>
+    </a>
+  </div>
+  </div>
+  <div class="klub-right">
+    <div class="klub-form-wrap">
+      <div class="klub-form-title" data-cs="Zanechte svůj e-mail" data-en="Leave your e-mail" data-it="Lascia la tua e-mail">Zanechte svůj e-mail</div>
+      <div class="klub-form-sub" data-cs="Budeme vám psát jen tehdy, když je opravdu co říct." data-en="We will write to you only when there is truly something to say." data-it="Vi scriveremo solo quando c'è davvero qualcosa da dire.">Budeme vám psát jen tehdy, když je opravdu co říct.</div>
+      <form id="klub-form">
+        <input class="klub-field" type="text" id="klub-name" placeholder="Jméno" autocomplete="name">
+        <input class="klub-field" type="email" id="klub-email" placeholder="E-mail *" required autocomplete="email">
+        <button class="klub-submit" type="submit" data-cs="Přihlásit se do klubu" data-en="Join the club" data-it="Iscriviti al club">Přihlásit se do klubu</button>
+      </form>
+      <div class="klub-success" id="klub-success" data-cs="Děkujeme! Těšíme se, že vám budeme psát." data-en="Thank you! We look forward to writing to you." data-it="Grazie! Non vediamo l'ora di scrivervi.">Děkujeme! Těšíme se, že vám budeme psát.</div>
+      <div class="klub-note" data-cs="Váš e-mail bude použit výhradně pro zasílání informací o tvorbě Vladi Skrivan. Žádný spam. Odhlášení kdykoliv." data-en="Your e-mail will be used solely to send information about Vladi Skrivan's work. No spam. Unsubscribe anytime." data-it="La tua e-mail sarà utilizzata esclusivamente per inviare informazioni sull'opera di Vladi Skrivan. Niente spam. Disiscrizione in qualsiasi momento.">Váš e-mail bude použit výhradně pro zasílání informací o tvorbě Vladi Skrivan. Žádný spam. Odhlášení kdykoliv.</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- LÍBÍ SE VÁM -->
+<section id="libi">
+  <div class="libi-inner">
+    <h2 class="libi-title" data-cs="Každý tah štětce je originál" data-en="Every brushstroke is an original" data-it="Ogni pennellata è un originale">Každý tah štětce je originál</h2>
+    <p class="libi-lead">Originální obrazy, které promění váš interiér v místo plné inspirace. Vybírejte z široké škály stylů, velikostí a barevných tónů, které dokonale ladí s vaším prostorem i osobností.<br><br>Každý obraz je malován s láskou a důrazem na detail, díky čemuž získáte skutečný originál, který nikde jinde nenajdete.</p>
+
+    <p class="libi-process-label">Z ateliéru bezpečně k Vám domů</p>
+    <div class="contact-process libi-process">
+      <div class="contact-step">
+        <div class="contact-step-num">01</div>
+        <strong>Napište nebo zavolejte</strong>
+        <p>Sdělte nám, který obraz vás zaujal, a my se vám co nejdříve ozveme.</p>
+      </div>
+      <div class="contact-step">
+        <div class="contact-step-num">02</div>
+        <strong>Osobní setkání</strong>
+        <p>Ráda Vám obraz osobně ukáži — v galerii nebo v ateliéru.</p>
+      </div>
+      <div class="contact-step">
+        <div class="contact-step-num">03</div>
+        <strong>Bezpečné doručení</strong>
+        <p>Obraz Vám doručíme bezpečně dle nejvyšších standardů spolu s certifikátem originality a pravosti.</p>
+      </div>
+    </div>
+    <div class="contact-process-cta">
+      <a href="#" onclick="showSection('contact'); return false;">Kontaktujte nás</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<!-- ROZHOVOR -->
+<section id="rozhovor">
+  <div class="rozhovor-inner">
+    <h2 class="rozhovor-title" data-cs="Rozhovor" data-en="Interview" data-it="Intervista">Rozhovor</h2>
+    <span class="rozhovor-subtitle" data-cs="Vladi Skrivan o životě, umění a příbězích za obrazy" data-en="Vladi Skrivan on life, art and the stories behind the paintings" data-it="Vladi Skrivan sulla vita, l'arte e le storie dietro i dipinti">Vladi Skrivan o životě, umění a příbězích za obrazy</span>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Kdy jste poprvé pocítila, že malování je víc než jen koníček?" data-en="When did you first feel that painting was more than just a hobby?" data-it="Quando ha sentito per la prima volta che dipingere era più di un semplice hobby?">Kdy jste poprvé pocítila, že malování je víc než jen koníček?</p>
+      <p class="rozhovor-a" data-cs="Bylo mi asi třicet, stála jsem před prázdným plátnem a najednou jsem věděla, že tohle je jediné místo, kde jsem úplně sama sebou. Tehdy jsem pochopila, že malování není to, co dělám — je to to, čím jsem." data-en="I was around thirty, standing before a blank canvas, and suddenly I knew this was the only place where I was completely myself. That was when I understood that painting is not what I do — it is what I am." data-it="Avevo circa trent'anni, stavo davanti a una tela vuota e all'improvviso ho capito che era l'unico posto dove ero completamente me stessa. Allora ho compreso che dipingere non è ciò che faccio — è ciò che sono.">Bylo mi asi třicet, stála jsem před prázdným plátnem a najednou jsem věděla, že tohle je jediné místo, kde jsem úplně sama sebou. Tehdy jsem pochopila, že malování není to, co dělám — je to to, čím jsem.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Itálie se ve vaší tvorbě vrací znovu a znovu. Co vás na ní tak přitahuje?" data-en="Italy keeps returning in your work again and again. What draws you to it so strongly?" data-it="L'Italia torna ancora e ancora nella sua opera. Cosa la attrae così tanto?">Itálie se ve vaší tvorbě vrací znovu a znovu. Co vás na ní tak přitahuje?</p>
+      <p class="rozhovor-a" data-cs="Itálie má světlo, které nikde jinde neexistuje. V Toskánsku nebo na Sicílii vidíte barvy, které se nedají namíchat ze zkušenosti — musíte je zažít na kůži. Každý pobyt tam mi přinese zásobu na celý rok tvorby." data-en="Italy has a light that exists nowhere else. In Tuscany or Sicily you see colours that cannot be mixed from experience — you have to feel them on your skin. Each stay there gives me enough to last a whole year of painting." data-it="L'Italia ha una luce che non esiste da nessun'altra parte. In Toscana o in Sicilia si vedono colori che non si possono mescolare dall'esperienza — bisogna sentirli sulla propria pelle. Ogni soggiorno lì mi porta una riserva per un intero anno di lavoro.">Itálie má světlo, které nikde jinde neexistuje. V Toskánsku nebo na Sicílii vidíte barvy, které se nedají namíchat ze zkušenosti — musíte je zažít na kůži. Každý pobyt tam mi přinese zásobu na celý rok tvorby.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Jak vypadá váš typický den v ateliéru?" data-en="What does a typical day in your studio look like?" data-it="Come si presenta una sua giornata tipica in atelier?">Jak vypadá váš typický den v ateliéru?</p>
+      <p class="rozhovor-a" data-cs="Začínám ráno s kávou a tiše stojím před rozedělaným obrazem. Nepospíchám. Pak přijde moment, kdy se plátno otevře a já maluji klidně i pět hodin bez přestávky. Jiné dny nestihnu udělat ani jeden tah a jen přemýšlím. Obojí je práce." data-en="I start the morning with coffee and stand quietly before an unfinished painting. I don't rush. Then comes the moment when the canvas opens up and I can paint for five hours without a break. Other days I don't manage a single stroke and just think. Both are work." data-it="Comincio la mattina con il caffè e sto in silenzio davanti a un dipinto incompiuto. Non ho fretta. Poi arriva il momento in cui la tela si apre e dipingo tranquillamente anche cinque ore di fila. Altri giorni non riesco a fare nemmeno una pennellata e penso soltanto. Entrambi sono lavoro.">Začínám ráno s kávou a tiše stojím před rozedělaným obrazem. Nepospíchám. Pak přijde moment, kdy se plátno otevře a já maluji klidně i pět hodin bez přestávky. Jiné dny nestihnu udělat ani jeden tah a jen přemýšlím. Obojí je práce.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Vaše sbírka Dotek nekonečna — co za ní stojí?" data-en="Your collection Dotek nekonečna — what is behind it?" data-it="La sua collezione Dotek nekonečna — cosa c'è dietro?">Vaše sbírka Dotek nekonečna — co za ní stojí?</p>
+      <p class="rozhovor-a" data-cs="Bylo to období, kdy jsem hodně přemýšlela o pomíjivosti. O tom, co z nás zůstane. Obrazy z této kolekce vznikaly v tichu, skoro meditativně. Chtěla jsem zachytit okamžik, který je věčný právě proto, že se nedá zastavit." data-en="It was a period when I thought a great deal about transience. About what remains of us. The paintings in this collection were created in silence, almost meditatively. I wanted to capture a moment that is eternal precisely because it cannot be stopped." data-it="È stato un periodo in cui ho pensato molto alla caducità. A ciò che di noi rimane. I dipinti di questa collezione sono nati nel silenzio, quasi meditativamente. Volevo catturare un momento che è eterno proprio perché non si può fermare.">Bylo to období, kdy jsem hodně přemýšlela o pomíjivosti. O tom, co z nás zůstane. Obrazy z této kolekce vznikaly v tichu, skoro meditativně. Chtěla jsem zachytit okamžik, který je věčný právě proto, že se nedá zastavit.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Pracujete technikou špachtle — co vás k ní přivedlo?" data-en="You work with the palette knife technique — what led you to it?" data-it="Lavora con la tecnica della spatola — cosa l'ha portata a sceglierla?">Pracujete technikou špachtle — co vás k ní přivedlo?</p>
+      <p class="rozhovor-a" data-cs="Štětec mi připadal příliš zdvořilý. Špachtlí se barva na plátno doslova vtlačí — je to fyzické, přímé, trochu nekompromisní. A to mi vyhovuje. Struktura, která vzniká, se nedá naplánovat. Každý tah je rozhodnutí." data-en="The brush felt too polite. With a palette knife the paint is literally pressed into the canvas — it is physical, direct, a little uncompromising. And that suits me. The texture that emerges cannot be planned. Every stroke is a decision." data-it="Il pennello mi sembrava troppo gentile. Con la spatola il colore viene letteralmente spinto sulla tela — è fisico, diretto, un po' intransigente. E questo mi si addice. La texture che ne emerge non si può pianificare. Ogni passata è una decisione.">Štětec mi připadal příliš zdvořilý. Špachtlí se barva na plátno doslova vtlačí — je to fyzické, přímé, trochu nekompromisní. A to mi vyhovuje. Struktura, která vzniká, se nedá naplánovat. Každý tah je rozhodnutí.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Coffee Art je neobvyklá technika — jak jste k malbě kávou přišla?" data-en="Coffee Art is an unusual technique — how did you come to paint with coffee?" data-it="Coffee Art è una tecnica insolita — come è arrivata a dipingere con il caffè?">Coffee Art je neobvyklá technika — jak jste k malbě kávou přišla?</p>
+      <p class="rozhovor-a" data-cs="Jednou ráno jsem přelila šálek na papír a místo abych to utřela, začala jsem to roztírat prstem. Výsledek byl překvapivý — jemný, sépiovitý, intimní. Kavárny, ráno, pomalý čas. Coffee Art je pro mě meditace jiného druhu." data-en="One morning I spilled a cup onto paper and instead of wiping it up I started spreading it with my finger. The result was surprising — delicate, sepia-toned, intimate. Coffee shops, morning, slow time. Coffee Art is a different kind of meditation for me." data-it="Una mattina ho rovesciato una tazza sulla carta e invece di asciugarla ho cominciato a spalmarla con un dito. Il risultato era sorprendente — delicato, color seppia, intimo. Bar, mattina, tempo lento. Il Coffee Art è per me una meditazione di altro tipo.">Jednou ráno jsem přelila šálek na papír a místo abych to utřela, začala jsem to roztírat prstem. Výsledek byl překvapivý — jemný, sépiovitý, intimní. Kavárny, ráno, pomalý čas. Coffee Art je pro mě meditace jiného druhu.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Jaká je vaše nejsilnější vzpomínka spojená s konkrétním obrazem?" data-en="What is your strongest memory connected to a particular painting?" data-it="Qual è il suo ricordo più forte legato a un dipinto specifico?">Jaká je vaše nejsilnější vzpomínka spojená s konkrétním obrazem?</p>
+      <p class="rozhovor-a" data-cs="Obraz Bosky vznikal tři týdny, které jinak skoro nepamatuji. Byl to čas velké osobní proměny. Když jsem ho dokončila, uvědomila jsem si, že jsem do něj vložila věci, které jsem jinak nedokázala říct nahlas. Prodala jsem ho těžce — ale věřím, že si našel správného člověka." data-en="The painting Bosky was created over three weeks that I otherwise barely remember. It was a time of great personal transformation. When I finished it I realised I had put into it things I had otherwise been unable to say out loud. I found it hard to sell — but I believe it found the right person." data-it="Il dipinto Bosky è stato realizzato in tre settimane che altrimenti quasi non ricordo. Era un periodo di grande trasformazione personale. Quando l'ho finito ho capito di avervi messo cose che altrimenti non riuscivo a dire ad alta voce. L'ho venduto con fatica — ma credo abbia trovato la persona giusta.">Obraz Bosky vznikal tři týdny, které jinak skoro nepamatuji. Byl to čas velké osobní proměny. Když jsem ho dokončila, uvědomila jsem si, že jsem do něj vložila věci, které jsem jinak nedokázala říct nahlas. Prodala jsem ho těžce — ale věřím, že si našel správného člověka.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Vyučujete malování v Ateliéru VS. Co vám výuka přináší?" data-en="You teach painting at Atelier VS. What does teaching bring you?" data-it="Insegna pittura all'Atelier VS. Cosa le porta l'insegnamento?">Vyučujete malování v Ateliéru VS. Co vám výuka přináší?</p>
+      <p class="rozhovor-a" data-cs="Studenti mě nutí vidět věci znovu. Jejich chyby jsou fascinující — dělají je z odvahy, ne z nevědomosti. Sledovat, jak někdo poprvé pochopí světlo nebo kompozici, je pro mě větší radost, než si myslím, že zasloužím." data-en="Students make me see things anew. Their mistakes are fascinating — they make them out of courage, not ignorance. Watching someone understand light or composition for the first time is a greater joy than I think I deserve." data-it="Gli studenti mi costringono a vedere le cose di nuovo. I loro errori sono affascinanti — li fanno per coraggio, non per ignoranza. Guardare qualcuno capire per la prima volta la luce o la composizione è per me una gioia più grande di quanto pensi di meritarmi.">Studenti mě nutí vidět věci znovu. Jejich chyby jsou fascinující — dělají je z odvahy, ne z nevědomosti. Sledovat, jak někdo poprvé pochopí světlo nebo kompozici, je pro mě větší radost, než si myslím, že zasloužím.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Jaká je vaše rada pro někoho, kdo chce začít sbírat umění?" data-en="What is your advice for someone who wants to start collecting art?" data-it="Qual è il suo consiglio per chi vuole iniziare a collezionare arte?">Jaká je vaše rada pro někoho, kdo chce začít sbírat umění?</p>
+      <p class="rozhovor-a" data-cs="Nekupujte obraz proto, že se hodí k pohovce. Kupte ho proto, že se u něj zastavíte. Pravé dílo vám bude časem odhalovat stále něco nového — to je ta nejlepší investice, jakou znám." data-en="Don't buy a painting because it matches the sofa. Buy it because it makes you stop. A true work will keep revealing something new to you over time — that is the best investment I know." data-it="Non comprare un dipinto perché si abbina al divano. Compralo perché ti fa fermare. Un'opera vera ti rivelerà sempre qualcosa di nuovo nel tempo — è il miglior investimento che conosco.">Nekupujte obraz proto, že se hodí k pohovce. Kupte ho proto, že se u něj zastavíte. Pravé dílo vám bude časem odhalovat stále něco nového — to je ta nejlepší investice, jakou znám.</p>
+    </div>
+
+    <div class="rozhovor-qa">
+      <p class="rozhovor-q" data-cs="Co chcete, aby si lidé z vašich obrazů odnesli domů — kromě samotného plátna?" data-en="What do you want people to take home from your paintings — apart from the canvas itself?" data-it="Cosa vuole che le persone portino a casa dai suoi dipinti — oltre alla tela stessa?">Co chcete, aby si lidé z vašich obrazů odnesli domů — kromě samotného plátna?</p>
+      <p class="rozhovor-a" data-cs="Pocit, že je svět krásný. Že stojí za to zpomalit a dívat se. Moje obrazy nejsou výzdobou — jsou pozváním. Každý z nich je okno do okamžiku, který jsem chtěla zachránit před zapomenutím. Jsem ráda, když se ten okamžik stane součástí něčího života." data-en="The feeling that the world is beautiful. That it is worth slowing down and looking. My paintings are not decoration — they are an invitation. Each one is a window into a moment I wanted to save from being forgotten. I am glad when that moment becomes part of someone's life." data-it="La sensazione che il mondo sia bello. Che valga la pena rallentare e guardare. I miei dipinti non sono decorazione — sono un invito. Ognuno è una finestra su un momento che volevo salvare dall'oblio. Sono felice quando quel momento diventa parte della vita di qualcuno.">Pocit, že je svět krásný. Že stojí za to zpomalit a dívat se. Moje obrazy nejsou výzdobou — jsou pozváním. Každý z nich je okno do okamžiku, který jsem chtěla zachránit před zapomenutím. Jsem ráda, když se ten okamžik stane součástí něčího života.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <h2 data-cs="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</h2>
+
+    <div>
+      <p class="contact-intro" data-cs="Sdílejte dojmy z mých obrazů, případně jakékoliv dotazy k výstavám a kolekcím — vyplňte prosím tento kontaktní formulář." data-en="Share your impressions of my paintings or any enquiries about exhibitions and collections — please fill in the contact form below." data-it="Condividete le vostre impressioni sui miei dipinti o eventuali domande su mostre e collezioni — compilate il modulo di contatto qui sotto.">Sdílejte dojmy z mých obrazů, případně jakékoliv dotazy k výstavám a kolekcím — vyplňte prosím tento kontaktní formulář.</p>
+      <form class="contact-form" id="contact-form">
+        <div class="form-group">
+          <label for="cf-name" data-cs="Jméno" data-en="Name" data-it="Nome">Jméno</label>
+          <input type="text" id="cf-name" name="name" required data-cs-placeholder="Vaše jméno" data-en-placeholder="Your name" data-it-placeholder="Il vostro nome" placeholder="Vaše jméno">
+        </div>
+        <div class="form-group">
+          <label for="cf-email" data-cs="E-mail" data-en="E-mail" data-it="E-mail">E-mail</label>
+          <input type="email" id="cf-email" name="email" required placeholder="vas@email.cz">
+        </div>
+        <div class="form-group">
+          <label for="cf-message" data-cs="Zpráva" data-en="Message" data-it="Messaggio">Zpráva</label>
+          <textarea id="cf-message" name="message" required data-cs-placeholder="Váš dotaz nebo vzkaz..." data-en-placeholder="Your message or enquiry..." data-it-placeholder="Il vostro messaggio o domanda..." placeholder="Váš dotaz nebo vzkaz..."></textarea>
+        </div>
+        <button type="submit" class="btn-send" data-cs="Odeslat zprávu" data-en="Send message" data-it="Invia messaggio">Odeslat zprávu</button>
+        <div class="form-success" id="form-success" data-cs="Děkujeme! Zpráva byla odeslána." data-en="Thank you! Your message has been sent." data-it="Grazie! Il messaggio è stato inviato.">Děkujeme! Zpráva byla odeslána.</div>
+      </form>
+    </div>
+
+    <div class="contact-manager">
+      <p class="contact-manager-label" data-cs="Přímý kontakt" data-en="Direct contact" data-it="Contatto diretto">Přímý kontakt</p>
+      <p class="contact-manager-name">David Novotný<br><small style="font-size:10px;color:#999;font-family:var(--font-sans)" data-cs="Manažer Vladi Skrivan" data-en="Manager of Vladi Skrivan" data-it="Manager di Vladi Skrivan">Manažer Vladi Skrivan</small></p>
+      <a href="mailto:novotny.dejv@email.cz">novotny.dejv@email.cz</a>
+      <a href="tel:+420736453009">736 453 009</a>
+    </div>
+
+    <div class="contact-social-standalone">
+      <a href="https://www.facebook.com/vladka.skrivankova" target="_blank" rel="noopener">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span>
+          <span class="contact-social-name">Facebook</span>
+          <span class="contact-social-handle">@vladka.skrivankova</span>
+        </span>
+      </a>
+      <a href="https://www.instagram.com/vladiskrivan/" target="_blank" rel="noopener">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        <span>
+          <span class="contact-social-name">Instagram</span>
+          <span class="contact-social-handle">@vladiskrivan</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Vladi Skrivan</span>
+  <a href="index.html" data-cs="← Zpět na úvod" data-en="← Back to home" data-it="← Torna alla home">← Zpět na úvod</a>
+</footer>
+
+</div><!-- /page-content -->
+
+<!-- PRICE INQUIRY MODAL -->
+<div class="pi-overlay" id="pi-overlay">
+  <div class="pi-box">
+    <div class="pi-img-panel" id="pi-img-panel">
+      <img id="pi-img" src="" alt="">
+    </div>
+    <div class="pi-form-panel">
+      <button class="pi-close" onclick="closePriceInquiry()">×</button>
+      <div class="pi-painting-ref" id="pi-painting-ref"></div>
+      <h3 data-cs="Zajímá mě cena" data-en="I am interested in the price" data-it="Sono interessato al prezzo">Zajímá mě cena</h3>
+      <p data-cs="Pokud se vám obraz líbí, bude ke shlédnutí v galerii nebo v ateliéru. Prosím zanechte kontakt a dáme vědět cenu." data-en="If you like the painting, it can be viewed at the gallery or the studio. Please leave your contact details and we will let you know the price." data-it="Se il dipinto vi piace, sarà visibile in galleria o in atelier. Lasciate un contatto e vi comunicheremo il prezzo.">Pokud se vám obraz líbí, bude ke shlédnutí v galerii nebo v ateliéru. Prosím zanechte kontakt a dáme vědět cenu.</p>
+      <form id="pi-form">
+        <input class="pi-field" type="text" id="pi-name" placeholder="Jméno *" required>
+        <input class="pi-field" type="email" id="pi-email" placeholder="E-mail *" required>
+        <input class="pi-field" type="tel" id="pi-phone" placeholder="Telefonní číslo (nepovinné)">
+        <button class="pi-submit" type="submit">Odeslat dotaz</button>
+      </form>
+      <div class="pi-success" id="pi-success">Děkujeme! Brzy se Vám ozveme.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMENT MODAL -->
+<div class="cm-overlay" id="cm-overlay">
+  <div class="cm-box">
+    <div class="cm-img-panel" id="cm-img-panel">
+      <img id="cm-img" src="" alt="">
+    </div>
+    <div class="cm-form-panel">
+      <button class="cm-close" onclick="closeComment()">×</button>
+      <div class="cm-painting-ref" id="cm-painting-ref"></div>
+      <h3 data-cs="Napsat komentář" data-en="Write a comment" data-it="Scrivi un commento">Napsat komentář</h3>
+      <p data-cs="Jaký dojem ve vás obraz nechává? Jaké pocity vzbuzuje? Napište komentář a pokud budete souhlasit, my ho sem umístíme na zeď." data-en="What impression does the painting leave on you? What feelings does it evoke? Write a comment and if you agree, we will display it here on the wall." data-it="Che impressione vi lascia il dipinto? Quali sentimenti suscita? Scrivete un commento e se sarete d'accordo lo pubblicheremo qui.">Jaký dojem ve vás obraz nechává? Jaké pocity vzbuzuje? Napište komentář a pokud budete souhlasit, my ho sem umístíme na zeď.</p>
+      <form id="cm-form">
+        <input class="cm-field" type="text" id="cm-name" placeholder="Jméno *" required>
+        <textarea class="cm-field" id="cm-text" placeholder="Váš komentář *" required></textarea>
+        <input class="cm-field" type="email" id="cm-email" placeholder="E-mail (nepovinné)">
+        <button class="cm-submit" type="submit">Odeslat komentář</button>
+      </form>
+      <div class="cm-success" id="cm-success">Děkujeme za váš komentář! Ozveme se vám.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- COOKIES -->
+<div id="cookie-bar">
+  <p class="cookie-text">Tato stránka používá cookies pro zajištění správného fungování webu. Pokračováním v prohlížení souhlasíte s jejich používáním.</p>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-accept" id="cookie-accept">Přijmout</button>
+    <button class="cookie-btn cookie-decline" id="cookie-decline">Odmítnout</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" id="lb-close">✕</button>
+  <button class="lb-nav lb-prev" id="lb-prev">‹</button>
+  <button class="lb-nav lb-next" id="lb-next">›</button>
+  <div class="lb-content">
+    <div class="lb-image-area"><img id="lb-img" src="" alt=""></div>
+    <div class="lb-info">
+      <div class="lb-collection" id="lb-collection"></div>
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-year" id="lb-year"></div>
+      <div class="lb-meta" id="lb-meta"></div>
+      <div class="lb-price" id="lb-price"></div>
+      <div class="lb-price-eur" id="lb-price-eur"></div>
+      <div class="lb-status" id="lb-status"></div>
+      <div class="lb-story" id="lb-story"></div>
+      <div class="lb-inquire">
+        <a href="#contact" class="btn-inquire" id="lb-inquire-btn">Mám zájem o tento obraz</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE DETAIL OVERLAY -->
+<div id="mobile-detail" class="mobile-detail-hidden">
+  <button class="mob-detail-close" onclick="closeMobileDetail()">✕</button>
+  <div class="mob-detail-img-wrap">
+    <div class="mob-carousel" id="mob-carousel"></div>
+    <button class="mob-carousel-arrow mob-carousel-prev" id="mob-carousel-prev" onclick="mobCarouselGo(mobCarouselIndex-1)">&#8249;</button>
+    <button class="mob-carousel-arrow mob-carousel-next" id="mob-carousel-next" onclick="mobCarouselGo(mobCarouselIndex+1)">&#8250;</button>
+    <div class="mob-carousel-dots" id="mob-carousel-dots"></div>
+  </div>
+  <div class="mob-detail-info">
+    <div class="mob-detail-collection" id="mob-detail-collection"></div>
+    <h2 class="mob-detail-title" id="mob-detail-title"></h2>
+    <div class="mob-detail-meta" id="mob-detail-meta"></div>
+    <div class="mob-detail-status" id="mob-detail-status"></div>
+    <div class="mob-detail-story" id="mob-detail-story"></div>
+  </div>
+  <div class="mob-detail-btns">
+    <button class="mob-detail-btn-primary" id="mob-detail-price-btn" onclick="openPriceInquiry('mobile')">Zajímá mě cena</button>
+  </div>
+</div>
+
+<script src="paintings.js?v=86"></script>
+<script>
+// Current language (initialised early so colLabel works from any script block)
+let currentLang = localStorage.getItem('lang') || 'cs';
+
+// Collection name translations
+const collectionNames = {
+  "Abstract":        { cs: "Abstract",        en: "Abstract",         it: "Abstract" },
+  "Z mých cest":     { cs: "Z mých cest",     en: "From My Travels",  it: "Dai miei viaggi" },
+  "Dotek nekonečna": { cs: "Dotek nekonečna", en: "Touch of Infinity", it: "Tocco dell'infinito" },
+  "Coffee Art":      { cs: "Coffee Art",      en: "Coffee Art",       it: "Coffee Art" },
+  "Secret of Love":  { cs: "Secret of Love",  en: "Secret of Love",   it: "Secret of Love" },
+  "Flowers":         { cs: "Flowers",         en: "Flowers",          it: "Fiori" },
+  "Spirit":          { cs: "Spirit",          en: "Spirit",           it: "Spirit" },
+};
+function colLabel(col) {
+  const t = collectionNames[col];
+  return t ? (t[currentLang] || t.cs) : col;
+}
+
+// Gallery viewer
+const visiblePaintings = paintings.filter(p => p.on_web || p.image);
+const allCollections = [...new Set(visiblePaintings.map(p => p.collection).filter(Boolean))];
+let currentGalFilter = allCollections[0] || 'all';
+let currentGalIndex = 0;
+let currentGalView = 'room'; // 'room' | 'detail'
+
+function getFilteredPaintings() {
+  return currentGalFilter === 'all'
+    ? visiblePaintings
+    : visiblePaintings.filter(p => p.collection === currentGalFilter);
+}
+
+// Derive the earliest year per collection
+const collectionYears = {};
+visiblePaintings.forEach(p => {
+  if (p.collection && p.year) {
+    if (!collectionYears[p.collection] || p.year < collectionYears[p.collection])
+      collectionYears[p.collection] = p.year;
+  }
+});
+
+function buildFilterTabs() {
+  const ft = document.getElementById('filter-tabs');
+  ft.innerHTML = '';
+  const navCols = document.getElementById('nav-collections');
+  navCols.innerHTML = '';
+  [...new Set(visiblePaintings.map(p => p.collection).filter(Boolean))].forEach((col, i) => {
+    // topbar tab (hidden on desktop, kept for mobile fallback)
+    const btn = document.createElement('button');
+    btn.className = 'filter-tab';
+    const yr = collectionYears[col] ? ` · ${collectionYears[col]}` : '';
+    btn.textContent = colLabel(col) + yr;
+    btn.dataset.filter = col;
+    btn.dataset.collection = col;
+    btn.addEventListener('click', () => applyGalFilter(col));
+    ft.appendChild(btn);
+    // nav sub-item
+    const sub = document.createElement('button');
+    sub.className = 'nav-sub-item' + (i === 0 ? ' active' : '');
+    sub.textContent = colLabel(col) + yr;
+    sub.dataset.filter = col;
+    sub.dataset.collection = col;
+    sub.addEventListener('click', () => applyGalFilter(col));
+    navCols.appendChild(sub);
+  });
+  const first = ft.querySelector('.filter-tab');
+  if (first) first.classList.add('active');
+}
+
+function updateNavSubActive(filter) {
+  document.querySelectorAll('#nav-collections .nav-sub-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.filter === filter);
+  });
+}
+
+function applyGalFilter(filter) {
+  currentGalFilter = filter;
+  currentGalIndex = 0;
+  currentGalView = 'room';
+  currentGalPhotoIndex = 0;
+  document.querySelectorAll('#filter-tabs .filter-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === filter));
+  updateNavSubActive(filter);
+  buildGalThumbs();
+  updateGalViewer();
+}
+
+
+function buildGalThumbs() {
+  const strip = document.getElementById('gal-thumbstrip');
+  strip.innerHTML = '';
+  getFilteredPaintings().forEach((p, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'gal-thumb-wrap';
+    const img = document.createElement('img');
+    img.src = p.room_image ? `images/${p.room_image}` : (p.image ? `images/${p.image}` : '');
+    img.alt = p.title;
+    img.className = 'gal-thumb' + (i === currentGalIndex ? ' active' : '');
+    wrap.appendChild(img);
+    if (p.status === 'Prodáno') {
+      const badge = document.createElement('span');
+      badge.className = 'gal-thumb-sold';
+      badge.textContent = 'Prodáno';
+      wrap.appendChild(badge);
+    }
+    wrap.addEventListener('click', () => {
+      currentGalIndex = i;
+      currentGalView = 'room';
+      currentGalPhotoIndex = 0;
+      buildGalThumbs();
+      updateGalViewer();
+    });
+    strip.appendChild(wrap);
+  });
+}
+
+let currentGalPhotoIndex = 0;
+
+function buildTiskyThumbs() {
+  if (typeof prints === 'undefined') return;
+  const strip = document.getElementById('tisky-thumbstrip');
+  if (!strip) return;
+  strip.innerHTML = '';
+  prints.forEach((p, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'gal-thumb-wrap';
+    const img = document.createElement('img');
+    img.src = p.image ? `images/${p.image}` : '';
+    img.alt = p.title;
+    img.className = 'gal-thumb' + (i === currentPrintIndex ? ' active' : '');
+    wrap.appendChild(img);
+    wrap.addEventListener('click', () => {
+      currentPrintIndex = i;
+      currentPrintPhotoIndex = 0;
+      buildTiskyThumbs();
+      updateTiskyViewer();
+    });
+    strip.appendChild(wrap);
+  });
+}
+
+function updateGalViewer() {
+  const filtered = getFilteredPaintings();
+  const p = filtered[currentGalIndex];
+  if (!p) return;
+
+  const allImages = p.images && p.images.length > 1 ? p.images : null;
+
+  // Main image: use currentGalPhotoIndex if photo strip active, else default
+  let imgSrc = '';
+  if (allImages) {
+    imgSrc = `images/${allImages[currentGalPhotoIndex] || allImages[0]}`;
+  } else {
+    imgSrc = p.image ? `images/${p.image}` : '';
+  }
+
+  const activeImg = document.getElementById('gal-active-img');
+  const _fitIdx = p.img_crop ? (p.img_crop[currentGalPhotoIndex] || (p.crop === 'cover' ? 'cover' : 'contain')) : (p.crop === 'cover' ? 'cover' : 'contain');
+  activeImg.style.objectFit = _fitIdx;
+  const _zoomIdx = p.img_zoom ? (p.img_zoom[currentGalPhotoIndex] || 1) : 1;
+  activeImg.style.transform = _zoomIdx !== 1 ? `scale(${_zoomIdx})` : '';
+  const _imgWrap = document.querySelector('.gal-active-img-wrap');
+  if (_imgWrap) _imgWrap.style.overflow = (_fitIdx === 'contain' && _zoomIdx > 1) ? 'visible' : 'hidden';
+  activeImg.style.opacity = '0';
+  activeImg.onload = () => { activeImg.style.opacity = '1'; };
+  activeImg.src = imgSrc;
+  activeImg.alt = p.title;
+
+  // Hide old view toggle (replaced by photo strip)
+  document.getElementById('gal-view-toggle').classList.add('hidden');
+
+  // Photo strip (legacy element may not exist)
+  const photoStrip = document.getElementById('gal-photo-strip');
+  if (photoStrip) {
+    photoStrip.innerHTML = '';
+    if (allImages) {
+      allImages.forEach((imgFile, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = `images/${imgFile}`;
+        thumb.alt = p.title;
+        thumb.className = idx === currentGalPhotoIndex ? 'active' : '';
+        thumb.addEventListener('click', () => {
+          currentGalPhotoIndex = idx;
+          updateGalViewer();
+        });
+        photoStrip.appendChild(thumb);
+      });
+    }
+  }
+
+  buildGalDots();
+  const soldOverlay = document.getElementById('gal-sold-overlay');
+  if (soldOverlay) soldOverlay.classList.toggle('hidden', p.status !== 'Prodáno');
+  document.getElementById('gal-info-title').textContent = p.title;
+  const collEl = document.getElementById('gal-info-collection');
+  collEl.innerHTML = '';
+  collEl.textContent = [p.collection, p.year].filter(Boolean).join(' · ');
+  if (p.status === 'Prodáno') {
+    const badge = document.createElement('span');
+    badge.className = 'gal-sold-badge';
+    badge.textContent = 'Prodáno';
+    collEl.appendChild(badge);
+  }
+  document.getElementById('gal-info-technique').textContent = p.technique || '';
+  document.getElementById('gal-info-size').textContent = p.size || '';
+  const authorBtn = document.getElementById('gal-author-btn');
+  if (authorBtn) authorBtn.style.display = p.story ? '' : 'none';
+}
+
+function openGalAuthorModal() {
+  const filtered = getFilteredPaintings();
+  const p = filtered[currentGalIndex];
+  if (!p || !p.story) return;
+  document.getElementById('gal-author-modal-title').textContent = p.title;
+  const el = document.getElementById('gal-author-modal-text');
+  el.innerHTML = p.story.split('\n\n').map(s => `<p style="margin-bottom:1em">${s}</p>`).join('');
+  document.getElementById('gal-author-modal').classList.remove('hidden');
+}
+
+function setGalView(view) {
+  currentGalView = view;
+  updateGalViewer();
+}
+
+// Price inquiry modal
+let inquiryPainting = null;
+function openPriceInquiry(source) {
+  if (source === 'mobile' && mobileDetailCurrent) {
+    inquiryPainting = mobileDetailCurrent.p;
+  } else if (source === 'tisky') {
+    const title = document.getElementById('tisky-info-title').textContent;
+    inquiryPainting = prints.find(p => p.title === title) || null;
+  } else {
+    const filtered = getFilteredPaintings();
+    inquiryPainting = filtered[currentGalIndex];
+  }
+  if (inquiryPainting) {
+    document.getElementById('pi-painting-ref').textContent =
+      [inquiryPainting.title, inquiryPainting.collection, inquiryPainting.year].filter(Boolean).join(' · ');
+    const imgSrc = 'images/' + inquiryPainting.image;
+    const imgEl = document.getElementById('pi-img');
+    imgEl.src = imgSrc;
+    imgEl.alt = inquiryPainting.title;
+    document.getElementById('pi-img-panel').style.display = 'flex';
+  } else {
+    document.getElementById('pi-img-panel').style.display = 'none';
+  }
+  document.getElementById('pi-form').reset();
+  document.getElementById('pi-success').style.display = 'none';
+  document.getElementById('pi-overlay').classList.add('open');
+}
+function closePriceInquiry() {
+  document.getElementById('pi-overlay').classList.remove('open');
+}
+document.getElementById('pi-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('pi-overlay')) closePriceInquiry();
+});
+document.getElementById('pi-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('pi-name').value;
+  const email = document.getElementById('pi-email').value;
+  const phone = document.getElementById('pi-phone').value;
+  const subject = inquiryPainting ? `Zájem o cenu: ${inquiryPainting.title}` : 'Zájem o cenu obrazu';
+  const body = `Dobrý den,%0A%0AMám zájem o informace o ceně obrazu.%0A%0AObraz: ${inquiryPainting ? inquiryPainting.title : ''}%0AJméno: ${name || '—'}%0ATelefon: ${phone || '—'}%0A%0AS pozdravem`;
+  window.location.href = `mailto:info@vladiskrivan.cz?subject=${encodeURIComponent(subject)}&body=${body}`;
+  document.getElementById('pi-success').style.display = 'block';
+});
+
+// Comment modal
+let commentPainting = null;
+function openComment(source) {
+  if (source === 'tisky') {
+    const title = document.getElementById('tisky-info-title').textContent;
+    commentPainting = prints.find(p => p.title === title) || null;
+  } else {
+    const filtered = getFilteredPaintings();
+    commentPainting = filtered[currentGalIndex];
+  }
+  if (commentPainting) {
+    document.getElementById('cm-painting-ref').textContent =
+      [commentPainting.title, commentPainting.collection, commentPainting.year].filter(Boolean).join(' · ');
+    const imgSrc = 'images/' + commentPainting.image;
+    document.getElementById('cm-img').src = imgSrc;
+    document.getElementById('cm-img').alt = commentPainting.title;
+    document.getElementById('cm-img-panel').style.display = 'flex';
+  } else {
+    document.getElementById('cm-img-panel').style.display = 'none';
+  }
+  document.getElementById('cm-form').reset();
+  document.getElementById('cm-success').style.display = 'none';
+  document.getElementById('cm-overlay').classList.add('open');
+}
+function closeComment() {
+  document.getElementById('cm-overlay').classList.remove('open');
+}
+document.getElementById('cm-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('cm-overlay')) closeComment();
+});
+document.getElementById('cm-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('cm-name').value;
+  const text = document.getElementById('cm-text').value;
+  const email = document.getElementById('cm-email').value;
+  const subject = commentPainting ? `Komentář k obrazu: ${commentPainting.title}` : 'Komentář k obrazu';
+  const body = `Dobrý den,%0A%0AZanechávám komentář k obrazu.%0A%0AObraz: ${commentPainting ? commentPainting.title : ''}%0AJméno: ${name}%0AKomentář: ${encodeURIComponent(text)}%0AE-mail: ${email || '—'}%0A%0AS pozdravem`;
+  window.location.href = `mailto:info@vladiskrivan.cz?subject=${encodeURIComponent(subject)}&body=${body}`;
+  document.getElementById('cm-success').style.display = 'block';
+});
+
+buildFilterTabs();
+// Set initial filter to first collection
+if (allCollections.length > 0) {
+  currentGalFilter = allCollections[0];
+  const firstTab = document.querySelector('#filter-tabs .filter-tab');
+  if (firstTab) firstTab.classList.add('active');
+}
+buildGalThumbs();
+updateGalViewer();
+
+// SPA router
+function showSection(id) {
+  document.querySelectorAll('.page-content > section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#side-nav a').forEach(a => a.classList.remove('active'));
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+    const pc = document.querySelector('.page-content');
+    if (pc) pc.scrollTop = 0;
+  }
+  const link = document.querySelector(`#side-nav a[data-section="${id}"]`);
+  if (link) link.classList.add('active');
+  history.pushState({ section: id }, '', `#${id}`);
+  // Show/hide collection sub-menu
+  const navCols = document.getElementById('nav-collections');
+  if (navCols) navCols.classList.toggle('open', id === 'gallery');
+  const navTisky = document.getElementById('nav-tisky-sub');
+  if (navTisky) navTisky.classList.toggle('open', id === 'tisky');
+}
+
+function showTiskyTab(tab) {
+  showSection('tisky');
+  const tvorba = document.getElementById('tisky-tab-tvorba');
+  const kvalita = document.getElementById('tisky-tab-kvalita');
+  if (tvorba) tvorba.style.display = tab === 'tvorba' ? '' : 'none';
+  if (kvalita) kvalita.style.display = tab === 'kvalita' ? '' : 'none';
+  document.querySelectorAll('#nav-tisky-sub .nav-sub-item').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase().startsWith(tab === 'tvorba' ? 'tvorba' : 'kvalita'));
+  });
+}
+
+document.querySelectorAll('#side-nav a[data-section]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    showSection(a.dataset.section);
+  });
+});
+
+window.addEventListener('popstate', e => {
+  const id = e.state?.section || location.hash.slice(1) || 'uvod';
+  showSection(id);
+});
+
+// Initial load
+const initSection = location.hash.slice(1) || 'uvod';
+showSection(initSection);
+
+// Lightbox
+let currentIndex = 0;
+function openLightbox(index) {
+  currentIndex = index; renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function renderLightbox() {
+  const p = visiblePaintings[currentIndex];
+  document.getElementById('lb-img').src = p.image ? `images/${p.image}` : '';
+  document.getElementById('lb-img').alt = p.title;
+  document.getElementById('lb-collection').textContent = p.collection || '';
+  document.getElementById('lb-title').textContent = p.title;
+  document.getElementById('lb-year').textContent = p.year || '';
+  const meta = document.getElementById('lb-meta');
+  meta.innerHTML = '';
+  if (p.size) meta.innerHTML += `<div class="lb-meta-row"><span class="lb-meta-label">Rozměr</span><span class="lb-meta-value">${p.size} cm</span></div>`;
+  if (p.technique) meta.innerHTML += `<div class="lb-meta-row"><span class="lb-meta-label">Technika</span><span class="lb-meta-value">${p.technique}</span></div>`;
+  document.getElementById('lb-price').textContent = p.price_czk ? `${p.price_czk.toLocaleString('cs-CZ')} Kč` : '';
+  document.getElementById('lb-price-eur').textContent = p.price_eur ? `${p.price_eur.toLocaleString('cs-CZ')} EUR` : '';
+  const sold = p.status === 'Prodáno';
+  const statusEl = document.getElementById('lb-status');
+  statusEl.textContent = sold ? soldLabels[currentLang] : availLabels[currentLang];
+  statusEl.className = 'lb-status ' + (sold ? 'sold' : 'available');
+  document.getElementById('lb-story').textContent = p.story || '';
+  const btn = document.getElementById('lb-inquire-btn');
+  btn.textContent = sold ? similarLabels[currentLang] : inquireLabels[currentLang];
+  btn.href = `mailto:info@vladiskrivan.cz?subject=Zájem o obraz: ${encodeURIComponent(p.title)}`;
+}
+// Gallery arrow navigation
+function galNavPrev() {
+  const filtered = getFilteredPaintings();
+  const p = filtered[currentGalIndex];
+  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
+  if (imgs && currentGalPhotoIndex > 0) {
+    currentGalPhotoIndex--;
+  } else {
+    currentGalIndex = (currentGalIndex - 1 + filtered.length) % filtered.length;
+    currentGalPhotoIndex = 0;
+  }
+  buildGalThumbs(); updateGalViewer();
+}
+function galNavNext() {
+  const filtered = getFilteredPaintings();
+  const p = filtered[currentGalIndex];
+  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
+  if (imgs && currentGalPhotoIndex < imgs.length - 1) {
+    currentGalPhotoIndex++;
+  } else {
+    currentGalIndex = (currentGalIndex + 1) % filtered.length;
+    currentGalPhotoIndex = 0;
+  }
+  buildGalThumbs(); updateGalViewer();
+}
+function buildGalDots() {
+  const dotsEl = document.getElementById('gal-img-dots');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = '';
+  const p = getFilteredPaintings()[currentGalIndex];
+  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
+  if (!imgs || imgs.length <= 1) return;
+  imgs.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'gal-img-dot' + (i === currentGalPhotoIndex ? ' active' : '');
+    dotsEl.appendChild(d);
+  });
+}
+
+function openTiskyAuthorModal() {
+  if (typeof prints === 'undefined') return;
+  const p = prints[currentPrintIndex];
+  if (!p) return;
+  const text = p.story || p.description || '';
+  if (!text) return;
+  document.getElementById('tisky-author-modal-title').textContent = p.title;
+  const el = document.getElementById('tisky-author-modal-text');
+  el.innerHTML = text.split('\n\n').map(p => `<p style="margin-bottom:1em">${p}</p>`).join('');
+  document.getElementById('tisky-author-modal').classList.remove('hidden');
+}
+
+// Tisky arrow navigation
+let currentPrintIndex = 0;
+let currentPrintPhotoIndex = 0;
+function tiskyNavPrev() {
+  if (typeof prints === 'undefined') return;
+  const p = prints[currentPrintIndex];
+  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
+  if (imgs && currentPrintPhotoIndex > 0) {
+    currentPrintPhotoIndex--;
+  } else {
+    currentPrintIndex = (currentPrintIndex - 1 + prints.length) % prints.length;
+    currentPrintPhotoIndex = 0;
+  }
+  updateTiskyViewer();
+}
+function tiskyNavNext() {
+  if (typeof prints === 'undefined') return;
+  const p = prints[currentPrintIndex];
+  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
+  if (imgs && currentPrintPhotoIndex < imgs.length - 1) {
+    currentPrintPhotoIndex++;
+  } else {
+    currentPrintIndex = (currentPrintIndex + 1) % prints.length;
+    currentPrintPhotoIndex = 0;
+  }
+  updateTiskyViewer();
+}
+function buildTiskyDots() {
+  const dotsEl = document.getElementById('tisky-img-dots');
+  if (!dotsEl || typeof prints === 'undefined') return;
+  dotsEl.innerHTML = '';
+  const p = prints[currentPrintIndex];
+  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
+  if (!imgs || imgs.length <= 1) return;
+  imgs.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'gal-img-dot' + (i === currentPrintPhotoIndex ? ' active' : '');
+    dotsEl.appendChild(d);
+  });
+}
+
+// Swipe support
+function addSwipe(el, onLeft, onRight) {
+  let sx = 0;
+  el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  el.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) { dx < 0 ? onLeft() : onRight(); }
+  }, { passive: true });
+}
+
+// Mobile gallery grid
+function buildMobileGalleryGrid() {
+  const grid = document.getElementById('mobile-gallery-grid');
+  if (!grid || grid.children.length > 0) return;
+  visiblePaintings.forEach((p, i) => {
+    const item = document.createElement('div');
+    const sold = p.status === 'Prodáno';
+    item.className = 'mgrid-item' + (sold ? ' mgrid-sold' : '');
+    item.onclick = () => openMobileDetail('painting', i);
+    item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+      <div class="mgrid-caption">
+        <span class="mgrid-title">${p.title}</span>
+        <span class="mgrid-meta">${[p.collection, p.year].filter(Boolean).join(' · ')}</span>
+        ${sold ? '<span class="mgrid-sold-badge">Prodáno</span>' : ''}
+      </div>`;
+    grid.appendChild(item);
+  });
+}
+function buildMobiletiskyGrid() {
+  if (typeof prints === 'undefined') return;
+  const grid = document.getElementById('mobile-tisky-grid');
+  if (!grid || grid.children.length > 0) return;
+  prints.forEach((p, i) => {
+    if (!p.image) return;
+    const item = document.createElement('div');
+    item.className = 'mgrid-item mgrid-item-print';
+    item.onclick = () => openMobileDetail('print', i);
+    item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+      <div class="mgrid-caption">
+        <span class="mgrid-title">${p.title}</span>
+        <span class="mgrid-meta">${p.subtitle || p.technique || ''}</span>
+      </div>`;
+    grid.appendChild(item);
+  });
+}
+
+let mobileDetailCurrent = null;
+let mobCarouselIndex = 0;
+let mobCarouselImages = [];
+let mobCarouselTouchX = null;
+
+function mobCarouselGo(i) {
+  const carousel = document.getElementById('mob-carousel');
+  const dots = document.getElementById('mob-carousel-dots').querySelectorAll('.mob-carousel-dot');
+  mobCarouselIndex = Math.max(0, Math.min(i, mobCarouselImages.length - 1));
+  carousel.style.transform = `translateX(-${mobCarouselIndex * 100}%)`;
+  dots.forEach((d, j) => d.classList.toggle('active', j === mobCarouselIndex));
+  const prev = document.getElementById('mob-carousel-prev');
+  const next = document.getElementById('mob-carousel-next');
+  if (prev) prev.hidden = mobCarouselIndex === 0 || mobCarouselImages.length <= 1;
+  if (next) next.hidden = mobCarouselIndex === mobCarouselImages.length - 1 || mobCarouselImages.length <= 1;
+  const _p = mobileDetailCurrent && mobileDetailCurrent.p;
+  if (_p) {
+    const _mFitDef = _p.crop === 'cover' ? 'cover' : 'contain';
+    const _mFit = _p.img_crop ? (_p.img_crop[mobCarouselIndex] || _mFitDef) : _mFitDef;
+    const _mZ = _p.img_zoom ? (_p.img_zoom[mobCarouselIndex] || 1) : 1;
+    const _wrap = document.querySelector('.mob-detail-img-wrap');
+    if (_wrap) _wrap.style.overflow = (_mFit === 'contain' && _mZ > 1) ? 'visible' : 'hidden';
+  }
+}
+
+function openMobileDetail(type, index) {
+  const p = type === 'print' ? prints[index] : visiblePaintings[index];
+  if (!p) return;
+  mobileDetailCurrent = { type, index, p };
+
+  // Build carousel
+  mobCarouselImages = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : []);
+  mobCarouselIndex = 0;
+  const carousel = document.getElementById('mob-carousel');
+  const dotsEl = document.getElementById('mob-carousel-dots');
+  const mobFitDefault = p.crop === 'cover' ? 'cover' : 'contain';
+  const _mobImgWrap = document.querySelector('.mob-detail-img-wrap');
+  carousel.innerHTML = mobCarouselImages.map((img, i) => {
+    const z = p.img_zoom ? (p.img_zoom[i] || 1) : 1;
+    const zStyle = z !== 1 ? `;transform:scale(${z})` : '';
+    const mobFit = p.img_crop ? (p.img_crop[i] || mobFitDefault) : mobFitDefault;
+    return `<div class="mob-carousel-slide"><img src="images/${img}" alt="${p.title}" loading="lazy" style="object-fit:${mobFit}${zStyle}"></div>`;
+  }).join('');
+  dotsEl.innerHTML = mobCarouselImages.length > 1
+    ? mobCarouselImages.map((_, i) => `<div class="mob-carousel-dot${i===0?' active':''}"></div>`).join('')
+    : '';
+  mobCarouselGo(0);
+
+  document.getElementById('mob-detail-title').textContent = p.title;
+  const coll = type === 'print'
+    ? (p.subtitle || '')
+    : [p.collection, p.year].filter(Boolean).join(' · ');
+  document.getElementById('mob-detail-collection').textContent = coll;
+  const metaParts = [];
+  if (p.technique) metaParts.push(p.technique);
+  if (p.size) metaParts.push(p.size);
+  document.getElementById('mob-detail-meta').textContent = metaParts.join('  ·  ');
+  document.getElementById('mob-detail-status').textContent = p.status === 'Prodáno' ? 'Prodáno' : '';
+  const storyEl = document.getElementById('mob-detail-story');
+  if (p.story) {
+    storyEl.innerHTML = p.story.split('\n\n').map(s => `<p>${s}</p>`).join('');
+  } else {
+    storyEl.innerHTML = '';
+  }
+  document.getElementById('mobile-detail').classList.remove('mobile-detail-hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+// Swipe support for carousel
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrap = document.querySelector('.mob-detail-img-wrap');
+    if (!wrap) return;
+    wrap.addEventListener('touchstart', function(e) {
+      mobCarouselTouchX = e.touches[0].clientX;
+    }, { passive: true });
+    wrap.addEventListener('touchend', function(e) {
+      if (mobCarouselTouchX === null) return;
+      const dx = e.changedTouches[0].clientX - mobCarouselTouchX;
+      mobCarouselTouchX = null;
+      if (Math.abs(dx) < 40) return;
+      mobCarouselGo(dx < 0 ? mobCarouselIndex + 1 : mobCarouselIndex - 1);
+    }, { passive: true });
+  });
+})();
+function closeMobileDetail() {
+  document.getElementById('mobile-detail').classList.add('mobile-detail-hidden');
+  document.body.style.overflow = '';
+  mobileDetailCurrent = null;
+}
+
+function toggleMobileMenu() {
+  document.getElementById('mob-menu-overlay').classList.toggle('mob-menu-hidden');
+  document.body.style.overflow =
+    document.getElementById('mob-menu-overlay').classList.contains('mob-menu-hidden') ? '' : 'hidden';
+}
+function mobilNavGo(section) {
+  document.getElementById('mob-menu-overlay').classList.add('mob-menu-hidden');
+  document.body.style.overflow = '';
+  showSection(section);
+}
+
+function buildMobileUnifiedFeed() {
+  const feed = document.getElementById('mob-unified-feed');
+  if (!feed || feed.children.length > 0) return;
+  const labelP = document.createElement('div');
+  labelP.className = 'mob-feed-section-label';
+  labelP.textContent = 'Obrazy';
+  feed.appendChild(labelP);
+  visiblePaintings.forEach((p, i) => {
+    const item = document.createElement('div');
+    item.className = 'mob-feed-item';
+    item.onclick = () => openMobileDetail('painting', i);
+    const sold = p.status === 'Prodáno';
+    item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+      <div class="mob-feed-caption">
+        <span class="mob-feed-title">${p.title}</span>
+        <span class="mob-feed-meta">${[p.collection, p.year].filter(Boolean).join(' · ')}</span>
+        ${sold ? '<span class="mob-feed-badge">Prodáno</span>' : ''}
+      </div>`;
+    feed.appendChild(item);
+  });
+  if (typeof prints !== 'undefined') {
+    const labelT = document.createElement('div');
+    labelT.className = 'mob-feed-section-label';
+    labelT.textContent = 'Umělecké tisky';
+    feed.appendChild(labelT);
+    prints.forEach((p, i) => {
+      if (!p.image) return;
+      const item = document.createElement('div');
+      item.className = 'mob-feed-item';
+      item.onclick = () => openMobileDetail('print', i);
+      item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+        <div class="mob-feed-caption">
+          <span class="mob-feed-title">${p.title}</span>
+          <span class="mob-feed-meta">${p.subtitle || p.technique || ''}</span>
+        </div>`;
+      feed.appendChild(item);
+    });
+  }
+}
+buildMobileUnifiedFeed();
+buildMobileGalleryGrid();
+buildMobiletiskyGrid();
+
+// Contact form
+document.getElementById('contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-send');
+  btn.textContent = 'Odesílám...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('form-success').style.display = 'block';
+    e.target.reset();
+    btn.textContent = 'Odeslat zprávu';
+    btn.disabled = false;
+  }, 800);
+});
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', () => { currentIndex = (currentIndex - 1 + visiblePaintings.length) % visiblePaintings.length; renderLightbox(); });
+document.getElementById('lb-next').addEventListener('click', () => { currentIndex = (currentIndex + 1) % visiblePaintings.length; renderLightbox(); });
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (document.getElementById('lightbox').classList.contains('open')) {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + visiblePaintings.length) % visiblePaintings.length; renderLightbox(); }
+    if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visiblePaintings.length; renderLightbox(); }
+    return;
+  }
+  const galActive = document.getElementById('gallery').classList.contains('active');
+  const tiskyActive = document.getElementById('tisky').classList.contains('active');
+  if (galActive) {
+    const filtered = getFilteredPaintings();
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      currentGalIndex = (currentGalIndex + 1) % filtered.length;
+      buildGalThumbs(); updateGalViewer();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      currentGalIndex = (currentGalIndex - 1 + filtered.length) % filtered.length;
+      buildGalThumbs(); updateGalViewer();
+    }
+  }
+});
+// Language switcher
+const soldLabels = { cs: 'Prodáno', en: 'Sold', it: 'Venduto' };
+const availLabels = { cs: 'K dispozici', en: 'Available', it: 'Disponibile' };
+const inquireLabels = { cs: 'Mám zájem o tento obraz', en: 'I am interested in this work', it: 'Sono interessato a quest\'opera' };
+const similarLabels = { cs: 'Dotaz na podobný obraz', en: 'Enquire about a similar work', it: 'Richiesta per un\'opera simile' };
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('[data-cs]').forEach(el => {
+    const val = el.dataset[lang] || el.dataset.cs;
+    el.innerHTML = val;
+  });
+  // Show/hide lang-specific elements (e.g. lang-cs, lang-en, lang-it)
+  ['cs','en','it'].forEach(l => {
+    document.querySelectorAll('.lang-' + l).forEach(el => {
+      el.style.display = (l === lang) ? '' : 'none';
+    });
+  });
+  // Rebuild collection filter tabs with translated names
+  if (typeof buildFilterTabs === 'function') buildFilterTabs();
+  document.querySelectorAll('[data-cs-placeholder]').forEach(el => {
+    el.placeholder = el.dataset[lang + 'Placeholder'] || el.dataset.csPlaceholder;
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+  });
+}
+// Apply saved lang on load
+applyLang(currentLang);
+
+// Prožitky — proklik na článek
+function openArticle(index) {
+  document.getElementById('prozitky-grid').style.display = 'none';
+  document.getElementById('inspirace-intro-block').style.display = 'none';
+  document.getElementById('prozitky-article-view').style.display = 'block';
+  document.querySelectorAll('.prozitky-article-content').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+  window.scrollTo(0, 0);
+}
+function closeArticle() {
+  document.getElementById('prozitky-grid').style.display = 'grid';
+  document.getElementById('inspirace-intro-block').style.display = 'block';
+  document.getElementById('prozitky-article-view').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+
+// Prints viewer
+function updateTiskyViewer() {
+  if (typeof prints === 'undefined') return;
+  const p = prints[currentPrintIndex];
+  if (!p) return;
+  const imgs = p.images && p.images.length > 1 ? p.images : [p.image];
+  const src = imgs[currentPrintPhotoIndex] || imgs[0];
+  const activeImg = document.getElementById('tisky-active-img');
+  activeImg.style.opacity = '0';
+  activeImg.onload = () => { activeImg.style.opacity = '1'; };
+  activeImg.src = `images/${src}`;
+  activeImg.alt = p.title;
+  buildTiskyDots();
+  const authorBtn = document.getElementById('tisky-author-btn');
+  if (authorBtn) authorBtn.style.display = (p.description || p.story) ? '' : 'none';
+
+  document.getElementById('tisky-info-title').textContent = p.title;
+  document.getElementById('tisky-info-collection').textContent = p.subtitle || '';
+  const techEl = document.getElementById('tisky-info-technique');
+  if (techEl) techEl.textContent = p.technique || '';
+  const sizeEl = document.getElementById('tisky-info-size');
+  if (sizeEl) sizeEl.textContent = p.size || '';
+  // sync thumb active state
+  document.querySelectorAll('#tisky-thumbstrip .gal-thumb').forEach((el, i) => {
+    el.classList.toggle('active', i === currentPrintIndex);
+  });
+}
+
+if (typeof prints !== 'undefined') {
+  buildTiskyThumbs();
+  updateTiskyViewer();
+  // Swipe
+  const tiskyWrap = document.querySelector('#tisky .gal-img-wrap');
+  if (tiskyWrap) addSwipe(tiskyWrap, tiskyNavNext, tiskyNavPrev);
+}
+const galWrap = document.querySelector('#gallery .gal-img-wrap');
+if (galWrap) addSwipe(galWrap, galNavNext, galNavPrev);
+
+// Klub form
+document.getElementById('klub-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('klub-name').value.trim();
+  const email = document.getElementById('klub-email').value.trim();
+  const subject = 'Nový člen Klubu přátel umění';
+  const body = `Nový zájemce o Pro přátelé umění Vladi Skrivan:%0A%0AJméno: ${name || '—'}%0AE-mail: ${email}`;
+  window.location.href = `mailto:info@vladiskrivan.cz?subject=${encodeURIComponent(subject)}&body=${body}`;
+  document.getElementById('klub-success').style.display = 'block';
+  e.target.reset();
+});
+
+// Cookie bar
+(function() {
+  if (localStorage.getItem('cookies_consent')) return;
+  const bar = document.getElementById('cookie-bar');
+  setTimeout(() => bar.classList.add('visible'), 600);
+  document.getElementById('cookie-accept').addEventListener('click', () => {
+    localStorage.setItem('cookies_consent', 'accepted');
+    bar.classList.remove('visible');
+  });
+  document.getElementById('cookie-decline').addEventListener('click', () => {
+    localStorage.setItem('cookies_consent', 'declined');
+    bar.classList.remove('visible');
+  });
+})();
+</script>
+</body>
+</html>

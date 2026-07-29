@@ -1,0 +1,483 @@
+var paintings = [
+  // ── ENERGIE (2026) ──
+  {
+    "title": "Energy",
+    "collection": "Abstract",
+    "year": 2026,
+    "size": "220 × 170 cm",
+    "technique": "olej na plátně",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "K dispozici",
+    "story": "",
+    "image": "Energy_mistnost.jpg",
+    "images": ["Energy_mistnost.jpg", "Energy_obraz_1.jpeg", "Energy_detail_3.jpeg", "energy 4.jpg"],
+    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "on_web": true
+  },
+
+  // ── POŽEHNÁNÍ (2026) ──
+  {
+    "title": "Požehnání",
+    "collection": "Abstract",
+    "year": 2026,
+    "size": "120 × 80 cm",
+    "technique": "olej na plátně",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "K dispozici",
+    "story": "Tento obraz vznikal pomalu, vrstvu po vrstvě – podobně jako myšlenky, které se během jeho tvorby postupně otevíraly a rozvíjely do všech směrů.\n\nZnovu a znovu jsem se k němu vracela. Každá nová vrstva barvy prohlubovala jeho výraz a vytvářela prostor, který není nutné jen vidět, ale především prožít. S každým tahem štětce se mé myšlenky nořily hlouběji. Propojovaly mě s přírodou, s rytmem země i s nekonečností vesmíru.\n\nČas přestal být důležitý. Zůstalo jen přítomné bytí, uvolnění a plynoucí tok tvorby. Nakonec přišly teplé odstíny. Nepůsobily jako výrazné gesto, ale jako přirozené završení celé cesty. Přinesly klid, harmonii a pocit požehnání.\n\nA tehdy jsem věděla, že je obraz dokončen.",
+    "image": "pozehnani-mistnost-1.jpg",
+    "images": ["pozehnani-mistnost-1.jpg", "pozehnani-key.jpeg", "pozehnani 3.jpeg", "pozehnani 4b.jpg"],
+    "crop": "cover",
+    "img_crop": ["contain", "contain", "contain", "contain"],
+    "img_zoom": [1.21, 1.21, 1.21, 1.21],
+    "on_web": true
+  },
+
+  // ── ROZHOVOR S NÍM (2026) ──
+  {
+    "title": "Rozhovor s Ním",
+    "collection": "Abstract",
+    "year": 2026,
+    "size": "120 × 90 cm",
+    "technique": "olej na plátně",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "K dispozici",
+    "story": "Chtěla jsem zachytit to, co se nedá vyslovit. Ten okamžik, kdy se ztiším natolik, že uslyším víc, než jen sebe. Kdy hranice mezi mnou a tím, s kým mluvím, přestane existovat, a zůstane jen proudění — jemné, modré, živé.\n\nMaloval mě dech. Každá linie je otisk chvíle, kdy jsem přestala hledat slova a nechala ruku svobodnou. Nevím přesně, co jsem zachytila. Vím jen, že to bylo skutečné.\n\nNechávám tento obraz otevřený. Nehledejte v něm mé vysvětlení — hledejte v něm své vlastní spojení. To, co uvidíte, když necháte oči volně bloudit po plátně, patří jen vám.",
+    "image": "rozhovor-mistnost-1.jpg",
+    "images": ["rozhovor-mistnost-1.jpg", "rozhovor-key.jpeg", "rozhovor-detail-1.jpeg", "rozhovor-mistnost-2.jpg"],
+    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "on_web": true
+  },
+
+  // ── Z MÝCH CEST (2026) ──
+  {
+    "title": "Sen o Skotské vysočině",
+    "collection": "Z mých cest",
+    "year": 2026,
+    "size": "40 × 40 cm",
+    "technique": "olej na plátně",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "K dispozici",
+    "story": "Tento obraz vznikl z mé touhy navštívit Skotskou vysočinu. Místo, které mě přitahuje svou nespoutanou krásou, rozlehlostí a jedinečnou atmosférou.\n\nToužím jednou projít jejími kopci, nasát všechny její barvy, vůně a energii a nechat se unášet krajinou vřesovišť a nekonečných obzorů. Do té doby o této cestě sním a přenáším své představy na plátno.\n\nTato malba je pozvánkou do krajiny, která zatím žije v mé fantazii, ale již nyní naplňuje mé srdce inspirací.\n\nOlej na plátně, 40 × 40 cm",
+    "image": "sen o skotske vysocine 4.jpg",
+    "images": ["sen o skotske vysocine 4.jpg", "ADOTSH_obraz_1.jpeg", "ADOTSH_detail_1.jpeg", "sen o skotske vysocine 1.jpg"],
+    "on_web": true
+  },
+  {
+    "title": "Garden",
+    "collection": "Z mých cest",
+    "year": 2026,
+    "size": "90 × 90 cm",
+    "technique": "originální olejomalba",
+    "price_czk": 99000,
+    "price_eur": 3960,
+    "status": "K dispozici",
+    "story": "Snění o tom, jak by vypadala babiččina zahrada, kdyby se dožila vysokého věku. Viděla jsem ji v představách jako rozlehlé voňavé útočiště plné barev, vůní květin, zpěvu ptáků a tajných zákoutí, kam se lze schovat před světem a jen tak si snít.",
+    "image": "image-garden.jpg",
+    "images": ["image-garden.jpg", "image-garden-2.jpeg", "image-garden-3.jpeg", "Garden 4.jpg"],
+    "on_web": true
+  },
+
+  // ── DOTEK NEKONEČNA (2025) ──
+  {
+    "title": "V náruči přírody",
+    "collection": "Dotek nekonečna",
+    "year": 2025,
+    "size": "80x120 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 65000,
+    "price_eur": 2600,
+    "status": "K dispozici",
+    "story": "„V náruči přírody“ je obrazem, který zve k propojení s divokou krásou a klidem, které příroda nabízí. Dynamické tahy špachtlí vytvářejí strukturu evokující hluboký soulad mezi člověkem a krajinou. Každá vrstva barvy zachycuje sílu živlů i jemnost okamžiku, ve kterém se můžeme ztratit a znovu nalézt.",
+    "image": "v naruci prirody 1.jpg",
+    "images": ["v naruci prirody 1.jpg", "v naruci prirody 2.jpeg", "v naruci prirody 3.jpeg", "v naruci prirody 4.jpg"],
+    "on_web": true
+  },
+  {
+    "title": "Vlnění",
+    "collection": "Dotek nekonečna",
+    "year": 2025,
+    "size": "50x60 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 30000,
+    "price_eur": 1200,
+    "status": "K dispozici",
+    "story": "Od hladiny jsem nedokázala odejít. Stačil lehký závan větru a z klidného zrcadla se stal živý obraz. Po vodě se začaly šířit jemné kruhy a vlnky, které rozbíjely odrazy stromů i oblohy. Každý okamžik byl jiný. Barvy se prolínaly, světlo se lámalo do nových tvarů a krajina jako by se nadechovala spolu s vodou. Uvědomila jsem si, že právě v tom neustálém pohybu je zvláštní harmonie. Nic nezůstává stejné, a přesto všechno drží pohromadě.\n\nObraz Vlnění vznikl z tohoto okamžiku. Z jemného pohybu, který proměňuje světlo i barvy, aniž by narušil jejich krásu. Malovala jsem špachtlí, vrstvila odstíny modré, tyrkysové, zelené a zlaté, nechávala je vzájemně se dotýkat, prolínat a vytvářet rytmus připomínající vodní vlny. Každá vrstva nese stopu předchozí, stejně jako každý prožitek zanechává jemnou stopu v našem nitru. Vlnění je pro mě připomínkou, že i zdánlivě nepatrný pohyb dokáže proměnit celý obraz – na hladině i v našem životě.",
+    "image": "vlneni fin 1.jpg",
+    "images": ["vlneni fin 1.jpg", "vlneni fin 2.jpeg", "vlneni fin 3.jpeg", "vlneni fin 4.jpg"],
+    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "on_web": true
+  },
+  {
+    "title": "Hladiny",
+    "collection": "Dotek nekonečna",
+    "year": 2025,
+    "size": "50x60 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 30000,
+    "price_eur": 1200,
+    "status": "Dostupné",
+    "story": "Ten den jsem šla bez cíle. Jen se nadechnout lesa, pustit myšlenky ven a nechat se vést. Cesta mě přivedla k rybníku - k tomu tichému, širokému zrcadlu uprostřed jarní krajiny. Zastavila jsem se. Voda byla klidná, ale žila. Neustále proměnlivá, barevná. Slunce v ní rozpouštělo zlatavé tóny, větve bříz kreslily šedozelené linie, nebe se koupalo v jemně modré. Každý pohyb větrem nebo ptákem rozechvíval hladinu, a spolu s ní i barvy. Nic nebylo ostré, přesto všechno mělo tvar. Všechno se rozplývalo a znovu skládalo. Byla to poezie odrazů.\n\nObraz Hladiny vznikl právě z té chvíle. Z toho barevného klidu, kde se svět nerozděluje na nahoře a dole, ale plyne dohromady. Malovala jsem špachtlí, vrstvila tóny modré, zelené, zlaté a tyrkysové, nechávala je prolínat, míchat se, překrývat. Stejně jako se míchají myšlenky, pocity, vjemy - na hladině i uvnitř nás.",
+    "image": "hladiny 1.jpg",
+    "images": ["hladiny 1.jpg", "Hladiny 2.jpg", "Hladiny 3.jpg", "Hladiny 4.jpg"],
+    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "on_web": true
+  },
+  {
+    "title": "Zlaté vejce",
+    "collection": "Dotek nekonečna",
+    "year": 2025,
+    "size": "100x100 cm",
+    "technique": "originální olejomalba špachtlí na desce",
+    "price_czk": 85000,
+    "price_eur": 3400,
+    "status": "Prodáno",
+    "story": "„Zlaté vejce“ je symbolem zrození, nových začátků a nekonečného potenciálu. Tato originální olejomalba špachtlí na desce kombinuje preciznost techniky s energií a bohatstvím barev, které dodávají obrazu jedinečný lesk a texturu.",
+    "image": "image-zlate-vejce-2.jpeg",
+    "images": ["image-zlate-vejce-2.jpeg", "image-zlate-vejce-3.jpeg", "zlate vejce 3.jpeg", "zlate vejce 4.jpg"],
+    "img_zoom": [1, 1, 1, 1],
+    "on_web": true
+  },
+  {
+    "title": "Uprostřed vděčnosti",
+    "collection": "Dotek nekonečna",
+    "year": 2025,
+    "size": "80x120 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 70000,
+    "price_eur": 2800,
+    "status": "K dispozici",
+    "story": "Uprostřed vděčnosti\n\nČasto přemýšlím, co vlastně znamená být vděčná.\n\nMožná je vděčnost ctnost. Možná je to jen přirozené přijetí života s vědomím, že dobro, krása i láska mají v našem životě své místo.\n\nUmím poděkovat – nahlas i potichu.\n\nVidím krásu tam, kde ji jiní míjejí. V ranním světle, v zeleni, v moři i v obyčejných okamžicích. Tato schopnost mě provází životem a přináší mi radost.\n\nA také jsem se naučila spoléhat sama na sebe. Jako kočka, která vždy dopadne na všechny čtyři a pokračuje na své cestě dál.\n\nPokud toto všechno znamená vděčnost, pak mohu s klidem říci:\n\nJsem vděčná.",
+    "image": "vdecnost 4.jpg",
+    "images": ["vdecnost 4.jpg", "vdecnost 2.jpeg", "vdecnost 3.jpeg", "vdecnost 1.jpg"],
+    "on_web": true
+  },
+  {
+    "title": "Zrození Venuše",
+    "collection": "Dotek nekonečna",
+    "year": 2025,
+    "size": "80x120 cm",
+    "technique": "originální olejomalba",
+    "price_czk": 100000,
+    "price_eur": 4000,
+    "status": "K dispozici",
+    "story": "„Zrození Venuše“ je oslavou ženské krásy, něhy a síly. Tento originální olejomalba na plátně přináší harmonii tvarů a barev, které vyzařují lásku a přirozenou eleganci. Venuše je nejen bohyní, ale také symbolem věčného spojení mezi krásou a emocemi.",
+    "image": "zrozeni venuse 1.jpeg",
+    "images": ["zrozeni venuse 1.jpeg", "zrozeni venuse 2.jpeg", "zrozeni venuse 3.jpeg", "zrozeni venuse 4.jpg"],
+    "on_web": true
+  },
+
+  // ── COFFEE ART (2025) ──
+  {
+    "title": "Křehké bytí",
+    "collection": "Coffee Art",
+    "year": 2025,
+    "size": "50x70 cm",
+    "technique": "malba kávou na profi akvarelový papír",
+    "price_czk": 10000,
+    "price_eur": 400,
+    "status": "K dispozici",
+        "story": "Dívka, možná žena. Štíhlá víla, a přesto zemitá. Objímá sama sebe – kolena k tělu, paže kolem nich – a ví, kam patří. Ví, co chce.\n\nTeď jen odpočívá sama se sebou. Nechává rozvířené myšlenky rozplynout se v tu krásnou zlatavou energii.",    "image": "krehke byti 1.jpg",
+    "images": ["krehke byti 1.jpg", "krehke byti 2.jpg", "krehke byti 3.jpeg", "krehke byti 4.jpg"],
+    "img_zoom": [1, 1, 1, 1],
+    "on_web": true
+  },
+  {
+    "title": "Zakletá v čase",
+    "collection": "Coffee Art",
+    "year": 2025,
+    "size": "50x70 cm",
+    "technique": "malba kávou na profi akvarelový papír",
+    "price_czk": 10000,
+    "price_eur": 400,
+    "status": "K dispozici",
+    "story": "Dívám se na ni a nevím, jestli se probouzí, nebo právě usíná do jiného světa. Po tváři jí stékají kapky, jako by z ní čas sám odkapával, kapku po kapce, beze spěchu.\n\nVlasy má rozpité do tmavé koruny, něco mezi korunou a stínem, něco mezi silou a snem. Oči jí zakryla, protože některé věci nejsou určené k tomu, aby je viděl každý.\n\nNese v sobě staré měsíce, jako medailon, který si zavěsila kolem krku dávno předtím, než jsem ji namalovala. Zůstala zaklená v okamžiku, který se nechce pustit dál, a přesto plyne.\n\nMalovala jsem ji kávou, protože jen ona umí vyprávět o čase způsobem, jaký slova neznají. Vrstva se usazovala na vrstvu, jako vzpomínka na vzpomínku, jako stopa toho, co bylo.\n\nJe tichá, ale ne nehybná. Zůstává, dokud se sama nerozhodne, kdy je čas jít dál.",
+    "image": "zakleta v case 1.jpg",
+    "images": ["zakleta v case 1.jpg", "zakleta v case 2.png", "zakletá v čase 3.png", "zakleta v case 4.jpg"],
+    "on_web": true
+  },
+  {
+    "title": "Šeptání stromů",
+    "collection": "Coffee Art",
+    "year": 2025,
+    "size": "50x70 cm",
+    "technique": "malba kávou na profi akvarelový papír",
+    "price_czk": 10000,
+    "price_eur": 400,
+    "status": "K dispozici",
+    "story": "Větve se proplétají jako věty, které si stromy šeptají mezi sebou už léta. Nebe mezi nimi prosvítá jen v útržcích, tiché modré kousky, které si všimne jen ten, kdo se na chvíli zastaví.\n\nNechala jsem je holé, bez listí, protože v tichu zimy je slyšet nejvíc. Kořeny pevně v zemi, a přesto nikam nespěchají – vědí, že jaro přijde samo.",
+    "image": "septani stromu 1.jpg",
+    "images": ["septani stromu 1.jpg", "septani stromu 2.png", "septani stormu 3.png", "septani stromu 4.jpg"],
+    "img_zoom": [1.2],
+    "on_web": true
+  },
+
+  // ── SECRET OF LOVE (2023) ──
+  {
+    "title": "Bosky",
+    "collection": "Secret of Love",
+    "year": 2023,
+    "size": "90x120 cm",
+    "technique": "originální olejomalba struktura na plátno",
+    "price_czk": 170000,
+    "price_eur": 6800,
+    "status": "Prodáno",
+    "story": "Tento obraz je oslavou intimních okamžiků a jemnosti lásky, zachycených v harmonii barev a struktury. Originální olejomalba na plátně přenáší pocity ranní svěžesti, doteků a něžného vyznání do jedinečného uměleckého díla.",
+    "image": "image-bosky-2.jpeg",
+    "images": ["image-bosky-2.jpeg", "image-bosky-3.jpeg", "image16.png", "Bosky 4.jpg"],
+    "on_web": true
+  },
+  {
+    "title": "Zrodila se hvězda",
+    "collection": "Secret of Love",
+    "year": 2023,
+    "size": "50x70 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 45000,
+    "price_eur": 1800,
+    "status": "Prodáno",
+    "story": "„Zrodila se hvězda“ zachycuje okamžik zázraku, kdy světlo naděje a lásky proráží temnotou. Jemné linie a vrstvy olejových barev vytvářejí fascinující textury, které dodávají obrazu hloubku a energii.",
+    "image": "image-hvezda-2.jpeg",
+    "images": ["image-hvezda-2.jpeg", "image9.png"],
+    "on_web": true
+  },
+  {
+    "title": "Moře lásky",
+    "collection": "Secret of Love",
+    "year": 2023,
+    "size": "80x120 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 45000,
+    "price_eur": 1800,
+    "status": "Prodáno",
+    "story": "„Moře lásky“ přináší na plátno energii, vášeň a hloubku pocitů, které se podobají nekonečnému moři. Tato originální olejomalba špachtlí vyniká svou dynamickou strukturou a intenzivními barvami, které přitáhnou pohled a vyvolají emoce.",
+    "image": "image14.png",
+    "images": ["image14.png"],
+    "on_web": true
+  },
+  {
+    "title": "Sen",
+    "collection": "Secret of Love",
+    "year": 2023,
+    "size": "60x70 cm",
+    "technique": "originální olejomalba na plátno",
+    "price_czk": 35000,
+    "price_eur": 1400,
+    "status": "K dispozici",
+    "story": "Tento obraz zachycuje okamžik, kdy jsme na pomezí spánku a bdění, v prostoru, kde čas a prostor ztrácí význam. Jemné tahy štětce a vrstvy barev vyprávějí příběh hlubokého klidu, ale i tajemné neklidné energie, která nás zve k hledání odpovědí na otázky, které možná nikdy nevyslovíme. Dílo „Sen“ v sobě nese snovou atmosféru, která promění každý interiér v prostor, kde se prolíná světlo, stíny a tiché emoce.",
+    "image": "image-sen-2.jpeg",
+    "images": ["image-sen-2.jpeg", "image11.png", "sen3.jpeg", "sen4.jpg"],
+    "on_web": true
+  },
+  {
+    "title": "Nebe plné lásky",
+    "collection": "Secret of Love",
+    "year": 2023,
+    "size": "60x80 cm",
+    "technique": "originální olejomalba špachtlí",
+    "price_czk": 35000,
+    "price_eur": 1400,
+    "status": "K dispozici",
+    "story": "„Nebe plné lásky“ přináší na plátno atmosféru klidu a nekonečna, kde se láska vznáší jako jemné obláčky na obzoru. Tento originální olejomalovaný obraz s výraznou texturou a poetickými tahy zachycuje moment, kdy se sny a emoce spojují v harmonii barev a tvarů.",
+    "image": "image-nebe-lasky-2.jpeg",
+    "images": ["image-nebe-lasky-2.jpeg", "image6.png", "nebe3.jpeg", "nebe4.jpg"],
+    "on_web": true
+  },
+
+
+  // ── FLOWERS (2022) ──
+  {
+    "title": "Pivoňky vol. I",
+    "collection": "Flowers",
+    "year": 2022,
+    "size": "90 × 90 cm",
+    "technique": "originální olejomalba na plátno",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "Prodáno",
+    "story": "Pivoňky v zahradě mě zastavily svou jemnou vůní, která na okamžik utišila celý svět. Zdají se křehké, a přitom jsou tak robustní. Ztělesňují hojnost a radost — ty okamžiky, kdy se člověk nebojí plně ukázat. Čtvercový formát jako okno do jiného světa — možná vzpomínky, možná snu.",
+    "image": "image-pivonky1-a.jpeg",
+    "images": ["image-pivonky1-a.jpeg", "image-pivonky1-b.jpeg", "image-pivonky1-c.jpeg"],
+    "on_web": true
+  },
+  {
+    "title": "Pivoňky vol. II",
+    "collection": "Flowers",
+    "year": 2022,
+    "size": "90 × 90 cm",
+    "technique": "originální olejomalba na plátno",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "Prodáno",
+    "story": "Druhý pohled na svět pivoněk — stejná elegance, nová energie. Každý záběr odhaluje jiný rozměr jejich krásy: hravost i vášeň v růžové paletě, ceremoniální teplo zlatého pozadí. Přirozená sofistikovanost, která v sobě nese příběh růstu a slavení.",
+    "image": "image-pivonky2-a.jpeg",
+    "images": ["image-pivonky2-a.jpeg"],
+    "on_web": true
+  },
+
+  // ── SPIRIT (2021) ──
+  {
+    "title": "Ježíš Kristus",
+    "collection": "Spirit",
+    "year": 2021,
+    "size": "90 × 120 cm",
+    "technique": "originální olejomalba na plátno",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "K dispozici",
+    "story": "Tento obraz zachycuje duchovní sílu a klid v tradičním, avšak osobitém pojetí. Originální olejomalba na plátně přináší hlubokou symboliku a jedinečný umělecký výraz, který vnese do vašeho prostoru atmosféru klidu a inspirace.",
+    "image": "image-kristus.jpeg",
+    "images": ["image-kristus.jpeg", "image-kristus-2.png"],
+    "on_web": true
+  },
+  {
+    "title": "Bohyně šťastného osudu",
+    "collection": "Spirit",
+    "year": 2021,
+    "size": "90 × 90 cm",
+    "technique": "originální olejomalba na plátno",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "Prodáno",
+    "story": "Tento originální obraz zachycuje symboliku štěstí a osudu v jemných liniích a sytých barvách. Olejomalba na plátně přináší harmonii a pozitivní energii do každého prostoru.",
+    "image": "image-bohyne-osudu.jpeg",
+    "images": ["image-bohyne-osudu.jpeg"],
+    "on_web": true
+  },
+  {
+    "title": "Bohyně světla",
+    "collection": "Spirit",
+    "year": 2021,
+    "size": "90 × 90 cm",
+    "technique": "originální olejomalba na plátno",
+    "price_czk": null,
+    "price_eur": null,
+    "status": "Prodáno",
+    "story": "Tento jedinečný obraz zachycuje sílu a jemnost světla v harmonii barev a tvarů. Originální olejomalba na plátně byla vytvořena s láskou a pečlivostí.",
+    "image": "image-bohyne-svetla.jpeg",
+    "images": ["image-bohyne-svetla.jpeg"],
+    "on_web": true
+  }
+];
+
+var prints = [
+  {
+    "title": "Hladiny",
+    "subtitle": "Dotek nekonečna",
+    "price_czk": null,
+    "image": "Hladiny 1.jpg",
+    "images": ["tisky-hladiny-hires1.jpeg", "tisky-hladiny-hires2.jpeg"],
+    "description": "Umělecký tisk originálního obrazu Hladiny přináší krásu umění těm, kteří touží po výjimečném díle, ale nemohou si pořídit originál. „Hladiny” zachycují tichou sílu a tajemství vody – její schopnost odrážet světlo, pohltit emoce a spojovat dvě vzdálené reality.",
+    "story": "Tento obraz vznikal pomalu, vrstvu po vrstvě – podobně jako myšlenky, které se během jeho tvorby postupně otevíraly a rozvíjely do všech směrů.\n\nZnovu a znovu jsem se k němu vracela. Každá nová vrstva barvy prohlubovala jeho výraz a vytvářela prostor, který není nutné jen vidět, ale především prožít. S každým tahem štětce se mé myšlenky nořily hlouběji. Propojovaly mě s přírodou, s rytmem země i s nekonečností vesmíru.\n\nČas přestal být důležitý. Zůstalo jen přítomné bytí, uvolnění a plynoucí tok tvorby. Nakonec přišly teplé odstíny. Nepůsobily jako výrazné gesto, ale jako přirozené završení celé cesty. Přinesly klid, harmonii a pocit požehnání.\n\nA tehdy jsem věděla, že je obraz dokončen.",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "size": "50 × 60 cm"
+  },
+  {
+    "title": "Pivoňky vol. I",
+    "subtitle": "Flowers — limitovaná edice",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "price_czk": null,
+    "image": "tisky-pivonky1.jpeg",
+    "images": ["tisky-pivonky1-hires.jpeg"],
+    "description": "„Pivoňky I“ zachycují jemnost a noblesu přírody v každém detailu. Tento exkluzivní tisk přináší do vašeho interiéru harmonii a nadčasovou eleganci, kterou ocení znalci krásy. Každý exemplář je ručně podepsán a očíslován autorkou, čímž se stává autentickým kouskem umění, který nelze nahradit.",
+    "sections": [
+      {
+        "heading": "Umělecký tisk",
+        "text": "Tisk je proveden metodou fine art na prvotřídní papír v gallery kvalitě vysoké gramáže, který je určen pro umělecké reprodukce. Papír má jemnou strukturu a hedvábně-matný povrch, který zajišťuje hlubokou sytost barev, zachování všech detailů a dlouhodobou archivní stálost. Barvy jsou živé, kontrasty přesné a detaily věrně reprodukované.\n\nPapír je odolný vůči žloutnutí a vyblednutí — vaše umělecké dílo si zachová krásu desítky let. Každý tisk je pečlivě balen do hedvábného papíru a zasílán v odolném poštovním tubusu."
+      },
+      {
+        "heading": "Exkluzivita každého kusu",
+        "text": "Každý exemplář limitované edice je číslován a ručně podepsán. Pořadí v edici odráží jeho exkluzivitu – první kusy představují nejvyšší sběratelskou hodnotu, zatímco každý další exemplář stále nese autenticitu, kvalitu a luxusní charakter celé edice."
+      }
+    ],
+    "price_table": {
+      "title": "Cenová tabulka — Pivoňky I",
+      "rows": [
+        { "order": "1", "price": "10 000 Kč", "note": "Exkluzivita, nejvyšší sběratelská hodnota" },
+        { "order": "2–3", "price": "9 000 Kč", "note": "Exkluzivní startovní kusy" },
+        { "order": "4–10", "price": "8 000 Kč", "note": "Vysoce exkluzivní exempláře" },
+        { "order": "11–20", "price": "7 000 Kč", "note": "Luxusní sběratelské tisky" },
+        { "order": "21–35", "price": "6 000 Kč", "note": "Elegantní vstupní cena" },
+        { "order": "36–50", "price": "5 000 Kč", "note": "Poslední kusy edice" }
+      ]
+    }
+  },
+  {
+    "title": "Pivoňky vol. II",
+    "subtitle": "Flowers — limitovaná edice",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "price_czk": null,
+    "image": "tisky pivonky II.jpeg",
+    "images": ["tisky-pivonky2-hires2.jpeg", "tisky-pivonky2-hires1.jpeg"],
+    "description": "„Pivoňky II“ zachycují jemnost a noblesu přírody v každém detailu. Tento exkluzivní tisk přináší do vašeho interiéru harmonii a nadčasovou eleganci, kterou ocení znalci krásy. Každý exemplář je ručně podepsán autorkou, čímž se stává autentickým kouskem umění, který nelze nahradit.",
+    "sections": [
+      {
+        "heading": "Umělecký tisk",
+        "text": "Tisk je proveden metodou fine art na prvotřídní papír v gallery kvalitě vysoké gramáže, který je určen pro umělecké reprodukce. Papír má jemnou strukturu a hedvábně-matný povrch, který zajišťuje hlubokou sytost barev, zachování všech detailů a dlouhodobou archivní stálost. Barvy jsou živé, kontrasty přesné a detaily věrně reprodukované.\n\nPapír je odolný vůči žloutnutí a vyblednutí — vaše umělecké dílo si zachová krásu desítky let. Každý tisk je pečlivě balen do hedvábného papíru a zasílán v odolném poštovním tubusu."
+      },
+      {
+        "heading": "Exkluzivita každého kusu",
+        "text": "Každý exemplář limitované edice je číslován a ručně podepsán. Pořadí v edici odráží jeho exkluzivitu – první kusy představují nejvyšší sběratelskou hodnotu, zatímco každý další exemplář stále nese autenticitu, kvalitu a luxusní charakter celé edice."
+      }
+    ],
+    "price_table": {
+      "title": "Cenová tabulka — Pivoňky II",
+      "rows": [
+        { "order": "1", "price": "10 000 Kč", "note": "Exkluzivita, nejvyšší sběratelská hodnota" },
+        { "order": "2–3", "price": "9 000 Kč", "note": "Exkluzivní startovní kusy" },
+        { "order": "4–10", "price": "8 000 Kč", "note": "Vysoce exkluzivní exempláře" },
+        { "order": "11–20", "price": "7 000 Kč", "note": "Luxusní sběratelské tisky" },
+        { "order": "21–35", "price": "6 000 Kč", "note": "Elegantní vstupní cena" },
+        { "order": "36–50", "price": "5 000 Kč", "note": "Poslední kusy edice" }
+      ]
+    }
+  },
+  {
+    "title": "Louka I",
+    "subtitle": "Louka 2026 — limitovaná edice",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "price_czk": null,
+    "image": "meadow1_obraz.jpg",
+    "images": [],
+    "description": "Papír - Gallery FineArt Smooth 240 g\nFormát - A3\nLimitovaná edice - 30 ks\nKaždý tisk z limitované edice je ručně signován a číslován autorkou",
+    "sections": [],
+    "price_table": null
+  },
+  {
+    "title": "Louka II",
+    "subtitle": "Louka 2026 — limitovaná edice",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "price_czk": null,
+    "image": "meadow2_obraz.jpg",
+    "images": [],
+    "description": "Papír - Gallery FineArt Smooth 240 g\nFormát - A3\nLimitovaná edice - 30 ks\nKaždý tisk z limitované edice je ručně signován a číslován autorkou",
+    "sections": [],
+    "price_table": null
+  },
+  {
+    "title": "Louka III",
+    "subtitle": "Louka 2026 — limitovaná edice",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "price_czk": null,
+    "image": "meadow3_obraz.jpg",
+    "images": [],
+    "description": "Papír - Gallery FineArt Smooth 240 g\nFormát - A3\nLimitovaná edice - 30 ks\nKaždý tisk z limitované edice je ručně signován a číslován autorkou",
+    "sections": [],
+    "price_table": null
+  },
+  {
+    "title": "Louka IV",
+    "subtitle": "Louka 2026 — limitovaná edice",
+    "technique": "Vysoce kvalitní tisk na archivní papír",
+    "price_czk": null,
+    "image": "meadow4_obraz.jpg",
+    "images": [],
+    "description": "Papír - Gallery FineArt Smooth 240 g\nFormát - A3\nLimitovaná edice - 30 ks\nKaždý tisk z limitované edice je ručně signován a číslován autorkou",
+    "sections": [],
+    "price_table": null
+  }
+];

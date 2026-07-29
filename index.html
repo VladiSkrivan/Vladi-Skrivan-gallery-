@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vladi Skrivan</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #f5f3ef;
+    --font-serif: 'Georgia', 'Times New Roman', serif;
+    --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #2e2e2e;
+  }
+
+  /* ── TOP BAR ── */
+  #top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: var(--font-serif);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    pointer-events: all;
+    transition: opacity 0.2s;
+  }
+  .nav-logo:hover { opacity: 0.6; }
+  #lang-switcher {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 2px;
+    overflow: hidden;
+    pointer-events: all;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6);
+    font-family: var(--font-sans);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn:first-child { border-left: none; }
+  .lang-btn:hover { color: #fff; }
+  .lang-btn.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── HERO TRIPTYCH ── */
+  #hero {
+    position: fixed;
+    inset: 0;
+    display: flex;
+  }
+
+  .hero-panel {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.7s cubic-bezier(0.77,0,0.175,1);
+  }
+  /* hover expand removed */
+
+  .hero-panel img,
+  .hero-panel video {
+    position: absolute;
+    inset: -8% -4%;
+    width: 108%;
+    height: 116%;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  .hero-panel:nth-child(1) img { object-position: center; }
+  .hero-panel:nth-child(2) img { object-position: center 30%; }
+  .hero-panel:nth-child(3) img { object-position: center 100%; }
+
+  .hero-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
+    opacity: 0.7;
+    transition: opacity 0.5s;
+  }
+  /* hover overlay removed */
+
+  .hero-divider {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.15);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero-divider:nth-of-type(1) { left: 33.33%; }
+  .hero-divider:nth-of-type(2) { left: 66.66%; }
+
+  /* ── OVERLAY TEXT ── */
+  .hero-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .hero-name {
+    font-family: var(--font-serif);
+    font-size: clamp(21px, 2.8vw, 40px);
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.4);
+    line-height: 1.05;
+    margin-bottom: 48px;
+    animation: fadeUp 1.4s ease both;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 15px 36px;
+    text-decoration: none;
+    pointer-events: all;
+    transition: background 0.3s, gap 0.3s, border-color 0.3s;
+    animation: fadeUp 1.4s 0.3s ease both;
+    backdrop-filter: blur(6px);
+  }
+  .hero-cta:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.55);
+    gap: 22px;
+  }
+  .hero-cta::after { content: '→'; font-size: 12px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SOCIAL BAR ── */
+  #social-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 10;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 32px;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: #fff; }
+
+  .social-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero-name { font-size: 18px; }
+    .hero-panel:hover { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+
+<section id="hero">
+  <div class="hero-panel">
+    <video autoplay muted loop playsinline src="images/SEA.mp4"></video>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-panel">
+    <img src="images/ENERGY.jpeg" alt="">
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-panel">
+    <video autoplay muted loop playsinline src="images/GRASS.mp4"></video>
+  </div>
+</section>
+
+<div class="hero-overlay">
+  <h1 class="hero-name">Vladimíra Victoria<br>Skrivan</h1>
+  <a href="galerie.html" class="hero-cta" id="hero-cta-btn">Vstoupit do galerie</a>
+</div>
+
+
+<script>
+// Language switcher
+const ctaLabels = { cs: 'Vstoupit do galerie', en: 'Enter gallery', it: 'Entra nella galleria' };
+let currentLangIndex = localStorage.getItem('lang') || 'cs';
+function applyLangIndex(lang) {
+  currentLangIndex = lang;
+  localStorage.setItem('lang', lang);
+  document.getElementById('hero-cta-btn').childNodes[0].textContent = ctaLabels[lang] + ' ';
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+  });
+}
+applyLangIndex(currentLangIndex);
+
+// Parallax: autonomous drift + mouse tracking
+(function() {
+  const panels = document.querySelectorAll('.hero-panel img, .hero-panel video');
+
+  // Slow autonomous sinusoidal drift per panel
+  const drift = [
+    { ax: 3.5, ay: 2.5, px: 0.0, py: 1.1, sx: 0.000065, sy: 0.000050 },
+    { ax: 2.5, ay: 3.5, px: 2.1, py: 0.4, sx: 0.000050, sy: 0.000075 },
+    { ax: 3.0, ay: 2.8, px: 1.3, py: 3.0, sx: 0.000060, sy: 0.000045 }
+  ];
+
+  // Mouse parallax depth per panel (px of max travel, different = depth illusion)
+  const depth = [22, 12, 18];
+
+  // Current lerped mouse offset (-1 to +1 each axis)
+  let mx = 0, my = 0, lx = 0, ly = 0;
+  const LERP = 0.035;
+
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth  - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  (function animate(t) {
+    lx += (mx - lx) * LERP;
+    ly += (my - ly) * LERP;
+
+    panels.forEach((el, i) => {
+      const d = drift[i];
+      const dx = Math.sin(t * d.sx + d.px) * d.ax;
+      const dy = Math.cos(t * d.sy + d.py) * d.ay;
+      const px = lx * depth[i];
+      const py = ly * depth[i];
+      el.style.transform = `translate(${dx + px}px, ${dy + py}px) scale(1.10)`;
+    });
+    requestAnimationFrame(animate);
+  })(0);
+})();
+</script>
+</body>
+</html>
