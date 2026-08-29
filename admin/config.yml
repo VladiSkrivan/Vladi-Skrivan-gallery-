@@ -20,7 +20,10 @@ collections:
     summary: "{{title}} — {{collection}} — {{status}}"
     fields:
       - { name: title, label: Název, widget: string }
-      - { name: collection, label: Kolekce, widget: string, hint: "Např. Abstract, Dotek nekonečna, Z mých cest, Coffee Art…" }
+      - name: collection
+        label: Kolekce
+        widget: string
+        hint: "Současné kolekce: Abstract · Dotek nekonečna · Z mých cest · Coffee Art · Secret of Love · Flowers · Spirit. Pro novou kolekci napište nový název."
       - { name: year, label: Rok, widget: number, value_type: int }
       - { name: size, label: Rozměr (cm), widget: string, required: false }
       - { name: technique, label: Technika, widget: string, required: false }
