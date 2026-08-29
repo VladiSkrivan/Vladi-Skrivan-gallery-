@@ -24,17 +24,7 @@ collections:
             summary: "{{fields.title}} — {{fields.status}}"
             fields:
               - { name: title, label: Název, widget: string }
-              - name: collection
-                label: Kolekce
-                widget: select
-                options:
-                  - Abstract
-                  - "Z mých cest"
-                  - "Dotek nekonečna"
-                  - "Coffee Art"
-                  - "Secret of Love"
-                  - Flowers
-                  - Spirit
+              - { name: collection, label: Kolekce, widget: string }
               - { name: year, label: Rok, widget: number, value_type: int }
               - { name: size, label: Rozměr (cm), widget: string, required: false }
               - { name: technique, label: Technika, widget: string, required: false }
