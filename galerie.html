@@ -2488,6 +2488,7 @@
   <div class="vystavy-inner">
     <h2 class="section-title" data-cs="Výstavy" data-en="Exhibitions" data-it="Mostre">Výstavy</h2>
     <ul class="vystavy-list">
+      <li><span class="vystavy-rok">2026</span><span class="vystavy-popis" data-cs="Zastoupena v online galerii <em>Saatchi Art</em>" data-en="Represented by online gallery <em>Saatchi Art</em>" data-it="Rappresentata dalla galleria online <em>Saatchi Art</em>">Zastoupena v online galerii <em>Saatchi Art</em></span></li>
       <li><span class="vystavy-rok">2026</span><span class="vystavy-popis" data-cs="Obraz <em>Energy</em> z nové kolekce Abstract k vidění v prémiové pekárně a kavárně Zrno Zrnko" data-en="Painting <em>Energy</em> from the new Abstract collection on display at premium bakery and café Zrno Zrnko" data-it="Dipinto <em>Energy</em> della nuova collezione Abstract in mostra nella premiata panetteria e caffè Zrno Zrnko">Obraz <em>Energy</em> z nové kolekce Abstract k vidění v prémiové pekárně a kavárně Zrno Zrnko</span></li>
       <li><span class="vystavy-rok">2025</span><span class="vystavy-popis" data-cs="Samostatná výstava <em>Dotek nekonečna</em>, Galerie Petrof" data-en="Solo exhibition <em>Dotek nekonečna</em>, Galerie Petrof" data-it="Mostra personale <em>Dotek nekonečna</em>, Galleria Petrof">Samostatná výstava <em>Dotek nekonečna</em>, Galerie Petrof</span></li>
       <li><span class="vystavy-rok">2022</span><span class="vystavy-popis" data-cs="Samostatná výstava <em>Secret of Love</em>, Galerie Petrof" data-en="Solo exhibition <em>Secret of Love</em>, Galerie Petrof" data-it="Mostra personale <em>Secret of Love</em>, Galleria Petrof">Samostatná výstava <em>Secret of Love</em>, Galerie Petrof</span></li>
@@ -2922,7 +2923,7 @@ Vendemmia Tardiva è per tutte le donne che vogliono ispirarsi, rallentare, apri
   </div>
 </div>
 
-<script src="paintings.js?v=86"></script>
+<script src="paintings.js?v=94"></script>
 <script>
 // Current language (initialised early so colLabel works from any script block)
 let currentLang = localStorage.getItem('lang') || 'cs';
@@ -3083,6 +3084,7 @@ function updateGalViewer() {
   activeImg.style.objectFit = _fitIdx;
   const _zoomIdx = p.img_zoom ? (p.img_zoom[currentGalPhotoIndex] || 1) : 1;
   activeImg.style.transform = _zoomIdx !== 1 ? `scale(${_zoomIdx})` : '';
+  activeImg.style.objectPosition = p.img_position ? (p.img_position[currentGalPhotoIndex] || 'center') : 'center';
   const _imgWrap = document.querySelector('.gal-active-img-wrap');
   if (_imgWrap) _imgWrap.style.overflow = (_fitIdx === 'contain' && _zoomIdx > 1) ? 'visible' : 'hidden';
   activeImg.style.opacity = '0';
@@ -3501,7 +3503,8 @@ function openMobileDetail(type, index) {
     const z = p.img_zoom ? (p.img_zoom[i] || 1) : 1;
     const zStyle = z !== 1 ? `;transform:scale(${z})` : '';
     const mobFit = p.img_crop ? (p.img_crop[i] || mobFitDefault) : mobFitDefault;
-    return `<div class="mob-carousel-slide"><img src="images/${img}" alt="${p.title}" loading="lazy" style="object-fit:${mobFit}${zStyle}"></div>`;
+    const mobPos = p.img_position ? (p.img_position[i] || 'center') : 'center';
+    return `<div class="mob-carousel-slide"><img src="images/${img}" alt="${p.title}" loading="lazy" style="object-fit:${mobFit};object-position:${mobPos}${zStyle}"></div>`;
   }).join('');
   dotsEl.innerHTML = mobCarouselImages.length > 1
     ? mobCarouselImages.map((_, i) => `<div class="mob-carousel-dot${i===0?' active':''}"></div>`).join('')

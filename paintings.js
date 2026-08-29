@@ -12,7 +12,7 @@ var paintings = [
     "story": "",
     "image": "Energy_mistnost.jpg",
     "images": ["Energy_mistnost.jpg", "Energy_obraz_1.jpeg", "Energy_detail_3.jpeg", "energy 4.jpg"],
-    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "img_zoom": [1.21, 1.21, 1.21, 1.21],
     "on_web": true
   },
 
@@ -48,7 +48,7 @@ var paintings = [
     "story": "Chtěla jsem zachytit to, co se nedá vyslovit. Ten okamžik, kdy se ztiším natolik, že uslyším víc, než jen sebe. Kdy hranice mezi mnou a tím, s kým mluvím, přestane existovat, a zůstane jen proudění — jemné, modré, živé.\n\nMaloval mě dech. Každá linie je otisk chvíle, kdy jsem přestala hledat slova a nechala ruku svobodnou. Nevím přesně, co jsem zachytila. Vím jen, že to bylo skutečné.\n\nNechávám tento obraz otevřený. Nehledejte v něm mé vysvětlení — hledejte v něm své vlastní spojení. To, co uvidíte, když necháte oči volně bloudit po plátně, patří jen vám.",
     "image": "rozhovor-mistnost-1.jpg",
     "images": ["rozhovor-mistnost-1.jpg", "rozhovor-key.jpeg", "rozhovor-detail-1.jpeg", "rozhovor-mistnost-2.jpg"],
-    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "img_zoom": [1.21, 1.21, 1.21, 1.21],
     "on_web": true
   },
 
@@ -109,7 +109,7 @@ var paintings = [
     "story": "Od hladiny jsem nedokázala odejít. Stačil lehký závan větru a z klidného zrcadla se stal živý obraz. Po vodě se začaly šířit jemné kruhy a vlnky, které rozbíjely odrazy stromů i oblohy. Každý okamžik byl jiný. Barvy se prolínaly, světlo se lámalo do nových tvarů a krajina jako by se nadechovala spolu s vodou. Uvědomila jsem si, že právě v tom neustálém pohybu je zvláštní harmonie. Nic nezůstává stejné, a přesto všechno drží pohromadě.\n\nObraz Vlnění vznikl z tohoto okamžiku. Z jemného pohybu, který proměňuje světlo i barvy, aniž by narušil jejich krásu. Malovala jsem špachtlí, vrstvila odstíny modré, tyrkysové, zelené a zlaté, nechávala je vzájemně se dotýkat, prolínat a vytvářet rytmus připomínající vodní vlny. Každá vrstva nese stopu předchozí, stejně jako každý prožitek zanechává jemnou stopu v našem nitru. Vlnění je pro mě připomínkou, že i zdánlivě nepatrný pohyb dokáže proměnit celý obraz – na hladině i v našem životě.",
     "image": "vlneni fin 1.jpg",
     "images": ["vlneni fin 1.jpg", "vlneni fin 2.jpeg", "vlneni fin 3.jpeg", "vlneni fin 4.jpg"],
-    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "img_zoom": [1.21, 1.21, 1.21, 1.21],
     "on_web": true
   },
   {
@@ -123,8 +123,9 @@ var paintings = [
     "status": "Dostupné",
     "story": "Ten den jsem šla bez cíle. Jen se nadechnout lesa, pustit myšlenky ven a nechat se vést. Cesta mě přivedla k rybníku - k tomu tichému, širokému zrcadlu uprostřed jarní krajiny. Zastavila jsem se. Voda byla klidná, ale žila. Neustále proměnlivá, barevná. Slunce v ní rozpouštělo zlatavé tóny, větve bříz kreslily šedozelené linie, nebe se koupalo v jemně modré. Každý pohyb větrem nebo ptákem rozechvíval hladinu, a spolu s ní i barvy. Nic nebylo ostré, přesto všechno mělo tvar. Všechno se rozplývalo a znovu skládalo. Byla to poezie odrazů.\n\nObraz Hladiny vznikl právě z té chvíle. Z toho barevného klidu, kde se svět nerozděluje na nahoře a dole, ale plyne dohromady. Malovala jsem špachtlí, vrstvila tóny modré, zelené, zlaté a tyrkysové, nechávala je prolínat, míchat se, překrývat. Stejně jako se míchají myšlenky, pocity, vjemy - na hladině i uvnitř nás.",
     "image": "hladiny 1.jpg",
-    "images": ["hladiny 1.jpg", "Hladiny 2.jpg", "Hladiny 3.jpg", "Hladiny 4.jpg"],
-    "img_zoom": [1.15, 1.15, 1.15, 1.15],
+    "images": ["hladiny 1.jpg", "Hladiny 2.jpg", "Hladiny 3.jpg", "hladiny 4 fin.jpg"],
+    "img_zoom": [1.21, 1.21, 1.21, 1.21],
+    "img_position": ["center", "center", "center", "center"],
     "on_web": true
   },
   {
@@ -212,7 +213,6 @@ var paintings = [
     "story": "Větve se proplétají jako věty, které si stromy šeptají mezi sebou už léta. Nebe mezi nimi prosvítá jen v útržcích, tiché modré kousky, které si všimne jen ten, kdo se na chvíli zastaví.\n\nNechala jsem je holé, bez listí, protože v tichu zimy je slyšet nejvíc. Kořeny pevně v zemi, a přesto nikam nespěchají – vědí, že jaro přijde samo.",
     "image": "septani stromu 1.jpg",
     "images": ["septani stromu 1.jpg", "septani stromu 2.png", "septani stormu 3.png", "septani stromu 4.jpg"],
-    "img_zoom": [1.2],
     "on_web": true
   },
 

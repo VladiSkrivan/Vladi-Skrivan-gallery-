@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: PLACEHOLDER/vladi-skrivan-gallery
+  repo: VladiSkrivan/Vladi-Skrivan-gallery-
   branch: main
 
 media_folder: images
