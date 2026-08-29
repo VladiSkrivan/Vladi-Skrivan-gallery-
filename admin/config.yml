@@ -54,6 +54,41 @@ collections:
                 field: { name: src, label: Foto, widget: image }
               - { name: on_web, label: Zobrazit na webu, widget: boolean, default: true }
 
+  - name: about
+    label: O umělkyni
+    files:
+      - name: about
+        label: O umělkyni
+        file: data/about.json
+        fields:
+          - { name: photo, label: Fotografie, widget: image }
+          - { name: tagline, label: Podtitulek (anglicky), widget: string }
+          - name: bio
+            label: Text "O umělkyni" (odstavce)
+            widget: list
+            field: { name: text, label: Odstavec, widget: text }
+          - name: story
+            label: Text "Můj příběh" (odstavce)
+            widget: list
+            field: { name: text, label: Odstavec, widget: text }
+
+  - name: exhibitions
+    label: Výstavy
+    files:
+      - name: exhibitions
+        label: Seznam výstav
+        file: data/exhibitions.json
+        fields:
+          - name: exhibitions
+            label: Výstavy
+            widget: list
+            summary: "{{fields.year}} — {{fields.text_cs}}"
+            fields:
+              - { name: year, label: Rok, widget: number, value_type: int }
+              - { name: text_cs, label: Text (česky), widget: string }
+              - { name: text_en, label: Text (anglicky), widget: string, required: false }
+              - { name: text_it, label: Text (italsky), widget: string, required: false }
+
   - name: prints
     label: Umělecké tisky
     label_singular: Tisk
