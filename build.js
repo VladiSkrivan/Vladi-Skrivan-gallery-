@@ -8,9 +8,12 @@ const paintings = fs.readdirSync(paintingsDir)
   .sort()
   .map(f => JSON.parse(fs.readFileSync(path.join(paintingsDir, f), 'utf8')));
 
-// Read prints (still single file)
-const printsData = JSON.parse(fs.readFileSync('data/prints.json', 'utf8'));
-const prints = Array.isArray(printsData) ? printsData : (printsData.prints || []);
+// Read individual print files from data/prints/
+const printsDir = 'data/prints';
+const prints = fs.readdirSync(printsDir)
+  .filter(f => f.endsWith('.json'))
+  .sort()
+  .map(f => JSON.parse(fs.readFileSync(path.join(printsDir, f), 'utf8')));
 
 const content = `var paintings = ${JSON.stringify(paintings, null, 2)};\n\nvar prints = ${JSON.stringify(prints, null, 2)};\n`;
 fs.writeFileSync('paintings.js', content);

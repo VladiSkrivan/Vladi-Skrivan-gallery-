@@ -130,24 +130,20 @@ collections:
   - name: prints
     label: Umělecké tisky
     label_singular: Tisk
-    files:
-      - name: prints
-        label: Všechny tisky
-        file: data/prints.json
-        fields:
-          - name: prints
-            label: Tisky
-            widget: list
-            label_singular: Tisk
-            summary: "{{fields.title}}"
-            fields:
-              - { name: title, label: Název, widget: string }
-              - { name: subtitle, label: Podtitul, widget: string, required: false }
-              - { name: technique, label: Technika, widget: string, required: false }
-              - { name: size, label: Rozměr, widget: string, required: false }
-              - { name: description, label: Popis, widget: text, required: false }
-              - { name: image, label: Náhledové foto, widget: image, required: false }
-              - name: images
-                label: Detailní fotky
-                widget: list
-                field: { name: src, label: Foto, widget: image }
+    folder: data/prints
+    create: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    summary: "{{title}} — {{subtitle}}"
+    fields:
+      - { name: title, label: Název, widget: string }
+      - { name: subtitle, label: Podtitul, widget: string, required: false }
+      - { name: technique, label: Technika, widget: string, required: false }
+      - { name: size, label: Rozměr, widget: string, required: false }
+      - { name: description, label: Popis, widget: text, required: false }
+      - { name: image, label: Náhledové foto, widget: image, required: false }
+      - name: images
+        label: Detailní fotky
+        widget: list
+        field: { name: src, label: Foto, widget: image }

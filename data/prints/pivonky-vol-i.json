@@ -1,0 +1,56 @@
+{
+  "title": "Pivoňky vol. I",
+  "subtitle": "Flowers — limitovaná edice",
+  "technique": "Vysoce kvalitní tisk na archivní papír",
+  "price_czk": null,
+  "image": "tisky-pivonky1.jpeg",
+  "images": [
+    "tisky-pivonky1-hires.jpeg"
+  ],
+  "description": "„Pivoňky I“ zachycují jemnost a noblesu přírody v každém detailu. Tento exkluzivní tisk přináší do vašeho interiéru harmonii a nadčasovou eleganci, kterou ocení znalci krásy. Každý exemplář je ručně podepsán a očíslován autorkou, čímž se stává autentickým kouskem umění, který nelze nahradit.",
+  "sections": [
+    {
+      "heading": "Umělecký tisk",
+      "text": "Tisk je proveden metodou fine art na prvotřídní papír v gallery kvalitě vysoké gramáže, který je určen pro umělecké reprodukce. Papír má jemnou strukturu a hedvábně-matný povrch, který zajišťuje hlubokou sytost barev, zachování všech detailů a dlouhodobou archivní stálost. Barvy jsou živé, kontrasty přesné a detaily věrně reprodukované.\n\nPapír je odolný vůči žloutnutí a vyblednutí — vaše umělecké dílo si zachová krásu desítky let. Každý tisk je pečlivě balen do hedvábného papíru a zasílán v odolném poštovním tubusu."
+    },
+    {
+      "heading": "Exkluzivita každého kusu",
+      "text": "Každý exemplář limitované edice je číslován a ručně podepsán. Pořadí v edici odráží jeho exkluzivitu – první kusy představují nejvyšší sběratelskou hodnotu, zatímco každý další exemplář stále nese autenticitu, kvalitu a luxusní charakter celé edice."
+    }
+  ],
+  "price_table": {
+    "title": "Cenová tabulka — Pivoňky I",
+    "rows": [
+      {
+        "order": "1",
+        "price": "10 000 Kč",
+        "note": "Exkluzivita, nejvyšší sběratelská hodnota"
+      },
+      {
+        "order": "2–3",
+        "price": "9 000 Kč",
+        "note": "Exkluzivní startovní kusy"
+      },
+      {
+        "order": "4–10",
+        "price": "8 000 Kč",
+        "note": "Vysoce exkluzivní exempláře"
+      },
+      {
+        "order": "11–20",
+        "price": "7 000 Kč",
+        "note": "Luxusní sběratelské tisky"
+      },
+      {
+        "order": "21–35",
+        "price": "6 000 Kč",
+        "note": "Elegantní vstupní cena"
+      },
+      {
+        "order": "36–50",
+        "price": "5 000 Kč",
+        "note": "Poslední kusy edice"
+      }
+    ]
+  }
+}
