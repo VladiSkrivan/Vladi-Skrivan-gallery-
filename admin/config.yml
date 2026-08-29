@@ -89,6 +89,58 @@ collections:
               - { name: text_en, label: Text (anglicky), widget: string, required: false }
               - { name: text_it, label: Text (italsky), widget: string, required: false }
 
+  - name: klub
+    label: Klub
+    files:
+      - name: klub
+        label: Klub přátel
+        file: data/klub.json
+        fields:
+          - { name: title_cs, label: Název sekce, widget: string }
+          - { name: tagline_cs, label: Úvodní text, widget: text }
+          - name: benefits_cs
+            label: Výhody členství
+            widget: list
+            field: { name: text, label: Výhoda, widget: string }
+          - { name: form_title_cs, label: Nadpis formuláře, widget: string }
+          - { name: form_subtitle_cs, label: Podnázev formuláře, widget: string }
+
+  - name: rozhovor
+    label: Rozhovor
+    files:
+      - name: rozhovor
+        label: Rozhovor
+        file: data/rozhovor.json
+        fields:
+          - { name: subtitle_cs, label: Podtitulek, widget: string }
+          - name: qa
+            label: Otázky a odpovědi
+            widget: list
+            summary: "{{fields.q_cs}}"
+            fields:
+              - { name: q_cs, label: Otázka, widget: string }
+              - { name: a_cs, label: Odpověď, widget: text }
+
+  - name: blog
+    label: Blog Pozdní sběr
+    files:
+      - name: blog
+        label: Blog
+        file: data/blog.json
+        fields:
+          - { name: quote_cs, label: Citát (hlavička), widget: string }
+          - { name: intro_cs, label: Úvod (odstavce oddělené prázdným řádkem), widget: text }
+          - name: articles
+            label: Články
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: tag, label: Kategorie, widget: string }
+              - { name: title, label: Název článku, widget: string }
+              - { name: lead, label: Perex, widget: text }
+              - { name: cover, label: Titulní fotka, widget: image }
+              - { name: body_cs, label: Text článku (HTML), widget: text }
+
   - name: prints
     label: Umělecké tisky
     label_singular: Tisk
