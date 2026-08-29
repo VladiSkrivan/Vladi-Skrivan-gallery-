@@ -1,11 +1,58 @@
-[
-  {"year": 2026, "text_cs": "Zastoupena v online galerii <em>Saatchi Art</em>", "text_en": "Represented by online gallery <em>Saatchi Art</em>", "text_it": "Rappresentata dalla galleria online <em>Saatchi Art</em>"},
-  {"year": 2026, "text_cs": "Obraz <em>Energy</em> z nové kolekce Abstract k vidění v prémiové pekárně a kavárně Zrno Zrnko", "text_en": "Painting <em>Energy</em> from the new Abstract collection on display at premium bakery and café Zrno Zrnko", "text_it": "Dipinto <em>Energy</em> della nuova collezione Abstract in mostra nella premiata panetteria e caffè Zrno Zrnko"},
-  {"year": 2025, "text_cs": "Samostatná výstava <em>Dotek nekonečna</em>, Galerie Petrof", "text_en": "Solo exhibition <em>Dotek nekonečna</em>, Galerie Petrof", "text_it": "Mostra personale <em>Dotek nekonečna</em>, Galleria Petrof"},
-  {"year": 2022, "text_cs": "Samostatná výstava <em>Secret of Love</em>, Galerie Petrof", "text_en": "Solo exhibition <em>Secret of Love</em>, Galerie Petrof", "text_it": "Mostra personale <em>Secret of Love</em>, Galleria Petrof"},
-  {"year": 2021, "text_cs": "Open Art Fest, Praha", "text_en": "Open Art Fest, Prague", "text_it": "Open Art Fest, Praga"},
-  {"year": 2019, "text_cs": "Skupinová výstava obrazů <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praha", "text_en": "Group exhibition <em>Sametová revoluce</em>, Divadlo bez zábradlí, Prague", "text_it": "Mostra collettiva <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praga"},
-  {"year": 2019, "text_cs": "Open Art Fest, Praha", "text_en": "Open Art Fest, Prague", "text_it": "Open Art Fest, Praga"},
-  {"year": 2018, "text_cs": "Skupinová výstava obrazů <em>Diversní (Ne)realita</em>, Galerie Zátiší Praha", "text_en": "Group exhibition <em>Diversní (Ne)realita</em>, Galerie Zátiší, Prague", "text_it": "Mostra collettiva <em>Diversní (Ne)realita</em>, Galleria Zátiší, Praga"},
-  {"year": 2018, "text_cs": "Open Art Fest, Praha", "text_en": "Open Art Fest, Prague", "text_it": "Open Art Fest, Praga"}
-]
+{
+  "exhibitions": [
+    {
+      "year": 2026,
+      "text_cs": "Zastoupena v online galerii <em>Saatchi Art</em>",
+      "text_en": "Represented by online gallery <em>Saatchi Art</em>",
+      "text_it": "Rappresentata dalla galleria online <em>Saatchi Art</em>"
+    },
+    {
+      "year": 2026,
+      "text_cs": "Obraz <em>Energy</em> z nové kolekce Abstract k vidění v prémiové pekárně a kavárně Zrno Zrnko",
+      "text_en": "Painting <em>Energy</em> from the new Abstract collection on display at premium bakery and café Zrno Zrnko",
+      "text_it": "Dipinto <em>Energy</em> della nuova collezione Abstract in mostra nella premiata panetteria e caffè Zrno Zrnko"
+    },
+    {
+      "year": 2025,
+      "text_cs": "Samostatná výstava <em>Dotek nekonečna</em>, Galerie Petrof",
+      "text_en": "Solo exhibition <em>Dotek nekonečna</em>, Galerie Petrof",
+      "text_it": "Mostra personale <em>Dotek nekonečna</em>, Galleria Petrof"
+    },
+    {
+      "year": 2022,
+      "text_cs": "Samostatná výstava <em>Secret of Love</em>, Galerie Petrof",
+      "text_en": "Solo exhibition <em>Secret of Love</em>, Galerie Petrof",
+      "text_it": "Mostra personale <em>Secret of Love</em>, Galleria Petrof"
+    },
+    {
+      "year": 2021,
+      "text_cs": "Open Art Fest, Praha",
+      "text_en": "Open Art Fest, Prague",
+      "text_it": "Open Art Fest, Praga"
+    },
+    {
+      "year": 2019,
+      "text_cs": "Skupinová výstava obrazů <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praha",
+      "text_en": "Group exhibition <em>Sametová revoluce</em>, Divadlo bez zábradlí, Prague",
+      "text_it": "Mostra collettiva <em>Sametová revoluce</em>, Divadlo bez zábradlí, Praga"
+    },
+    {
+      "year": 2019,
+      "text_cs": "Open Art Fest, Praha",
+      "text_en": "Open Art Fest, Prague",
+      "text_it": "Open Art Fest, Praga"
+    },
+    {
+      "year": 2018,
+      "text_cs": "Skupinová výstava obrazů <em>Diversní (Ne)realita</em>, Galerie Zátiší Praha",
+      "text_en": "Group exhibition <em>Diversní (Ne)realita</em>, Galerie Zátiší, Prague",
+      "text_it": "Mostra collettiva <em>Diversní (Ne)realita</em>, Galleria Zátiší, Praga"
+    },
+    {
+      "year": 2018,
+      "text_cs": "Open Art Fest, Praha",
+      "text_en": "Open Art Fest, Prague",
+      "text_it": "Open Art Fest, Praga"
+    }
+  ]
+}

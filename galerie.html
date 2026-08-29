@@ -3622,7 +3622,8 @@ fetch('data/about.json')
 // Dynamické načtení výstav z data/exhibitions.json
 fetch('data/exhibitions.json')
   .then(r => r.json())
-  .then(items => {
+  .then(data => {
+    const items = Array.isArray(data) ? data : (data.exhibitions || []);
     const ul = document.getElementById('vystavy-list');
     if (!ul) return;
     ul.innerHTML = items.map(e =>
