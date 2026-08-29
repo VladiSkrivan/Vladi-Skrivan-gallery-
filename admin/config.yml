@@ -14,6 +14,8 @@ collections:
     label_singular: Obraz
     folder: data/paintings
     create: true
+    extension: json
+    format: json
     slug: "{{slug}}"
     summary: "{{title}} — {{collection}} — {{status}}"
     fields:
