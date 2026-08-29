@@ -1,0 +1,19 @@
+{
+  "title": "Sen",
+  "collection": "Secret of Love",
+  "year": 2023,
+  "size": "60x70 cm",
+  "technique": "originální olejomalba na plátno",
+  "price_czk": 35000,
+  "price_eur": 1400,
+  "status": "K dispozici",
+  "story": "Tento obraz zachycuje okamžik, kdy jsme na pomezí spánku a bdění, v prostoru, kde čas a prostor ztrácí význam. Jemné tahy štětce a vrstvy barev vyprávějí příběh hlubokého klidu, ale i tajemné neklidné energie, která nás zve k hledání odpovědí na otázky, které možná nikdy nevyslovíme. Dílo „Sen“ v sobě nese snovou atmosféru, která promění každý interiér v prostor, kde se prolíná světlo, stíny a tiché emoce.",
+  "image": "image-sen-2.jpeg",
+  "images": [
+    "image-sen-2.jpeg",
+    "image11.png",
+    "sen3.jpeg",
+    "sen4.jpg"
+  ],
+  "on_web": true
+}

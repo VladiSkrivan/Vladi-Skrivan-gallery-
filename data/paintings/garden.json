@@ -1,0 +1,19 @@
+{
+  "title": "Garden",
+  "collection": "Z mých cest",
+  "year": 2026,
+  "size": "90 × 90 cm",
+  "technique": "originální olejomalba",
+  "price_czk": 99000,
+  "price_eur": 3960,
+  "status": "K dispozici",
+  "story": "Snění o tom, jak by vypadala babiččina zahrada, kdyby se dožila vysokého věku. Viděla jsem ji v představách jako rozlehlé voňavé útočiště plné barev, vůní květin, zpěvu ptáků a tajných zákoutí, kam se lze schovat před světem a jen tak si snít.",
+  "image": "image-garden.jpg",
+  "images": [
+    "image-garden.jpg",
+    "image-garden-2.jpeg",
+    "image-garden-3.jpeg",
+    "Garden 4.jpg"
+  ],
+  "on_web": true
+}

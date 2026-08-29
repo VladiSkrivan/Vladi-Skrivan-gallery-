@@ -12,37 +12,31 @@ collections:
   - name: paintings
     label: Obrazy
     label_singular: Obraz
-    files:
-      - name: paintings
-        label: Všechny obrazy
-        file: data/paintings.json
-        fields:
-          - name: paintings
-            label: Obrazy
-            widget: list
-            label_singular: Obraz
-            summary: "{{fields.title}} — {{fields.status}}"
-            fields:
-              - { name: title, label: Název, widget: string }
-              - { name: collection, label: Kolekce, widget: string }
-              - { name: year, label: Rok, widget: number, value_type: int }
-              - { name: size, label: Rozměr (cm), widget: string, required: false }
-              - { name: technique, label: Technika, widget: string, required: false }
-              - name: status
-                label: Status
-                widget: select
-                options:
-                  - "K dispozici"
-                  - Prodáno
-              - { name: price_czk, label: Cena CZK, widget: number, required: false }
-              - { name: price_eur, label: Cena EUR, widget: number, required: false }
-              - { name: story, label: Text autora, widget: text, required: false }
-              - { name: image, label: Hlavní foto (místnost), widget: image, required: false }
-              - name: images
-                label: Všechny fotky (1–4)
-                widget: list
-                field: { name: src, label: Foto, widget: image }
-              - { name: on_web, label: Zobrazit na webu, widget: boolean, default: true }
+    folder: data/paintings
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{collection}} — {{status}}"
+    fields:
+      - { name: title, label: Název, widget: string }
+      - { name: collection, label: Kolekce, widget: string, hint: "Např. Abstract, Dotek nekonečna, Z mých cest, Coffee Art…" }
+      - { name: year, label: Rok, widget: number, value_type: int }
+      - { name: size, label: Rozměr (cm), widget: string, required: false }
+      - { name: technique, label: Technika, widget: string, required: false }
+      - name: status
+        label: Status
+        widget: select
+        options:
+          - "K dispozici"
+          - Prodáno
+      - { name: price_czk, label: Cena CZK, widget: number, required: false }
+      - { name: price_eur, label: Cena EUR, widget: number, required: false }
+      - { name: story, label: Text autora, widget: text, required: false }
+      - { name: image, label: Hlavní foto (místnost), widget: image, required: false }
+      - name: images
+        label: Fotografie obrazu (1–4 snímky)
+        widget: list
+        field: { name: src, label: Foto, widget: image }
+      - { name: on_web, label: Zobrazit na webu, widget: boolean, default: true }
 
   - name: about
     label: O umělkyni

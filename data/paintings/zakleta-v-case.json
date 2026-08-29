@@ -1,0 +1,19 @@
+{
+  "title": "Zakletá v čase",
+  "collection": "Coffee Art",
+  "year": 2025,
+  "size": "50x70 cm",
+  "technique": "malba kávou na profi akvarelový papír",
+  "price_czk": 10000,
+  "price_eur": 400,
+  "status": "K dispozici",
+  "story": "Dívám se na ni a nevím, jestli se probouzí, nebo právě usíná do jiného světa. Po tváři jí stékají kapky, jako by z ní čas sám odkapával, kapku po kapce, beze spěchu.\n\nVlasy má rozpité do tmavé koruny, něco mezi korunou a stínem, něco mezi silou a snem. Oči jí zakryla, protože některé věci nejsou určené k tomu, aby je viděl každý.\n\nNese v sobě staré měsíce, jako medailon, který si zavěsila kolem krku dávno předtím, než jsem ji namalovala. Zůstala zaklená v okamžiku, který se nechce pustit dál, a přesto plyne.\n\nMalovala jsem ji kávou, protože jen ona umí vyprávět o čase způsobem, jaký slova neznají. Vrstva se usazovala na vrstvu, jako vzpomínka na vzpomínku, jako stopa toho, co bylo.\n\nJe tichá, ale ne nehybná. Zůstává, dokud se sama nerozhodne, kdy je čas jít dál.",
+  "image": "zakleta v case 1.jpg",
+  "images": [
+    "zakleta v case 1.jpg",
+    "zakleta v case 2.png",
+    "zakletá v čase 3.png",
+    "zakleta v case 4.jpg"
+  ],
+  "on_web": true
+}

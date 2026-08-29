@@ -1,0 +1,18 @@
+{
+  "title": "Pivoňky vol. I",
+  "collection": "Flowers",
+  "year": 2022,
+  "size": "90 × 90 cm",
+  "technique": "originální olejomalba na plátno",
+  "price_czk": null,
+  "price_eur": null,
+  "status": "Prodáno",
+  "story": "Pivoňky v zahradě mě zastavily svou jemnou vůní, která na okamžik utišila celý svět. Zdají se křehké, a přitom jsou tak robustní. Ztělesňují hojnost a radost — ty okamžiky, kdy se člověk nebojí plně ukázat. Čtvercový formát jako okno do jiného světa — možná vzpomínky, možná snu.",
+  "image": "image-pivonky1-a.jpeg",
+  "images": [
+    "image-pivonky1-a.jpeg",
+    "image-pivonky1-b.jpeg",
+    "image-pivonky1-c.jpeg"
+  ],
+  "on_web": true
+}

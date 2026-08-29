@@ -1,0 +1,32 @@
+{
+  "title": "Požehnání",
+  "collection": "Abstract",
+  "year": 2026,
+  "size": "120 × 80 cm",
+  "technique": "olej na plátně",
+  "price_czk": null,
+  "price_eur": null,
+  "status": "K dispozici",
+  "story": "Tento obraz vznikal pomalu, vrstvu po vrstvě – podobně jako myšlenky, které se během jeho tvorby postupně otevíraly a rozvíjely do všech směrů.\n\nZnovu a znovu jsem se k němu vracela. Každá nová vrstva barvy prohlubovala jeho výraz a vytvářela prostor, který není nutné jen vidět, ale především prožít. S každým tahem štětce se mé myšlenky nořily hlouběji. Propojovaly mě s přírodou, s rytmem země i s nekonečností vesmíru.\n\nČas přestal být důležitý. Zůstalo jen přítomné bytí, uvolnění a plynoucí tok tvorby. Nakonec přišly teplé odstíny. Nepůsobily jako výrazné gesto, ale jako přirozené završení celé cesty. Přinesly klid, harmonii a pocit požehnání.\n\nA tehdy jsem věděla, že je obraz dokončen.",
+  "image": "pozehnani-mistnost-1.jpg",
+  "images": [
+    "pozehnani-mistnost-1.jpg",
+    "pozehnani-key.jpeg",
+    "pozehnani 3.jpeg",
+    "pozehnani 4b.jpg"
+  ],
+  "crop": "cover",
+  "img_crop": [
+    "contain",
+    "contain",
+    "contain",
+    "contain"
+  ],
+  "img_zoom": [
+    1.21,
+    1.21,
+    1.21,
+    1.21
+  ],
+  "on_web": true
+}
