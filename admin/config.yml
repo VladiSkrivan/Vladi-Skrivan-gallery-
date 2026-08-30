@@ -9,6 +9,18 @@ public_folder: images
 locale: cs
 
 collections:
+  - name: collections
+    label: Kolekce
+    label_singular: Kolekce
+    folder: data/collections
+    create: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    summary: "{{name}}"
+    fields:
+      - { name: name, label: Název kolekce, widget: string }
+
   - name: paintings
     label: Obrazy
     label_singular: Obraz
@@ -22,8 +34,11 @@ collections:
       - { name: title, label: Název, widget: string }
       - name: collection
         label: Kolekce
-        widget: string
-        hint: "Současné kolekce: Abstract · Dotek nekonečna · Z mých cest · Coffee Art · Secret of Love · Flowers · Spirit. Pro novou kolekci napište nový název."
+        widget: relation
+        collection: collections
+        search_fields: [name]
+        value_field: name
+        display_fields: [name]
       - { name: year, label: Rok, widget: number, value_type: int }
       - { name: size, label: Rozměr (cm), widget: string, required: false }
       - { name: technique, label: Technika, widget: string, required: false }
