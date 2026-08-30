@@ -8,12 +8,9 @@
   "price_eur": null,
   "status": "K dispozici",
   "story": "Tento obraz vznikl z mé touhy navštívit Skotskou vysočinu. Místo, které mě přitahuje svou nespoutanou krásou, rozlehlostí a jedinečnou atmosférou.\n\nToužím jednou projít jejími kopci, nasát všechny její barvy, vůně a energii a nechat se unášet krajinou vřesovišť a nekonečných obzorů. Do té doby o této cestě sním a přenáším své představy na plátno.\n\nTato malba je pozvánkou do krajiny, která zatím žije v mé fantazii, ale již nyní naplňuje mé srdce inspirací.\n\nOlej na plátně, 40 × 40 cm",
-  "image": "sen o skotske vysocine 4.jpg",
-  "images": [
-    "sen o skotske vysocine 4.jpg",
-    "ADOTSH_obraz_1.jpeg",
-    "ADOTSH_detail_1.jpeg",
-    "sen o skotske vysocine 1.jpg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "sen o skotske vysocine 4.jpg",
+  "image2": "ADOTSH_obraz_1.jpeg",
+  "image3": "ADOTSH_detail_1.jpeg",
+  "image4": "sen o skotske vysocine 1.jpg"
 }

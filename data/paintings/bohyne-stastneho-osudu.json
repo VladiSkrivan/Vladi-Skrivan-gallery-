@@ -8,9 +8,9 @@
   "price_eur": null,
   "status": "Prodáno",
   "story": "Tento originální obraz zachycuje symboliku štěstí a osudu v jemných liniích a sytých barvách. Olejomalba na plátně přináší harmonii a pozitivní energii do každého prostoru.",
-  "image": "image-bohyne-osudu.jpeg",
-  "images": [
-    "image-bohyne-osudu.jpeg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-bohyne-osudu.jpeg",
+  "image2": "",
+  "image3": "",
+  "image4": ""
 }

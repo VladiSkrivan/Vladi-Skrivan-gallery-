@@ -8,12 +8,9 @@
   "price_eur": 400,
   "status": "K dispozici",
   "story": "Větve se proplétají jako věty, které si stromy šeptají mezi sebou už léta. Nebe mezi nimi prosvítá jen v útržcích, tiché modré kousky, které si všimne jen ten, kdo se na chvíli zastaví.\n\nNechala jsem je holé, bez listí, protože v tichu zimy je slyšet nejvíc. Kořeny pevně v zemi, a přesto nikam nespěchají – vědí, že jaro přijde samo.",
-  "image": "septani stromu 1.jpg",
-  "images": [
-    "septani stromu 1.jpg",
-    "septani stromu 2.png",
-    "septani stormu 3.png",
-    "septani stromu 4.jpg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "septani stromu 1.jpg",
+  "image2": "septani stromu 2.png",
+  "image3": "septani stormu 3.png",
+  "image4": "septani stromu 4.jpg"
 }

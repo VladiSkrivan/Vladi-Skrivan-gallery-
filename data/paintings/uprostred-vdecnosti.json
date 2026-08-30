@@ -8,12 +8,9 @@
   "price_eur": 2800,
   "status": "K dispozici",
   "story": "Uprostřed vděčnosti\n\nČasto přemýšlím, co vlastně znamená být vděčná.\n\nMožná je vděčnost ctnost. Možná je to jen přirozené přijetí života s vědomím, že dobro, krása i láska mají v našem životě své místo.\n\nUmím poděkovat – nahlas i potichu.\n\nVidím krásu tam, kde ji jiní míjejí. V ranním světle, v zeleni, v moři i v obyčejných okamžicích. Tato schopnost mě provází životem a přináší mi radost.\n\nA také jsem se naučila spoléhat sama na sebe. Jako kočka, která vždy dopadne na všechny čtyři a pokračuje na své cestě dál.\n\nPokud toto všechno znamená vděčnost, pak mohu s klidem říci:\n\nJsem vděčná.",
-  "image": "vdecnost 4.jpg",
-  "images": [
-    "vdecnost 4.jpg",
-    "vdecnost 2.jpeg",
-    "vdecnost 3.jpeg",
-    "vdecnost 1.jpg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "vdecnost 4.jpg",
+  "image2": "vdecnost 2.jpeg",
+  "image3": "vdecnost 3.jpeg",
+  "image4": "vdecnost 1.jpg"
 }

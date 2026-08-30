@@ -8,18 +8,15 @@
   "price_eur": null,
   "status": "K dispozici",
   "story": "",
-  "image": "Energy_mistnost.jpg",
-  "images": [
-    "Energy_mistnost.jpg",
-    "Energy_obraz_1.jpeg",
-    "Energy_detail_3.jpeg",
-    "energy 4.jpg"
-  ],
   "img_zoom": [
     1.21,
     1.21,
     1.21,
     1.21
   ],
-  "on_web": true
+  "on_web": true,
+  "image1": "Energy_mistnost.jpg",
+  "image2": "Energy_obraz_1.jpeg",
+  "image3": "Energy_detail_3.jpeg",
+  "image4": "energy 4.jpg"
 }

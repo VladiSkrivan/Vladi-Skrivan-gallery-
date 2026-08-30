@@ -2781,7 +2781,9 @@ function colLabel(col) {
 }
 
 // Gallery viewer
-const visiblePaintings = paintings.filter(p => p.on_web || p.image);
+function getPaintingImages(p) { return [p.image1, p.image2, p.image3, p.image4].filter(Boolean); }
+function getPrintImages(p) { return [p.image1, p.image2, p.image3, p.image4].filter(Boolean); }
+const visiblePaintings = paintings.filter(p => p.on_web || p.image1);
 const allCollections = [...new Set(visiblePaintings.map(p => p.collection).filter(Boolean))];
 let currentGalFilter = allCollections[0] || 'all';
 let currentGalIndex = 0;
@@ -2855,7 +2857,7 @@ function buildGalThumbs() {
     const wrap = document.createElement('div');
     wrap.className = 'gal-thumb-wrap';
     const img = document.createElement('img');
-    img.src = p.room_image ? `images/${p.room_image}` : (p.image ? `images/${p.image}` : '');
+    img.src = p.image1 ? `images/${p.image1}` : '';
     img.alt = p.title;
     img.className = 'gal-thumb' + (i === currentGalIndex ? ' active' : '');
     wrap.appendChild(img);
@@ -2887,7 +2889,7 @@ function buildTiskyThumbs() {
     const wrap = document.createElement('div');
     wrap.className = 'gal-thumb-wrap';
     const img = document.createElement('img');
-    img.src = p.image ? `images/${p.image}` : '';
+    img.src = p.image1 ? `images/${p.image1}` : '';
     img.alt = p.title;
     img.className = 'gal-thumb' + (i === currentPrintIndex ? ' active' : '');
     wrap.appendChild(img);
@@ -2906,14 +2908,12 @@ function updateGalViewer() {
   const p = filtered[currentGalIndex];
   if (!p) return;
 
-  const allImages = p.images && p.images.length > 1 ? p.images : null;
+  const allImages = getPaintingImages(p);
 
   // Main image: use currentGalPhotoIndex if photo strip active, else default
   let imgSrc = '';
-  if (allImages) {
+  if (allImages.length > 0) {
     imgSrc = `images/${allImages[currentGalPhotoIndex] || allImages[0]}`;
-  } else {
-    imgSrc = p.image ? `images/${p.image}` : '';
   }
 
   const activeImg = document.getElementById('gal-active-img');
@@ -2936,7 +2936,7 @@ function updateGalViewer() {
   const photoStrip = document.getElementById('gal-photo-strip');
   if (photoStrip) {
     photoStrip.innerHTML = '';
-    if (allImages) {
+    if (allImages.length > 0) {
       allImages.forEach((imgFile, idx) => {
         const thumb = document.createElement('img');
         thumb.src = `images/${imgFile}`;
@@ -3141,7 +3141,7 @@ function closeLightbox() {
 }
 function renderLightbox() {
   const p = visiblePaintings[currentIndex];
-  document.getElementById('lb-img').src = p.image ? `images/${p.image}` : '';
+  document.getElementById('lb-img').src = p.image1 ? `images/${p.image1}` : '';
   document.getElementById('lb-img').alt = p.title;
   document.getElementById('lb-collection').textContent = p.collection || '';
   document.getElementById('lb-title').textContent = p.title;
@@ -3165,8 +3165,8 @@ function renderLightbox() {
 function galNavPrev() {
   const filtered = getFilteredPaintings();
   const p = filtered[currentGalIndex];
-  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
-  if (imgs && currentGalPhotoIndex > 0) {
+  const imgs = p ? getPaintingImages(p) : [];
+  if (imgs.length > 1 && currentGalPhotoIndex > 0) {
     currentGalPhotoIndex--;
   } else {
     currentGalIndex = (currentGalIndex - 1 + filtered.length) % filtered.length;
@@ -3177,8 +3177,8 @@ function galNavPrev() {
 function galNavNext() {
   const filtered = getFilteredPaintings();
   const p = filtered[currentGalIndex];
-  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
-  if (imgs && currentGalPhotoIndex < imgs.length - 1) {
+  const imgs = p ? getPaintingImages(p) : [];
+  if (imgs.length > 1 && currentGalPhotoIndex < imgs.length - 1) {
     currentGalPhotoIndex++;
   } else {
     currentGalIndex = (currentGalIndex + 1) % filtered.length;
@@ -3191,8 +3191,8 @@ function buildGalDots() {
   if (!dotsEl) return;
   dotsEl.innerHTML = '';
   const p = getFilteredPaintings()[currentGalIndex];
-  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
-  if (!imgs || imgs.length <= 1) return;
+  const imgs = p ? getPaintingImages(p) : [];
+  if (imgs.length <= 1) return;
   imgs.forEach((_, i) => {
     const d = document.createElement('span');
     d.className = 'gal-img-dot' + (i === currentGalPhotoIndex ? ' active' : '');
@@ -3218,8 +3218,8 @@ let currentPrintPhotoIndex = 0;
 function tiskyNavPrev() {
   if (typeof prints === 'undefined') return;
   const p = prints[currentPrintIndex];
-  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
-  if (imgs && currentPrintPhotoIndex > 0) {
+  const imgs = p ? getPrintImages(p) : [];
+  if (imgs.length > 1 && currentPrintPhotoIndex > 0) {
     currentPrintPhotoIndex--;
   } else {
     currentPrintIndex = (currentPrintIndex - 1 + prints.length) % prints.length;
@@ -3230,8 +3230,8 @@ function tiskyNavPrev() {
 function tiskyNavNext() {
   if (typeof prints === 'undefined') return;
   const p = prints[currentPrintIndex];
-  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
-  if (imgs && currentPrintPhotoIndex < imgs.length - 1) {
+  const imgs = p ? getPrintImages(p) : [];
+  if (imgs.length > 1 && currentPrintPhotoIndex < imgs.length - 1) {
     currentPrintPhotoIndex++;
   } else {
     currentPrintIndex = (currentPrintIndex + 1) % prints.length;
@@ -3244,8 +3244,8 @@ function buildTiskyDots() {
   if (!dotsEl || typeof prints === 'undefined') return;
   dotsEl.innerHTML = '';
   const p = prints[currentPrintIndex];
-  const imgs = p && p.images && p.images.length > 1 ? p.images : null;
-  if (!imgs || imgs.length <= 1) return;
+  const imgs = p ? getPrintImages(p) : [];
+  if (imgs.length <= 1) return;
   imgs.forEach((_, i) => {
     const d = document.createElement('span');
     d.className = 'gal-img-dot' + (i === currentPrintPhotoIndex ? ' active' : '');
@@ -3272,7 +3272,7 @@ function buildMobileGalleryGrid() {
     const sold = p.status === 'Prodáno';
     item.className = 'mgrid-item' + (sold ? ' mgrid-sold' : '');
     item.onclick = () => openMobileDetail('painting', i);
-    item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+    item.innerHTML = `<img src="images/${p.image1 || ''}" alt="${p.title}" loading="lazy">
       <div class="mgrid-caption">
         <span class="mgrid-title">${p.title}</span>
         <span class="mgrid-meta">${[p.collection, p.year].filter(Boolean).join(' · ')}</span>
@@ -3286,11 +3286,11 @@ function buildMobiletiskyGrid() {
   const grid = document.getElementById('mobile-tisky-grid');
   if (!grid || grid.children.length > 0) return;
   prints.forEach((p, i) => {
-    if (!p.image) return;
+    if (!p.image1) return;
     const item = document.createElement('div');
     item.className = 'mgrid-item mgrid-item-print';
     item.onclick = () => openMobileDetail('print', i);
-    item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+    item.innerHTML = `<img src="images/${p.image1 || ''}" alt="${p.title}" loading="lazy">
       <div class="mgrid-caption">
         <span class="mgrid-title">${p.title}</span>
         <span class="mgrid-meta">${p.subtitle || p.technique || ''}</span>
@@ -3330,7 +3330,7 @@ function openMobileDetail(type, index) {
   mobileDetailCurrent = { type, index, p };
 
   // Build carousel
-  mobCarouselImages = (p.images && p.images.length > 0) ? p.images : (p.image ? [p.image] : []);
+  mobCarouselImages = type === 'print' ? getPrintImages(p) : getPaintingImages(p);
   mobCarouselIndex = 0;
   const carousel = document.getElementById('mob-carousel');
   const dotsEl = document.getElementById('mob-carousel-dots');
@@ -3414,7 +3414,7 @@ function buildMobileUnifiedFeed() {
     item.className = 'mob-feed-item';
     item.onclick = () => openMobileDetail('painting', i);
     const sold = p.status === 'Prodáno';
-    item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+    item.innerHTML = `<img src="images/${p.image1 || ''}" alt="${p.title}" loading="lazy">
       <div class="mob-feed-caption">
         <span class="mob-feed-title">${p.title}</span>
         <span class="mob-feed-meta">${[p.collection, p.year].filter(Boolean).join(' · ')}</span>
@@ -3428,11 +3428,11 @@ function buildMobileUnifiedFeed() {
     labelT.textContent = 'Umělecké tisky';
     feed.appendChild(labelT);
     prints.forEach((p, i) => {
-      if (!p.image) return;
+      if (!p.image1) return;
       const item = document.createElement('div');
       item.className = 'mob-feed-item';
       item.onclick = () => openMobileDetail('print', i);
-      item.innerHTML = `<img src="images/${p.image}" alt="${p.title}" loading="lazy">
+      item.innerHTML = `<img src="images/${p.image1 || ''}" alt="${p.title}" loading="lazy">
         <div class="mob-feed-caption">
           <span class="mob-feed-title">${p.title}</span>
           <span class="mob-feed-meta">${p.subtitle || p.technique || ''}</span>
@@ -3535,7 +3535,7 @@ function updateTiskyViewer() {
   if (typeof prints === 'undefined') return;
   const p = prints[currentPrintIndex];
   if (!p) return;
-  const imgs = p.images && p.images.length > 1 ? p.images : [p.image];
+  const imgs = getPrintImages(p);
   const src = imgs[currentPrintPhotoIndex] || imgs[0];
   const activeImg = document.getElementById('tisky-active-img');
   activeImg.style.opacity = '0';

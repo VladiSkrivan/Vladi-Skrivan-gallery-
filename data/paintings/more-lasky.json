@@ -8,9 +8,9 @@
   "price_eur": 1800,
   "status": "Prodáno",
   "story": "„Moře lásky“ přináší na plátno energii, vášeň a hloubku pocitů, které se podobají nekonečnému moři. Tato originální olejomalba špachtlí vyniká svou dynamickou strukturou a intenzivními barvami, které přitáhnou pohled a vyvolají emoce.",
-  "image": "image14.png",
-  "images": [
-    "image14.png"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image14.png",
+  "image2": "",
+  "image3": "",
+  "image4": ""
 }

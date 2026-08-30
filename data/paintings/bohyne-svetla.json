@@ -8,9 +8,9 @@
   "price_eur": null,
   "status": "Prodáno",
   "story": "Tento jedinečný obraz zachycuje sílu a jemnost světla v harmonii barev a tvarů. Originální olejomalba na plátně byla vytvořena s láskou a pečlivostí.",
-  "image": "image-bohyne-svetla.jpeg",
-  "images": [
-    "image-bohyne-svetla.jpeg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-bohyne-svetla.jpeg",
+  "image2": "",
+  "image3": "",
+  "image4": ""
 }

@@ -8,9 +8,9 @@
   "price_eur": null,
   "status": "Prodáno",
   "story": "Druhý pohled na svět pivoněk — stejná elegance, nová energie. Každý záběr odhaluje jiný rozměr jejich krásy: hravost i vášeň v růžové paletě, ceremoniální teplo zlatého pozadí. Přirozená sofistikovanost, která v sobě nese příběh růstu a slavení.",
-  "image": "image-pivonky2-a.jpeg",
-  "images": [
-    "image-pivonky2-a.jpeg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-pivonky2-a.jpeg",
+  "image2": "",
+  "image3": "",
+  "image4": ""
 }

@@ -8,18 +8,15 @@
   "price_eur": 400,
   "status": "K dispozici",
   "story": "Dívka, možná žena. Štíhlá víla, a přesto zemitá. Objímá sama sebe – kolena k tělu, paže kolem nich – a ví, kam patří. Ví, co chce.\n\nTeď jen odpočívá sama se sebou. Nechává rozvířené myšlenky rozplynout se v tu krásnou zlatavou energii.",
-  "image": "krehke byti 1.jpg",
-  "images": [
-    "krehke byti 1.jpg",
-    "krehke byti 2.jpg",
-    "krehke byti 3.jpeg",
-    "krehke byti 4.jpg"
-  ],
   "img_zoom": [
     1,
     1,
     1,
     1
   ],
-  "on_web": true
+  "on_web": true,
+  "image1": "krehke byti 1.jpg",
+  "image2": "krehke byti 2.jpg",
+  "image3": "krehke byti 3.jpeg",
+  "image4": "krehke byti 4.jpg"
 }

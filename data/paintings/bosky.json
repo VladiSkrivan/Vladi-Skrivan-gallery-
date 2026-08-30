@@ -8,12 +8,9 @@
   "price_eur": 6800,
   "status": "Prodáno",
   "story": "Tento obraz je oslavou intimních okamžiků a jemnosti lásky, zachycených v harmonii barev a struktury. Originální olejomalba na plátně přenáší pocity ranní svěžesti, doteků a něžného vyznání do jedinečného uměleckého díla.",
-  "image": "image-bosky-2.jpeg",
-  "images": [
-    "image-bosky-2.jpeg",
-    "image-bosky-3.jpeg",
-    "image16.png",
-    "Bosky 4.jpg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-bosky-2.jpeg",
+  "image2": "image-bosky-3.jpeg",
+  "image3": "image16.png",
+  "image4": "Bosky 4.jpg"
 }

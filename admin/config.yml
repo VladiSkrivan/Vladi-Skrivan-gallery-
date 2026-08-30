@@ -51,11 +51,10 @@ collections:
       - { name: price_czk, label: Cena CZK, widget: number, required: false }
       - { name: price_eur, label: Cena EUR, widget: number, required: false }
       - { name: story, label: Text autora, widget: text, required: false }
-      - { name: image, label: Hlavní foto (místnost), widget: image, required: false }
-      - name: images
-        label: Fotografie obrazu (1–4 snímky)
-        widget: list
-        field: { name: src, label: Foto, widget: image }
+      - { name: image1, label: "Snímek 1 — Obraz v prostředí", widget: image, required: false }
+      - { name: image2, label: "Snímek 2 — Celý obraz", widget: image, required: false }
+      - { name: image3, label: "Snímek 3 — Obraz v detailu", widget: image, required: false }
+      - { name: image4, label: "Snímek 4 — Obraz v prostředí", widget: image, required: false }
       - { name: on_web, label: Zobrazit na webu, widget: boolean, default: true }
 
   - name: about
@@ -160,8 +159,7 @@ collections:
       - { name: technique, label: Technika, widget: string, required: false }
       - { name: size, label: Rozměr, widget: string, required: false }
       - { name: description, label: Popis, widget: text, required: false }
-      - { name: image, label: Náhledové foto, widget: image, required: false }
-      - name: images
-        label: Detailní fotky
-        widget: list
-        field: { name: src, label: Foto, widget: image }
+      - { name: image1, label: "Snímek 1 — Tisk v prostředí", widget: image, required: false }
+      - { name: image2, label: "Snímek 2 — Celý tisk", widget: image, required: false }
+      - { name: image3, label: "Snímek 3 — Detail tisku", widget: image, required: false }
+      - { name: image4, label: "Snímek 4 — Tisk v prostředí", widget: image, required: false }

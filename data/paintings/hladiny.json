@@ -8,13 +8,6 @@
   "price_eur": 1200,
   "status": "Dostupné",
   "story": "Ten den jsem šla bez cíle. Jen se nadechnout lesa, pustit myšlenky ven a nechat se vést. Cesta mě přivedla k rybníku - k tomu tichému, širokému zrcadlu uprostřed jarní krajiny. Zastavila jsem se. Voda byla klidná, ale žila. Neustále proměnlivá, barevná. Slunce v ní rozpouštělo zlatavé tóny, větve bříz kreslily šedozelené linie, nebe se koupalo v jemně modré. Každý pohyb větrem nebo ptákem rozechvíval hladinu, a spolu s ní i barvy. Nic nebylo ostré, přesto všechno mělo tvar. Všechno se rozplývalo a znovu skládalo. Byla to poezie odrazů.\n\nObraz Hladiny vznikl právě z té chvíle. Z toho barevného klidu, kde se svět nerozděluje na nahoře a dole, ale plyne dohromady. Malovala jsem špachtlí, vrstvila tóny modré, zelené, zlaté a tyrkysové, nechávala je prolínat, míchat se, překrývat. Stejně jako se míchají myšlenky, pocity, vjemy - na hladině i uvnitř nás.",
-  "image": "hladiny 1.jpg",
-  "images": [
-    "hladiny 1.jpg",
-    "Hladiny 2.jpg",
-    "Hladiny 3.jpg",
-    "hladiny 4 fin.jpg"
-  ],
   "img_zoom": [
     1.21,
     1.21,
@@ -27,5 +20,9 @@
     "center",
     "center"
   ],
-  "on_web": true
+  "on_web": true,
+  "image1": "hladiny 1.jpg",
+  "image2": "Hladiny 2.jpg",
+  "image3": "Hladiny 3.jpg",
+  "image4": "hladiny 4 fin.jpg"
 }

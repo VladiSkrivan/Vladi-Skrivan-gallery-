@@ -8,10 +8,9 @@
   "price_eur": 1800,
   "status": "Prodáno",
   "story": "„Zrodila se hvězda“ zachycuje okamžik zázraku, kdy světlo naděje a lásky proráží temnotou. Jemné linie a vrstvy olejových barev vytvářejí fascinující textury, které dodávají obrazu hloubku a energii.",
-  "image": "image-hvezda-2.jpeg",
-  "images": [
-    "image-hvezda-2.jpeg",
-    "image9.png"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-hvezda-2.jpeg",
+  "image2": "image9.png",
+  "image3": "",
+  "image4": ""
 }

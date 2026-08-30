@@ -8,12 +8,9 @@
   "price_eur": 4000,
   "status": "K dispozici",
   "story": "„Zrození Venuše“ je oslavou ženské krásy, něhy a síly. Tento originální olejomalba na plátně přináší harmonii tvarů a barev, které vyzařují lásku a přirozenou eleganci. Venuše je nejen bohyní, ale také symbolem věčného spojení mezi krásou a emocemi.",
-  "image": "zrozeni venuse 1.jpeg",
-  "images": [
-    "zrozeni venuse 1.jpeg",
-    "zrozeni venuse 2.jpeg",
-    "zrozeni venuse 3.jpeg",
-    "zrozeni venuse 4.jpg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "zrozeni venuse 1.jpeg",
+  "image2": "zrozeni venuse 2.jpeg",
+  "image3": "zrozeni venuse 3.jpeg",
+  "image4": "zrozeni venuse 4.jpg"
 }

@@ -8,10 +8,9 @@
   "price_eur": null,
   "status": "K dispozici",
   "story": "Tento obraz zachycuje duchovní sílu a klid v tradičním, avšak osobitém pojetí. Originální olejomalba na plátně přináší hlubokou symboliku a jedinečný umělecký výraz, který vnese do vašeho prostoru atmosféru klidu a inspirace.",
-  "image": "image-kristus.jpeg",
-  "images": [
-    "image-kristus.jpeg",
-    "image-kristus-2.png"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-kristus.jpeg",
+  "image2": "image-kristus-2.png",
+  "image3": "",
+  "image4": ""
 }

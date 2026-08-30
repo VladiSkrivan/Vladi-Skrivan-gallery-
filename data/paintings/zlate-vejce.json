@@ -8,18 +8,15 @@
   "price_eur": 3400,
   "status": "Prodáno",
   "story": "„Zlaté vejce“ je symbolem zrození, nových začátků a nekonečného potenciálu. Tato originální olejomalba špachtlí na desce kombinuje preciznost techniky s energií a bohatstvím barev, které dodávají obrazu jedinečný lesk a texturu.",
-  "image": "image-zlate-vejce-2.jpeg",
-  "images": [
-    "image-zlate-vejce-2.jpeg",
-    "image-zlate-vejce-3.jpeg",
-    "zlate vejce 3.jpeg",
-    "zlate vejce 4.jpg"
-  ],
   "img_zoom": [
     1,
     1,
     1,
     1
   ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-zlate-vejce-2.jpeg",
+  "image2": "image-zlate-vejce-3.jpeg",
+  "image3": "zlate vejce 3.jpeg",
+  "image4": "zlate vejce 4.jpg"
 }

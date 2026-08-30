@@ -8,18 +8,15 @@
   "price_eur": null,
   "status": "K dispozici",
   "story": "Chtěla jsem zachytit to, co se nedá vyslovit. Ten okamžik, kdy se ztiším natolik, že uslyším víc, než jen sebe. Kdy hranice mezi mnou a tím, s kým mluvím, přestane existovat, a zůstane jen proudění — jemné, modré, živé.\n\nMaloval mě dech. Každá linie je otisk chvíle, kdy jsem přestala hledat slova a nechala ruku svobodnou. Nevím přesně, co jsem zachytila. Vím jen, že to bylo skutečné.\n\nNechávám tento obraz otevřený. Nehledejte v něm mé vysvětlení — hledejte v něm své vlastní spojení. To, co uvidíte, když necháte oči volně bloudit po plátně, patří jen vám.",
-  "image": "rozhovor-mistnost-1.jpg",
-  "images": [
-    "rozhovor-mistnost-1.jpg",
-    "rozhovor-key.jpeg",
-    "rozhovor-detail-1.jpeg",
-    "rozhovor-mistnost-2.jpg"
-  ],
   "img_zoom": [
     1.21,
     1.21,
     1.21,
     1.21
   ],
-  "on_web": true
+  "on_web": true,
+  "image1": "rozhovor-mistnost-1.jpg",
+  "image2": "rozhovor-key.jpeg",
+  "image3": "rozhovor-detail-1.jpeg",
+  "image4": "rozhovor-mistnost-2.jpg"
 }

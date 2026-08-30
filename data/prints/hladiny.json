@@ -2,13 +2,12 @@
   "title": "Hladiny",
   "subtitle": "Dotek nekonečna",
   "price_czk": null,
-  "image": "Hladiny 1.jpg",
-  "images": [
-    "tisky-hladiny-hires1.jpeg",
-    "tisky-hladiny-hires2.jpeg"
-  ],
   "description": "Umělecký tisk originálního obrazu Hladiny přináší krásu umění těm, kteří touží po výjimečném díle, ale nemohou si pořídit originál. „Hladiny” zachycují tichou sílu a tajemství vody – její schopnost odrážet světlo, pohltit emoce a spojovat dvě vzdálené reality.",
   "story": "Tento obraz vznikal pomalu, vrstvu po vrstvě – podobně jako myšlenky, které se během jeho tvorby postupně otevíraly a rozvíjely do všech směrů.\n\nZnovu a znovu jsem se k němu vracela. Každá nová vrstva barvy prohlubovala jeho výraz a vytvářela prostor, který není nutné jen vidět, ale především prožít. S každým tahem štětce se mé myšlenky nořily hlouběji. Propojovaly mě s přírodou, s rytmem země i s nekonečností vesmíru.\n\nČas přestal být důležitý. Zůstalo jen přítomné bytí, uvolnění a plynoucí tok tvorby. Nakonec přišly teplé odstíny. Nepůsobily jako výrazné gesto, ale jako přirozené završení celé cesty. Přinesly klid, harmonii a pocit požehnání.\n\nA tehdy jsem věděla, že je obraz dokončen.",
   "technique": "Vysoce kvalitní tisk na archivní papír",
-  "size": "50 × 60 cm"
+  "size": "50 × 60 cm",
+  "image1": "tisky-hladiny-hires1.jpeg",
+  "image2": "tisky-hladiny-hires2.jpeg",
+  "image3": "",
+  "image4": ""
 }

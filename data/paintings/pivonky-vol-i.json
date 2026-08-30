@@ -8,11 +8,9 @@
   "price_eur": null,
   "status": "Prodáno",
   "story": "Pivoňky v zahradě mě zastavily svou jemnou vůní, která na okamžik utišila celý svět. Zdají se křehké, a přitom jsou tak robustní. Ztělesňují hojnost a radost — ty okamžiky, kdy se člověk nebojí plně ukázat. Čtvercový formát jako okno do jiného světa — možná vzpomínky, možná snu.",
-  "image": "image-pivonky1-a.jpeg",
-  "images": [
-    "image-pivonky1-a.jpeg",
-    "image-pivonky1-b.jpeg",
-    "image-pivonky1-c.jpeg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "image-pivonky1-a.jpeg",
+  "image2": "image-pivonky1-b.jpeg",
+  "image3": "image-pivonky1-c.jpeg",
+  "image4": ""
 }

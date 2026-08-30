@@ -8,12 +8,9 @@
   "price_eur": 2600,
   "status": "K dispozici",
   "story": "„V náruči přírody“ je obrazem, který zve k propojení s divokou krásou a klidem, které příroda nabízí. Dynamické tahy špachtlí vytvářejí strukturu evokující hluboký soulad mezi člověkem a krajinou. Každá vrstva barvy zachycuje sílu živlů i jemnost okamžiku, ve kterém se můžeme ztratit a znovu nalézt.",
-  "image": "v naruci prirody 1.jpg",
-  "images": [
-    "v naruci prirody 1.jpg",
-    "v naruci prirody 2.jpeg",
-    "v naruci prirody 3.jpeg",
-    "v naruci prirody 4.jpg"
-  ],
-  "on_web": true
+  "on_web": true,
+  "image1": "v naruci prirody 1.jpg",
+  "image2": "v naruci prirody 2.jpeg",
+  "image3": "v naruci prirody 3.jpeg",
+  "image4": "v naruci prirody 4.jpg"
 }

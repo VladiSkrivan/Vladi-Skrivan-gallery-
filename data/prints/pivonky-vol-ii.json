@@ -3,11 +3,6 @@
   "subtitle": "Flowers — limitovaná edice",
   "technique": "Vysoce kvalitní tisk na archivní papír",
   "price_czk": null,
-  "image": "tisky pivonky II.jpeg",
-  "images": [
-    "tisky-pivonky2-hires2.jpeg",
-    "tisky-pivonky2-hires1.jpeg"
-  ],
   "description": "„Pivoňky II“ zachycují jemnost a noblesu přírody v každém detailu. Tento exkluzivní tisk přináší do vašeho interiéru harmonii a nadčasovou eleganci, kterou ocení znalci krásy. Každý exemplář je ručně podepsán autorkou, čímž se stává autentickým kouskem umění, který nelze nahradit.",
   "sections": [
     {
@@ -53,5 +48,9 @@
         "note": "Poslední kusy edice"
       }
     ]
-  }
+  },
+  "image1": "tisky-pivonky2-hires2.jpeg",
+  "image2": "tisky-pivonky2-hires1.jpeg",
+  "image3": "",
+  "image4": ""
 }
