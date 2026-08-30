@@ -3627,7 +3627,7 @@ fetch('data/exhibitions.json')
     const ul = document.getElementById('vystavy-list');
     if (!ul) return;
     ul.innerHTML = items.map(e =>
-      `<li><span class="vystavy-rok">${e.year}</span><span class="vystavy-popis" data-cs="${e.text_cs}" data-en="${e.text_en}" data-it="${e.text_it}">${e.text_cs}</span></li>`
+      `<li><span class="vystavy-rok">${e.year}</span><span class="vystavy-popis">${e.text || e.text_cs || ''}</span></li>`
     ).join('');
     if (typeof applyLang === 'function') applyLang(document.documentElement.lang || 'cs');
   })

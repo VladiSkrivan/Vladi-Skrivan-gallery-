@@ -85,12 +85,10 @@ collections:
           - name: exhibitions
             label: Výstavy
             widget: list
-            summary: "{{fields.year}} — {{fields.text_cs}}"
+            summary: "{{fields.year}} — {{fields.text}}"
             fields:
               - { name: year, label: Rok, widget: number, value_type: int }
-              - { name: text_cs, label: Text (česky), widget: string }
-              - { name: text_en, label: Text (anglicky), widget: string, required: false }
-              - { name: text_it, label: Text (italsky), widget: string, required: false }
+              - { name: text, label: Text, widget: string }
 
   - name: klub
     label: Klub
