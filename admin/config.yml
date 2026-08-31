@@ -51,10 +51,26 @@ collections:
       - { name: price_czk, label: Cena CZK, widget: number, required: false }
       - { name: price_eur, label: Cena EUR, widget: number, required: false }
       - { name: story, label: Text autora, widget: text, required: false }
-      - { name: image1, label: "Snímek 1 — Obraz v prostředí", widget: image, required: false }
-      - { name: image2, label: "Snímek 2 — Celý obraz", widget: image, required: false }
-      - { name: image3, label: "Snímek 3 — Obraz v detailu", widget: image, required: false }
-      - { name: image4, label: "Snímek 4 — Obraz v prostředí", widget: image, required: false }
+      - name: image1
+        label: "Snímek 1 — Obraz v prostředí"
+        widget: image
+        required: false
+        hint: "Povinný, slouží jako náhled. Fotografie obrazu na zdi v interiéru. Formát na šířku, poměr 3:2 nebo 4:3. Obraz by měl zabírat 50–70 % záběru. Min. 1 800 × 1 200 px, JPG do 3 MB."
+      - name: image2
+        label: "Snímek 2 — Celý obraz"
+        widget: image
+        required: false
+        hint: "Dokumentační snímek. Samotný obraz bez okolí, na čistém neutrálním podkladu (bílá nebo béžová). Fotografujte přímo ze předu, rovnoběžně s plochou. Zachovejte přirozené proporce díla. Min. 1 800 px na delší straně, JPG do 3 MB."
+      - name: image3
+        label: "Snímek 3 — Obraz v detailu"
+        widget: image
+        required: false
+        hint: "Textury a technika. Výřez zajímavé části — textury barvy, stopy špachtle nebo štětce. Formát libovolný. Min. 1 200 px na delší straně, JPG do 3 MB."
+      - name: image4
+        label: "Snímek 4 — Obraz v prostředí"
+        widget: image
+        required: false
+        hint: "Volitelný druhý pohled. Jiný úhel nebo jiná místnost. Stejná pravidla jako Snímek 1. Min. 1 800 × 1 200 px, JPG do 3 MB. | Všechny snímky: název souboru bez mezer a diakritiky (např. Hladiny_mistnost.jpg). Velké soubory zkomprimujte na squoosh.app."
       - { name: on_web, label: Zobrazit na webu, widget: boolean, default: true }
 
   - name: about
