@@ -1894,6 +1894,21 @@
   }
   .mob-lang-btn:last-child { border-right: none; }
   .mob-lang-btn.active { background: var(--black); color: #fff; }
+  /* Lang buttons in top bar */
+  .mob-topbar-lang {
+    display: none;
+  }
+  @media (max-width: 600px) {
+    .mob-topbar-lang {
+      display: flex; gap: 0; align-items: center; margin-left: auto; margin-right: 8px;
+    }
+    .mob-topbar-lang-btn {
+      background: none; border: none;
+      padding: 4px 7px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      color: #888; cursor: pointer; font-family: var(--font-sans);
+    }
+    .mob-topbar-lang-btn.active { color: var(--black); }
+  }
   /* ── MOBILE UNIFIED FEED ── */
   .mob-unified-feed { display: none; }
   @media (max-width: 768px) {
@@ -2268,6 +2283,11 @@
     <img src="images/logo-skrivan.png" alt="Vladi Skrivan" class="nav-logo-img-el">
   </a>
   <a href="#" class="nav-mobile-logo" onclick="showSection('uvod'); return false;">VS</a>
+  <div class="mob-topbar-lang">
+    <button class="mob-topbar-lang-btn" onclick="applyLang('cs')">CS</button>
+    <button class="mob-topbar-lang-btn" onclick="applyLang('en')">EN</button>
+    <button class="mob-topbar-lang-btn" onclick="applyLang('it')">IT</button>
+  </div>
   <button class="mob-hamburger" id="mob-hamburger" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
   </button>
@@ -3531,7 +3551,7 @@ function applyLang(lang) {
   document.querySelectorAll('[data-cs-placeholder]').forEach(el => {
     el.placeholder = el.dataset[lang + 'Placeholder'] || el.dataset.csPlaceholder;
   });
-  document.querySelectorAll('.lang-btn, .mob-lang-btn').forEach(btn => {
+  document.querySelectorAll('.lang-btn, .mob-lang-btn, .mob-topbar-lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
   });
 }
