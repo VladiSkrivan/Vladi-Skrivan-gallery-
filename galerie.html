@@ -1883,6 +1883,17 @@
     opacity: 0.9;
   }
   .mob-menu-links a:last-child { border-bottom: none; }
+  .mob-lang-switcher {
+    display: flex; gap: 0; margin-top: 32px; align-self: flex-start;
+    border: 1px solid var(--light-gray); border-radius: 4px; overflow: hidden;
+  }
+  .mob-lang-btn {
+    background: none; border: none; border-right: 1px solid var(--light-gray);
+    padding: 10px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    color: #888; cursor: pointer; font-family: var(--font-sans);
+  }
+  .mob-lang-btn:last-child { border-right: none; }
+  .mob-lang-btn.active { background: var(--black); color: #fff; }
   /* ── MOBILE UNIFIED FEED ── */
   .mob-unified-feed { display: none; }
   @media (max-width: 768px) {
@@ -2297,6 +2308,11 @@
     <a href="#rozhovor" onclick="mobilNavGo('rozhovor'); return false;">Rozhovor</a>
     <a href="#contact" onclick="mobilNavGo('contact'); return false;">Kontakt</a>
   </nav>
+  <div class="mob-lang-switcher">
+    <button class="mob-lang-btn" onclick="applyLang('cs')">CS</button>
+    <button class="mob-lang-btn" onclick="applyLang('en')">EN</button>
+    <button class="mob-lang-btn" onclick="applyLang('it')">IT</button>
+  </div>
 </div>
 
 <div class="page-content">
@@ -3506,7 +3522,7 @@ function applyLang(lang) {
   document.querySelectorAll('[data-cs-placeholder]').forEach(el => {
     el.placeholder = el.dataset[lang + 'Placeholder'] || el.dataset.csPlaceholder;
   });
-  document.querySelectorAll('.lang-btn').forEach(btn => {
+  document.querySelectorAll('.lang-btn, .mob-lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
   });
 }
