@@ -2825,7 +2825,16 @@ function buildFilterTabs() {
   ft.innerHTML = '';
   const navCols = document.getElementById('nav-collections');
   navCols.innerHTML = '';
-  [...new Set(visiblePaintings.map(p => p.collection).filter(Boolean))].forEach((col, i) => {
+  const collectionOrder = ['Abstract','Z mých cest','Dotek nekonečna','Coffee Art','Secret of Love','Flowers','Spirit'];
+  const rawCols = [...new Set(visiblePaintings.map(p => p.collection).filter(Boolean))];
+  const sortedCols = [...rawCols].sort((a, b) => {
+    const ai = collectionOrder.indexOf(a), bi = collectionOrder.indexOf(b);
+    if (ai === -1 && bi === -1) return a.localeCompare(b);
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+  sortedCols.forEach((col, i) => {
     // topbar tab (hidden on desktop, kept for mobile fallback)
     const btn = document.createElement('button');
     btn.className = 'filter-tab';
